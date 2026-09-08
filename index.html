@@ -57,24 +57,24 @@ select {
     border-bottom: 1px solid #e6e9ed;
 }
 
-.logo-prater {
-    font-size: 24px;
-    font-weight: 800;
-    color: #253240;
-}
-
-.logo-prater span {
-    color: #e30613;
+.logo-imagen {
+    width: 100%;
+    max-width: 175px;
+    height: auto;
+    display: block;
+    margin-bottom: 12px;
 }
 
 .logo-subtitulo {
-    margin-top: 6px;
+    margin-top: 4px;
     font-size: 13px;
     font-weight: 700;
+    line-height: 1.3;
+    color: #1f2937;
 }
 
 .logo-descripcion {
-    margin-top: 3px;
+    margin-top: 4px;
     font-size: 10px;
     color: #66788a;
     letter-spacing: 0.5px;
@@ -552,12 +552,14 @@ tr:hover td {
 
     <div class="logo-box">
 
-        <div class="logo-prater">
-            <span>▣</span>PRATER
-        </div>
+        <img
+            src="Logo_Prater_9b16d75267.webp"
+            alt="Logo PRATER"
+            class="logo-imagen"
+        >
 
         <div class="logo-subtitulo">
-            Producción Farma
+            Sistemas de Apoyo Crítico y Metrología
         </div>
 
         <div class="logo-descripcion">
@@ -622,10 +624,6 @@ tr:hover td {
 
 </aside>
 
-
-<!-- =========================================================
-     CONTENIDO
-========================================================= -->
 
 <main
     class="contenido"
@@ -707,7 +705,7 @@ function mostrarPagina(pagina, elemento) {
 
 
 /* =========================================================
-   ESTADOS
+   ESTADO DOCUMENTO
 ========================================================= */
 
 function obtenerEstadoDocumento(vencimiento) {
@@ -772,12 +770,6 @@ function obtenerEstadoDocumento(vencimiento) {
 ========================================================= */
 
 function mostrarInicio() {
-
-    let activos =
-        equipos.filter(
-            e => e.estado === "Activo"
-        ).length;
-
 
     let vigentes = 0;
     let proximos = 0;
@@ -918,9 +910,9 @@ function mostrarInicio() {
             </h2>
 
             <p style="color:#66788a;">
-                Registra equipos y controla los protocolos
-                y reportes correspondientes a las
-                calificaciones de Diseño, Instalación,
+                Sistema para el control de equipos,
+                protocolos y reportes correspondientes a
+                calificación de Diseño, Instalación,
                 Operación y Desempeño.
             </p>
 
@@ -1069,7 +1061,6 @@ function nuevoEquipo() {
 
                     <input
                         id="nombreEquipo"
-                        placeholder="Ejemplo: Envasadora de Gotas"
                     >
 
                 </div>
@@ -1126,17 +1117,9 @@ function nuevoEquipo() {
 
                     <select id="estadoEquipo">
 
-                        <option>
-                            Activo
-                        </option>
-
-                        <option>
-                            En mantenimiento
-                        </option>
-
-                        <option>
-                            Fuera de servicio
-                        </option>
+                        <option>Activo</option>
+                        <option>En mantenimiento</option>
+                        <option>Fuera de servicio</option>
 
                     </select>
 
@@ -1180,53 +1163,35 @@ function guardarEquipo() {
     let equipo = {
 
         codigo:
-            document.getElementById(
-                "codigoEquipo"
-            ).value.trim(),
+            document.getElementById("codigoEquipo").value.trim(),
 
         nombre:
-            document.getElementById(
-                "nombreEquipo"
-            ).value.trim(),
+            document.getElementById("nombreEquipo").value.trim(),
 
         area:
-            document.getElementById(
-                "areaEquipo"
-            ).value.trim(),
+            document.getElementById("areaEquipo").value.trim(),
 
         ubicacion:
-            document.getElementById(
-                "ubicacionEquipo"
-            ).value.trim(),
+            document.getElementById("ubicacionEquipo").value.trim(),
 
         fabricante:
-            document.getElementById(
-                "fabricanteEquipo"
-            ).value.trim(),
+            document.getElementById("fabricanteEquipo").value.trim(),
 
         modelo:
-            document.getElementById(
-                "modeloEquipo"
-            ).value.trim(),
+            document.getElementById("modeloEquipo").value.trim(),
 
         serie:
-            document.getElementById(
-                "serieEquipo"
-            ).value.trim(),
+            document.getElementById("serieEquipo").value.trim(),
 
         estado:
-            document.getElementById(
-                "estadoEquipo"
-            ).value
+            document.getElementById("estadoEquipo").value
 
     };
 
 
     if (!equipo.codigo || !equipo.nombre) {
 
-        alert(
-            "Debes ingresar código y nombre del equipo."
-        );
+        alert("Debes ingresar código y nombre del equipo.");
 
         return;
 
@@ -1239,8 +1204,7 @@ function guardarEquipo() {
 
     } else {
 
-        equipos[equipoEditando] =
-            equipo;
+        equipos[equipoEditando] = equipo;
 
     }
 
@@ -1260,51 +1224,40 @@ function editarEquipo(indice) {
 
     let equipo = equipos[indice];
 
-    equipoEditando = indice;
-
-
     nuevoEquipo();
 
     equipoEditando = indice;
 
 
-    document.getElementById(
-        "codigoEquipo"
-    ).value = equipo.codigo || "";
+    document.getElementById("codigoEquipo").value =
+        equipo.codigo || "";
 
-    document.getElementById(
-        "nombreEquipo"
-    ).value = equipo.nombre || "";
+    document.getElementById("nombreEquipo").value =
+        equipo.nombre || "";
 
-    document.getElementById(
-        "areaEquipo"
-    ).value = equipo.area || "";
+    document.getElementById("areaEquipo").value =
+        equipo.area || "";
 
-    document.getElementById(
-        "ubicacionEquipo"
-    ).value = equipo.ubicacion || "";
+    document.getElementById("ubicacionEquipo").value =
+        equipo.ubicacion || "";
 
-    document.getElementById(
-        "fabricanteEquipo"
-    ).value = equipo.fabricante || "";
+    document.getElementById("fabricanteEquipo").value =
+        equipo.fabricante || "";
 
-    document.getElementById(
-        "modeloEquipo"
-    ).value = equipo.modelo || "";
+    document.getElementById("modeloEquipo").value =
+        equipo.modelo || "";
 
-    document.getElementById(
-        "serieEquipo"
-    ).value = equipo.serie || "";
+    document.getElementById("serieEquipo").value =
+        equipo.serie || "";
 
-    document.getElementById(
-        "estadoEquipo"
-    ).value = equipo.estado || "Activo";
+    document.getElementById("estadoEquipo").value =
+        equipo.estado || "Activo";
 
 }
 
 
 /* =========================================================
-   CANCELAR
+   CANCELAR EQUIPO
 ========================================================= */
 
 function cancelarFormularioEquipo() {
@@ -1319,7 +1272,7 @@ function cancelarFormularioEquipo() {
 
 
 /* =========================================================
-   ELIMINAR
+   ELIMINAR EQUIPO
 ========================================================= */
 
 function eliminarEquipo(indice) {
@@ -1346,7 +1299,7 @@ function eliminarEquipo(indice) {
 
 
 /* =========================================================
-   BUSCAR
+   BUSCAR EQUIPOS
 ========================================================= */
 
 function buscarEquipos() {
@@ -1375,27 +1328,19 @@ function mostrarTablaEquipos(filtro = "") {
 
             return (
 
-                (e.codigo || "")
-                    .toLowerCase()
-                    .includes(texto)
+                (e.codigo || "").toLowerCase().includes(texto)
 
                 ||
 
-                (e.nombre || "")
-                    .toLowerCase()
-                    .includes(texto)
+                (e.nombre || "").toLowerCase().includes(texto)
 
                 ||
 
-                (e.area || "")
-                    .toLowerCase()
-                    .includes(texto)
+                (e.area || "").toLowerCase().includes(texto)
 
                 ||
 
-                (e.ubicacion || "")
-                    .toLowerCase()
-                    .includes(texto)
+                (e.ubicacion || "").toLowerCase().includes(texto)
 
             );
 
@@ -1411,7 +1356,6 @@ function mostrarTablaEquipos(filtro = "") {
             <thead>
 
                 <tr>
-
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Área</th>
@@ -1421,7 +1365,6 @@ function mostrarTablaEquipos(filtro = "") {
                     <th>Serie</th>
                     <th>Estado</th>
                     <th>Acciones</th>
-
                 </tr>
 
             </thead>
@@ -1580,86 +1523,54 @@ function mostrarCalificaciones() {
         <div class="resumen">
 
             <div class="resumen-card">
-
-                <div class="resumen-icono icono-azul">
-                    ▣
-                </div>
-
+                <div class="resumen-icono icono-azul">▣</div>
                 <div>
-
                     <div class="resumen-titulo">
                         Total documentos
                     </div>
-
                     <div class="resumen-numero">
                         ${calificaciones.length}
                     </div>
-
                 </div>
-
             </div>
 
 
             <div class="resumen-card">
-
-                <div class="resumen-icono icono-verde">
-                    ✓
-                </div>
-
+                <div class="resumen-icono icono-verde">✓</div>
                 <div>
-
                     <div class="resumen-titulo">
                         Vigentes
                     </div>
-
                     <div class="resumen-numero">
                         ${vigentes}
                     </div>
-
                 </div>
-
             </div>
 
 
             <div class="resumen-card">
-
-                <div class="resumen-icono icono-amarillo">
-                    ◷
-                </div>
-
+                <div class="resumen-icono icono-amarillo">◷</div>
                 <div>
-
                     <div class="resumen-titulo">
                         Próximos a vencer
                     </div>
-
                     <div class="resumen-numero">
                         ${proximos}
                     </div>
-
                 </div>
-
             </div>
 
 
             <div class="resumen-card">
-
-                <div class="resumen-icono icono-rojo">
-                    !
-                </div>
-
+                <div class="resumen-icono icono-rojo">!</div>
                 <div>
-
                     <div class="resumen-titulo">
                         Vencidos
                     </div>
-
                     <div class="resumen-numero">
                         ${vencidos}
                     </div>
-
                 </div>
-
             </div>
 
         </div>
@@ -1867,6 +1778,10 @@ function nuevaCalificacion() {
                             Seleccionar
                         </option>
 
+                        <option value="Di">
+                            Diseño (Di)
+                        </option>
+
                         <option value="IQ">
                             IQ
                         </option>
@@ -1877,10 +1792,6 @@ function nuevaCalificacion() {
 
                         <option value="PQ">
                             PQ
-                        </option>
-
-                        <option value="Di">
-                            Diseño (Di)
                         </option>
 
                     </select>
@@ -2027,33 +1938,19 @@ function nuevaCalificacion() {
 function generarCodigoCalificacion() {
 
     let equipoIndice =
-        document.getElementById(
-            "calEquipo"
-        ).value;
-
+        document.getElementById("calEquipo").value;
 
     let tipo =
-        document.getElementById(
-            "calTipo"
-        ).value;
-
+        document.getElementById("calTipo").value;
 
     let documento =
-        document.getElementById(
-            "calDocumento"
-        ).value;
-
+        document.getElementById("calDocumento").value;
 
     let version =
-        document.getElementById(
-            "calVersion"
-        ).value.trim();
-
+        document.getElementById("calVersion").value.trim();
 
     let campoCodigo =
-        document.getElementById(
-            "calCodigo"
-        );
+        document.getElementById("calCodigo");
 
 
     if (
@@ -2077,9 +1974,18 @@ function generarCodigoCalificacion() {
     let prefijo = "";
 
 
-    /* =====================================================
-       IQ
-    ===================================================== */
+    if (tipo === "Di") {
+
+        if (documento === "Protocolo") {
+            prefijo = "PCDi";
+        }
+
+        if (documento === "Reporte") {
+            prefijo = "RCDi";
+        }
+
+    }
+
 
     if (tipo === "IQ") {
 
@@ -2094,10 +2000,6 @@ function generarCodigoCalificacion() {
     }
 
 
-    /* =====================================================
-       OQ
-    ===================================================== */
-
     if (tipo === "OQ") {
 
         if (documento === "Protocolo") {
@@ -2111,10 +2013,6 @@ function generarCodigoCalificacion() {
     }
 
 
-    /* =====================================================
-       PQ
-    ===================================================== */
-
     if (tipo === "PQ") {
 
         if (documento === "Protocolo") {
@@ -2123,23 +2021,6 @@ function generarCodigoCalificacion() {
 
         if (documento === "Reporte") {
             prefijo = "RCD";
-        }
-
-    }
-
-
-    /* =====================================================
-       DISEÑO
-    ===================================================== */
-
-    if (tipo === "Di") {
-
-        if (documento === "Protocolo") {
-            prefijo = "PCDi";
-        }
-
-        if (documento === "Reporte") {
-            prefijo = "RCDi";
         }
 
     }
@@ -2162,15 +2043,11 @@ function generarCodigoCalificacion() {
 function calcularVencimiento() {
 
     let fecha =
-        document.getElementById(
-            "calFecha"
-        );
+        document.getElementById("calFecha");
 
 
     let vencimiento =
-        document.getElementById(
-            "calVencimiento"
-        );
+        document.getElementById("calVencimiento");
 
 
     if (!fecha || !vencimiento) {
@@ -2218,33 +2095,19 @@ function calcularVencimiento() {
 function guardarCalificacion() {
 
     let equipoIndice =
-        document.getElementById(
-            "calEquipo"
-        ).value;
-
+        document.getElementById("calEquipo").value;
 
     let tipo =
-        document.getElementById(
-            "calTipo"
-        ).value;
-
+        document.getElementById("calTipo").value;
 
     let documento =
-        document.getElementById(
-            "calDocumento"
-        ).value;
-
+        document.getElementById("calDocumento").value;
 
     let version =
-        document.getElementById(
-            "calVersion"
-        ).value.trim();
-
+        document.getElementById("calVersion").value.trim();
 
     let fecha =
-        document.getElementById(
-            "calFecha"
-        ).value;
+        document.getElementById("calFecha").value;
 
 
     if (
@@ -2264,24 +2127,16 @@ function guardarCalificacion() {
     }
 
 
-    /* volver a calcular antes de guardar */
-
     calcularVencimiento();
 
     generarCodigoCalificacion();
 
 
     let vencimiento =
-        document.getElementById(
-            "calVencimiento"
-        ).value;
-
+        document.getElementById("calVencimiento").value;
 
     let codigo =
-        document.getElementById(
-            "calCodigo"
-        ).value;
-
+        document.getElementById("calCodigo").value;
 
     let equipo =
         equipos[equipoIndice];
@@ -2555,7 +2410,6 @@ function mostrarTablaCalificaciones() {
                 <thead>
 
                     <tr>
-
                         <th>Equipo</th>
                         <th>Tipo</th>
                         <th>Documento</th>
@@ -2565,7 +2419,6 @@ function mostrarTablaCalificaciones() {
                         <th>Fecha vencimiento</th>
                         <th>Estado</th>
                         <th>Acciones</th>
-
                     </tr>
 
                 </thead>
@@ -2629,11 +2482,9 @@ function mostrarTablaCalificaciones() {
 
 
                 <td class="codigo-doc">
-
                     ${escapeHTML(
                         registro.codigo
                     )}
-
                 </td>
 
 
@@ -2676,7 +2527,6 @@ function mostrarTablaCalificaciones() {
                         <button
                             class="btn-editar"
                             onclick="editarCalificacion(${indice})"
-                            title="Editar"
                         >
                             ✎
                         </button>
@@ -2685,7 +2535,6 @@ function mostrarTablaCalificaciones() {
                         <button
                             class="btn-eliminar"
                             onclick="eliminarCalificacion(${indice})"
-                            title="Eliminar"
                         >
                             🗑
                         </button>
@@ -2918,7 +2767,7 @@ function obtenerColumna(
 
 
 /* =========================================================
-   DESCARGAR PLANTILLA
+   PLANTILLA EXCEL
 ========================================================= */
 
 function descargarPlantilla() {
@@ -2998,9 +2847,8 @@ function mostrarDocumentos() {
             </h2>
 
             <p style="color:#66788a;">
-                Los protocolos y reportes actualmente
-                se administran desde la sección
-                Calificaciones.
+                Los protocolos y reportes se administran
+                desde la sección Calificaciones.
             </p>
 
         </div>
@@ -3011,7 +2859,7 @@ function mostrarDocumentos() {
 
 
 /* =========================================================
-   CONFIGURACIÓN
+   BASE DE DATOS
 ========================================================= */
 
 function mostrarConfiguracion() {
@@ -3096,7 +2944,7 @@ function formatearFecha(fecha) {
 
 
 /* =========================================================
-   ESCAPE HTML
+   SEGURIDAD HTML
 ========================================================= */
 
 function escapeHTML(valor) {
@@ -3136,5 +2984,4 @@ window.onload =
 </script>
 
 </body>
-
 </html>
