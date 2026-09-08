@@ -1429,42 +1429,30 @@ function generarCodigoCalificacion() {
 
 function calcularVencimiento() {
 
-    let documento =
-        document.getElementById("calDocumento");
+    let fecha = document.getElementById("calFecha");
+    let vencimiento = document.getElementById("calVencimiento");
 
-    let fecha =
-        document.getElementById("calFecha");
-
-    let vencimiento =
-        document.getElementById("calVencimiento");
-
-    if (!documento || !fecha || !vencimiento) {
+    if (!fecha || !vencimiento) {
         return;
     }
 
-
-    if (
-        documento.value === "Reporte" &&
-        fecha.value
-    ) {
-
-        let fechaOriginal =
-            new Date(fecha.value + "T00:00:00");
-
-
-        fechaOriginal.setFullYear(
-            fechaOriginal.getFullYear() + 5
-        );
-
-
-        vencimiento.value =
-            formatearFechaInput(fechaOriginal);
-
-    } else {
-
+    // Si no hay fecha de emisión, limpiar vencimiento
+    if (!fecha.value) {
         vencimiento.value = "";
-
+        return;
     }
+
+    // Tomar fecha de emisión
+    let fechaEmision = new Date(fecha.value + "T00:00:00");
+
+    // Sumar 5 años
+    fechaEmision.setFullYear(
+        fechaEmision.getFullYear() + 5
+    );
+
+    // Mostrar inmediatamente la fecha de vencimiento
+    vencimiento.value =
+        formatearFechaInput(fechaEmision);
 
 }
 
