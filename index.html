@@ -1,546 +1,684 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Equipos Calificados</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión de Equipos Calificados</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+<!-- Librería para trabajar con Excel -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-        body {
-            background: #f4f6f8;
-            color: #1f2937;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-        .app {
-            display: flex;
-            min-height: 100vh;
-        }
+body {
+    background: #f4f6f8;
+    color: #1f2937;
+}
 
-        /* MENÚ LATERAL */
-        .sidebar {
-            width: 250px;
-            background: #172033;
-            color: white;
-            padding: 20px 0;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-        }
+.app {
+    display: flex;
+    min-height: 100vh;
+}
 
-        .logo {
-            padding: 10px 22px 25px;
-            font-size: 20px;
-            font-weight: bold;
-            border-bottom: 1px solid #303a4f;
-            margin-bottom: 15px;
-        }
+/* MENÚ */
+.sidebar {
+    width: 250px;
+    background: #172033;
+    color: white;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding-top: 20px;
+}
 
-        .logo span {
-            display: block;
-            font-size: 12px;
-            font-weight: normal;
-            color: #aeb8ca;
-            margin-top: 5px;
-        }
+.logo {
+    padding: 10px 22px 25px;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #303a4f;
+    margin-bottom: 15px;
+}
 
-        .menu {
-            list-style: none;
-        }
+.logo span {
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    color: #aeb8ca;
+    margin-top: 5px;
+}
 
-        .menu li {
-            margin: 4px 10px;
-        }
+.menu {
+    list-style: none;
+}
 
-        .menu button {
-            width: 100%;
-            padding: 13px 15px;
-            border: none;
-            background: transparent;
-            color: #d8deea;
-            text-align: left;
-            border-radius: 7px;
-            cursor: pointer;
-            font-size: 14px;
-        }
+.menu li {
+    margin: 4px 10px;
+}
 
-        .menu button:hover {
-            background: #26334b;
-            color: white;
-        }
+.menu button {
+    width: 100%;
+    padding: 13px 15px;
+    border: none;
+    background: transparent;
+    color: #d8deea;
+    text-align: left;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+}
 
-        .menu button.active {
-            background: #34445f;
-            color: white;
-            font-weight: bold;
-        }
+.menu button:hover {
+    background: #26334b;
+    color: white;
+}
 
-        /* CONTENIDO */
-        .main {
-            margin-left: 250px;
-            width: calc(100% - 250px);
-            padding: 30px;
-        }
+.menu button.active {
+    background: #34445f;
+    color: white;
+    font-weight: bold;
+}
 
-        .header {
-            margin-bottom: 25px;
-        }
+/* CONTENIDO */
+.main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 30px;
+}
 
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 6px;
-        }
+.header {
+    margin-bottom: 25px;
+}
 
-        .header p {
-            color: #6b7280;
-        }
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
 
-        /* TARJETAS */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+.header p {
+    color: #6b7280;
+}
 
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 22px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
+/* TARJETAS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
 
-        .card h3 {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 12px;
-        }
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
 
-        .number {
-            font-size: 30px;
-            font-weight: bold;
-        }
+.card h3 {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 12px;
+}
 
-        /* PANEL */
-        .panel {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
+.number {
+    font-size: 30px;
+    font-weight: bold;
+}
 
-        .panel h2 {
-            margin-bottom: 10px;
-        }
+/* PANEL */
+.panel {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
 
-        .panel p {
-            color: #6b7280;
-            margin-bottom: 20px;
-        }
+.panel h2 {
+    margin-bottom: 10px;
+}
 
-        /* TABLA */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+.panel p {
+    color: #6b7280;
+    margin-bottom: 20px;
+}
 
-        th, td {
-            padding: 13px;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-            font-size: 14px;
-        }
+/* BOTONES */
+.btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-bottom: 15px;
+}
 
-        th {
-            background: #f9fafb;
-        }
+.btn:hover {
+    background: #1d4ed8;
+}
 
-        /* BOTONES */
-        .btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
+.btn.secondary {
+    background: #4b5563;
+}
 
-        .btn:hover {
-            background: #1d4ed8;
-        }
+.btn.danger {
+    background: #dc2626;
+}
 
-        /* FORMULARIO */
-        .form-group {
-            margin-bottom: 18px;
-        }
+.btn.success {
+    background: #15803d;
+}
 
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-            font-size: 14px;
-        }
+/* BUSCADOR */
+.search {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
 
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            max-width: 500px;
-            padding: 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-        }
+/* TABLA */
+.table-container {
+    overflow-x: auto;
+}
 
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
 
-        @media (max-width: 600px) {
-            .sidebar {
-                width: 190px;
-            }
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    font-size: 13px;
+}
 
-            .main {
-                margin-left: 190px;
-                width: calc(100% - 190px);
-                padding: 15px;
-            }
+th {
+    background: #f9fafb;
+}
 
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+tr:hover {
+    background: #f9fafb;
+}
+
+/* ESTADOS */
+.estado {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado.activo {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.estado.mantenimiento {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.estado.fuera {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* FORMULARIO */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+/* ACCIONES */
+.acciones button {
+    border: none;
+    padding: 6px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.editar {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.eliminar {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* MENSAJE */
+.mensaje {
+    padding: 12px;
+    background: #ecfdf5;
+    color: #166534;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-    <!-- MENÚ -->
-    <aside class="sidebar">
+<!-- MENÚ LATERAL -->
+<aside class="sidebar">
 
-        <div class="logo">
-            Gestión de Equipos
-            <span>Calificados</span>
-        </div>
+    <div class="logo">
+        Gestión de Equipos
+        <span>Calificados</span>
+    </div>
 
-        <ul class="menu">
+    <ul class="menu">
 
-            <li>
-                <button class="active" onclick="mostrarPagina('inicio', this)">
-                    🏠 Inicio
-                </button>
-            </li>
+        <li>
+            <button class="active" onclick="mostrarPagina('inicio', this)">
+                🏠 Inicio
+            </button>
+        </li>
 
-            <li>
-                <button onclick="mostrarPagina('equipos', this)">
-                    ⚙️ Equipos
-                </button>
-            </li>
+        <li>
+            <button onclick="mostrarPagina('equipos', this)">
+                ⚙️ Equipos
+            </button>
+        </li>
 
-            <li>
-                <button onclick="mostrarPagina('calificaciones', this)">
-                    📋 Calificaciones
-                </button>
-            </li>
+        <li>
+            <button onclick="mostrarPagina('calificaciones', this)">
+                📋 Calificaciones
+            </button>
+        </li>
 
-            <li>
-                <button onclick="mostrarPagina('documentos', this)">
-                    📁 Documentos
-                </button>
-            </li>
+        <li>
+            <button onclick="mostrarPagina('documentos', this)">
+                📁 Documentos
+            </button>
+        </li>
 
-            <li>
-                <button onclick="mostrarPagina('configuracion', this)">
-                    ⚙️ Configuración
-                </button>
-            </li>
+        <li>
+            <button onclick="mostrarPagina('configuracion', this)">
+                ⚙️ Configuración
+            </button>
+        </li>
 
-        </ul>
+    </ul>
 
-    </aside>
+</aside>
 
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main">
-
-        <div id="contenido"></div>
-
-    </main>
+<!-- CONTENIDO -->
+<main class="main">
+    <div id="contenido"></div>
+</main>
 
 </div>
 
 
 <script>
 
+/* =====================================================
+   DATOS
+===================================================== */
+
+let equipos = JSON.parse(localStorage.getItem("equipos")) || [];
+
+let equipoEditando = null;
+
+
+/* =====================================================
+   GUARDAR DATOS
+===================================================== */
+
+function guardarDatos() {
+    localStorage.setItem("equipos", JSON.stringify(equipos));
+}
+
+
+/* =====================================================
+   MENÚ
+===================================================== */
+
 function mostrarPagina(pagina, boton) {
 
-    /* Quitar selección anterior */
     document.querySelectorAll(".menu button").forEach(function(btn) {
         btn.classList.remove("active");
     });
 
-    /* Seleccionar botón actual */
     boton.classList.add("active");
 
-    const contenido = document.getElementById("contenido");
-
-
-    /* INICIO */
     if (pagina === "inicio") {
-
-        contenido.innerHTML = `
-
-            <div class="header">
-                <h1>Inicio</h1>
-                <p>Gestión de Equipos Calificados</p>
-            </div>
-
-            <div class="cards">
-
-                <div class="card">
-                    <h3>Equipos registrados</h3>
-                    <div class="number">0</div>
-                </div>
-
-                <div class="card">
-                    <h3>Equipos calificados</h3>
-                    <div class="number">0</div>
-                </div>
-
-                <div class="card">
-                    <h3>Calificaciones pendientes</h3>
-                    <div class="number">0</div>
-                </div>
-
-                <div class="card">
-                    <h3>Documentos</h3>
-                    <div class="number">0</div>
-                </div>
-
-            </div>
-
-            <div class="panel">
-
-                <h2>Bienvenido</h2>
-
-                <p>
-                    Desde este sistema podrás gestionar los equipos,
-                    calificaciones y documentación asociada.
-                </p>
-
-            </div>
-
-        `;
+        mostrarInicio();
     }
 
-
-    /* EQUIPOS */
     if (pagina === "equipos") {
-
-        contenido.innerHTML = `
-
-            <div class="header">
-                <h1>Equipos</h1>
-                <p>Registro y gestión de equipos.</p>
-            </div>
-
-            <div class="panel">
-
-                <button class="btn" onclick="nuevoEquipo()">
-                    + Nuevo equipo
-                </button>
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Equipo</th>
-                            <th>Área</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <tr>
-                            <td>-</td>
-                            <td>No existen equipos registrados</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        `;
+        mostrarEquipos();
     }
 
-
-    /* CALIFICACIONES */
     if (pagina === "calificaciones") {
-
-        contenido.innerHTML = `
-
-            <div class="header">
-                <h1>Calificaciones</h1>
-                <p>Gestión de las calificaciones de equipos.</p>
-            </div>
-
-            <div class="panel">
-
-                <button class="btn">
-                    + Nueva calificación
-                </button>
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>Equipo</th>
-                            <th>Tipo</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>Sin registros</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        `;
+        mostrarCalificaciones();
     }
 
-
-    /* DOCUMENTOS */
     if (pagina === "documentos") {
-
-        contenido.innerHTML = `
-
-            <div class="header">
-                <h1>Documentos</h1>
-                <p>Documentación asociada a los equipos y calificaciones.</p>
-            </div>
-
-            <div class="panel">
-
-                <button class="btn">
-                    + Agregar documento
-                </button>
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>Documento</th>
-                            <th>Equipo</th>
-                            <th>Tipo</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>Sin documentos</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        `;
+        mostrarDocumentos();
     }
 
-
-    /* CONFIGURACIÓN */
     if (pagina === "configuracion") {
-
-        contenido.innerHTML = `
-
-            <div class="header">
-                <h1>Configuración</h1>
-                <p>Configuración general del sistema.</p>
-            </div>
-
-            <div class="panel">
-
-                <h2>Configuración del sistema</h2>
-
-                <br>
-
-                <div class="form-group">
-
-                    <label>Nombre del sistema</label>
-
-                    <input
-                        type="text"
-                        value="Gestión de Equipos Calificados"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Responsable</label>
-
-                    <input
-                        type="text"
-                        placeholder="Ingrese responsable"
-                    >
-
-                </div>
-
-                <button class="btn">
-                    Guardar configuración
-                </button>
-
-            </div>
-
-        `;
+        mostrarConfiguracion();
     }
-
 }
 
 
-/* NUEVO EQUIPO */
+/* =====================================================
+   INICIO
+===================================================== */
+
+function mostrarInicio() {
+
+    const activos = equipos.filter(e => e.estado === "Activo").length;
+
+    document.getElementById("contenido").innerHTML = `
+
+        <div class="header">
+            <h1>Inicio</h1>
+            <p>Gestión de Equipos Calificados</p>
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Equipos registrados</h3>
+                <div class="number">${equipos.length}</div>
+            </div>
+
+            <div class="card">
+                <h3>Equipos activos</h3>
+                <div class="number">${activos}</div>
+            </div>
+
+            <div class="card">
+                <h3>Calificaciones</h3>
+                <div class="number">0</div>
+            </div>
+
+            <div class="card">
+                <h3>Documentos</h3>
+                <div class="number">0</div>
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <h2>Bienvenido</h2>
+
+            <p>
+                Desde este sistema podrás gestionar los equipos,
+                calificaciones y documentación asociada.
+            </p>
+
+            <p>
+                Actualmente tienes <strong>${equipos.length}</strong>
+                equipo(s) registrado(s).
+            </p>
+
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   EQUIPOS
+===================================================== */
+
+function mostrarEquipos() {
+
+    document.getElementById("contenido").innerHTML = `
+
+        <div class="header">
+
+            <h1>Equipos</h1>
+
+            <p>
+                Registro y gestión de equipos calificados.
+            </p>
+
+        </div>
+
+        <div class="panel">
+
+            <button class="btn" onclick="nuevoEquipo()">
+                + Nuevo equipo
+            </button>
+
+            <button class="btn success" onclick="document.getElementById('excelInput').click()">
+                📊 Importar Excel
+            </button>
+
+            <button class="btn secondary" onclick="descargarPlantilla()">
+                ⬇ Descargar plantilla
+            </button>
+
+            <input
+                type="file"
+                id="excelInput"
+                accept=".xlsx,.xls"
+                style="display:none"
+                onchange="importarExcel(event)"
+            >
+
+            <input
+                type="text"
+                class="search"
+                placeholder="Buscar por código, nombre, área, ubicación..."
+                oninput="buscarEquipos(this.value)"
+            >
+
+            <div id="tablaEquipos"></div>
+
+        </div>
+    `;
+
+    mostrarTablaEquipos(equipos);
+}
+
+
+/* =====================================================
+   TABLA
+===================================================== */
+
+function mostrarTablaEquipos(lista) {
+
+    const contenedor = document.getElementById("tablaEquipos");
+
+    if (!contenedor) return;
+
+    if (lista.length === 0) {
+
+        contenedor.innerHTML = `
+            <p style="color:#6b7280;">
+                No existen equipos registrados.
+            </p>
+        `;
+
+        return;
+    }
+
+    let html = `
+
+        <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Código</th>
+                    <th>Equipo</th>
+                    <th>Área</th>
+                    <th>Ubicación</th>
+                    <th>Fabricante</th>
+                    <th>Modelo</th>
+                    <th>N.º de serie</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+    `;
+
+    lista.forEach((equipo, index) => {
+
+        const indiceReal = equipos.indexOf(equipo);
+
+        let claseEstado = "activo";
+
+        if (equipo.estado === "En mantenimiento") {
+            claseEstado = "mantenimiento";
+        }
+
+        if (equipo.estado === "Fuera de servicio") {
+            claseEstado = "fuera";
+        }
+
+        html += `
+
+            <tr>
+
+                <td><strong>${escapeHTML(equipo.codigo)}</strong></td>
+
+                <td>${escapeHTML(equipo.nombre)}</td>
+
+                <td>${escapeHTML(equipo.area)}</td>
+
+                <td>${escapeHTML(equipo.ubicacion)}</td>
+
+                <td>${escapeHTML(equipo.fabricante)}</td>
+
+                <td>${escapeHTML(equipo.modelo)}</td>
+
+                <td>${escapeHTML(equipo.serie)}</td>
+
+                <td>
+                    <span class="estado ${claseEstado}">
+                        ${escapeHTML(equipo.estado)}
+                    </span>
+                </td>
+
+                <td class="acciones">
+
+                    <button
+                        class="editar"
+                        onclick="editarEquipo(${indiceReal})">
+                        Editar
+                    </button>
+
+                    <button
+                        class="eliminar"
+                        onclick="eliminarEquipo(${indiceReal})">
+                        Eliminar
+                    </button>
+
+                </td>
+
+            </tr>
+        `;
+    });
+
+    html += `
+            </tbody>
+
+        </table>
+
+        </div>
+    `;
+
+    contenedor.innerHTML = html;
+}
+
+
+/* =====================================================
+   BUSCAR
+===================================================== */
+
+function buscarEquipos(texto) {
+
+    texto = texto.toLowerCase();
+
+    const resultado = equipos.filter(equipo => {
+
+        return Object.values(equipo).some(valor =>
+            String(valor).toLowerCase().includes(texto)
+        );
+
+    });
+
+    mostrarTablaEquipos(resultado);
+}
+
+
+/* =====================================================
+   NUEVO EQUIPO
+===================================================== */
 
 function nuevoEquipo() {
 
-    const contenido = document.getElementById("contenido");
+    equipoEditando = null;
 
-    contenido.innerHTML = `
+    document.getElementById("contenido").innerHTML = `
 
         <div class="header">
 
@@ -554,74 +692,549 @@ function nuevoEquipo() {
 
         <div class="panel">
 
-            <div class="form-group">
+            <div class="form-grid">
 
-                <label>Código del equipo</label>
+                <div class="form-group">
 
-                <input
-                    type="text"
-                    placeholder="Ej: E780/EF"
-                >
+                    <label>Código *</label>
+
+                    <input id="codigo" placeholder="Ej: E780/EF">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Nombre del equipo *</label>
+
+                    <input
+                        id="nombre"
+                        placeholder="Ej: Envasadora de Gotas"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Área</label>
+
+                    <input
+                        id="area"
+                        placeholder="Ej: Producción"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Ubicación</label>
+
+                    <input
+                        id="ubicacion"
+                        placeholder="Ej: Línea de Envasado"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Fabricante</label>
+
+                    <input id="fabricante">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Modelo</label>
+
+                    <input id="modelo">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>N.º de serie</label>
+
+                    <input id="serie">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Estado</label>
+
+                    <select id="estado">
+
+                        <option>Activo</option>
+
+                        <option>En mantenimiento</option>
+
+                        <option>Fuera de servicio</option>
+
+                    </select>
+
+                </div>
 
             </div>
 
+            <br>
 
-            <div class="form-group">
-
-                <label>Nombre del equipo</label>
-
-                <input
-                    type="text"
-                    placeholder="Ej: Envasadora de Gotas"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Área</label>
-
-                <input
-                    type="text"
-                    placeholder="Ej: Producción"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Estado</label>
-
-                <select>
-
-                    <option>Activo</option>
-                    <option>Fuera de servicio</option>
-                    <option>En mantenimiento</option>
-
-                </select>
-
-            </div>
-
-
-            <button class="btn">
+            <button class="btn success" onclick="guardarEquipo()">
                 Guardar equipo
             </button>
 
-        </div>
+            <button class="btn secondary" onclick="mostrarEquipos()">
+                Cancelar
+            </button>
 
+        </div>
     `;
 }
 
 
-/* CARGAR INICIO AL ABRIR */
+/* =====================================================
+   GUARDAR EQUIPO
+===================================================== */
+
+function guardarEquipo() {
+
+    const codigo = document.getElementById("codigo").value.trim();
+    const nombre = document.getElementById("nombre").value.trim();
+
+    if (!codigo || !nombre) {
+
+        alert("Debe ingresar al menos el código y nombre del equipo.");
+
+        return;
+    }
+
+    const equipo = {
+
+        codigo: codigo,
+
+        nombre: nombre,
+
+        area: document.getElementById("area").value.trim(),
+
+        ubicacion: document.getElementById("ubicacion").value.trim(),
+
+        fabricante: document.getElementById("fabricante").value.trim(),
+
+        modelo: document.getElementById("modelo").value.trim(),
+
+        serie: document.getElementById("serie").value.trim(),
+
+        estado: document.getElementById("estado").value
+
+    };
+
+
+    if (equipoEditando === null) {
+
+        equipos.push(equipo);
+
+    } else {
+
+        equipos[equipoEditando] = equipo;
+
+        equipoEditando = null;
+
+    }
+
+
+    guardarDatos();
+
+    alert("Equipo guardado correctamente.");
+
+    mostrarEquipos();
+}
+
+
+/* =====================================================
+   EDITAR
+===================================================== */
+
+function editarEquipo(indice) {
+
+    const equipo = equipos[indice];
+
+    equipoEditando = indice;
+
+    nuevoEquipo();
+
+    document.getElementById("codigo").value = equipo.codigo;
+    document.getElementById("nombre").value = equipo.nombre;
+    document.getElementById("area").value = equipo.area;
+    document.getElementById("ubicacion").value = equipo.ubicacion;
+    document.getElementById("fabricante").value = equipo.fabricante;
+    document.getElementById("modelo").value = equipo.modelo;
+    document.getElementById("serie").value = equipo.serie;
+    document.getElementById("estado").value = equipo.estado;
+
+    document.querySelector(".header h1").textContent = "Editar equipo";
+}
+
+
+/* =====================================================
+   ELIMINAR
+===================================================== */
+
+function eliminarEquipo(indice) {
+
+    const equipo = equipos[indice];
+
+    const confirmar = confirm(
+        "¿Está seguro de eliminar el equipo " +
+        equipo.codigo +
+        " - " +
+        equipo.nombre +
+        "?"
+    );
+
+    if (!confirmar) return;
+
+    equipos.splice(indice, 1);
+
+    guardarDatos();
+
+    mostrarEquipos();
+}
+
+
+/* =====================================================
+   IMPORTAR EXCEL
+===================================================== */
+
+function importarExcel(event) {
+
+    const archivo = event.target.files[0];
+
+    if (!archivo) return;
+
+    const lector = new FileReader();
+
+    lector.onload = function(e) {
+
+        try {
+
+            const datos = new Uint8Array(e.target.result);
+
+            const libro = XLSX.read(datos, {
+                type: "array"
+            });
+
+            const hoja = libro.Sheets[libro.SheetNames[0]];
+
+            const filas = XLSX.utils.sheet_to_json(hoja, {
+                defval: ""
+            });
+
+            if (filas.length === 0) {
+
+                alert("La planilla no contiene datos.");
+
+                return;
+            }
+
+            let agregados = 0;
+
+            filas.forEach(fila => {
+
+                const equipo = {
+
+                    codigo: obtenerColumna(fila, [
+                        "Código",
+                        "Codigo",
+                        "codigo"
+                    ]),
+
+                    nombre: obtenerColumna(fila, [
+                        "Nombre del equipo",
+                        "Nombre",
+                        "nombre"
+                    ]),
+
+                    area: obtenerColumna(fila, [
+                        "Área",
+                        "Area",
+                        "area"
+                    ]),
+
+                    ubicacion: obtenerColumna(fila, [
+                        "Ubicación",
+                        "Ubicacion",
+                        "ubicacion"
+                    ]),
+
+                    fabricante: obtenerColumna(fila, [
+                        "Fabricante",
+                        "fabricante"
+                    ]),
+
+                    modelo: obtenerColumna(fila, [
+                        "Modelo",
+                        "modelo"
+                    ]),
+
+                    serie: obtenerColumna(fila, [
+                        "N.º de serie",
+                        "N° de serie",
+                        "Nº de serie",
+                        "Numero de serie",
+                        "N.º Serie",
+                        "Serie"
+                    ]),
+
+                    estado: obtenerColumna(fila, [
+                        "Estado",
+                        "estado"
+                    ]) || "Activo"
+
+                };
+
+
+                if (equipo.codigo && equipo.nombre) {
+
+                    equipos.push(equipo);
+
+                    agregados++;
+                }
+
+            });
+
+
+            guardarDatos();
+
+            alert(
+                "Importación completada.\n\n" +
+                "Equipos agregados: " +
+                agregados
+            );
+
+            mostrarEquipos();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "No fue posible leer la planilla Excel."
+            );
+
+        }
+
+    };
+
+    lector.readAsArrayBuffer(archivo);
+
+    event.target.value = "";
+}
+
+
+/* =====================================================
+   OBTENER COLUMNA
+===================================================== */
+
+function obtenerColumna(fila, nombres) {
+
+    for (const nombre of nombres) {
+
+        if (fila[nombre] !== undefined) {
+
+            return String(fila[nombre]).trim();
+
+        }
+
+    }
+
+    return "";
+}
+
+
+/* =====================================================
+   DESCARGAR PLANTILLA EXCEL
+===================================================== */
+
+function descargarPlantilla() {
+
+    const datos = [
+
+        {
+            "Código": "E780/EF",
+            "Nombre del equipo": "Envasadora de Gotas",
+            "Área": "Producción",
+            "Ubicación": "Línea de Envasado",
+            "Fabricante": "Fabricante ejemplo",
+            "Modelo": "Modelo ejemplo",
+            "N.º de serie": "SN-0001",
+            "Estado": "Activo"
+        },
+
+        {
+            "Código": "E781/EF",
+            "Nombre del equipo": "Disco de Arrastre",
+            "Área": "Producción",
+            "Ubicación": "Línea de Envasado",
+            "Fabricante": "Fabricante ejemplo",
+            "Modelo": "Modelo ejemplo",
+            "N.º de serie": "SN-0002",
+            "Estado": "Activo"
+        }
+
+    ];
+
+
+    const hoja = XLSX.utils.json_to_sheet(datos);
+
+    const libro = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        libro,
+        hoja,
+        "Equipos"
+    );
+
+
+    XLSX.writeFile(
+        libro,
+        "Plantilla_Equipos_Calificados.xlsx"
+    );
+}
+
+
+/* =====================================================
+   CALIFICACIONES
+===================================================== */
+
+function mostrarCalificaciones() {
+
+    document.getElementById("contenido").innerHTML = `
+
+        <div class="header">
+
+            <h1>Calificaciones</h1>
+
+            <p>
+                Gestión de las calificaciones de los equipos.
+            </p>
+
+        </div>
+
+        <div class="panel">
+
+            <h2>Próximamente</h2>
+
+            <p>
+                En esta sección incorporaremos la gestión
+                de IQ, OQ y PQ.
+            </p>
+
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   DOCUMENTOS
+===================================================== */
+
+function mostrarDocumentos() {
+
+    document.getElementById("contenido").innerHTML = `
+
+        <div class="header">
+
+            <h1>Documentos</h1>
+
+            <p>
+                Gestión de documentos asociados a los equipos.
+            </p>
+
+        </div>
+
+        <div class="panel">
+
+            <h2>Próximamente</h2>
+
+            <p>
+                En esta sección incorporaremos los documentos
+                asociados a cada equipo y calificación.
+            </p>
+
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+function mostrarConfiguracion() {
+
+    document.getElementById("contenido").innerHTML = `
+
+        <div class="header">
+
+            <h1>Configuración</h1>
+
+            <p>
+                Configuración general del sistema.
+            </p>
+
+        </div>
+
+        <div class="panel">
+
+            <h2>Gestión de Equipos Calificados</h2>
+
+            <br>
+
+            <p>
+                Versión 2.0
+            </p>
+
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   SEGURIDAD HTML
+===================================================== */
+
+function escapeHTML(texto) {
+
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =====================================================
+   INICIO
+===================================================== */
 
 window.onload = function() {
 
-    const primerBoton = document.querySelector(".menu button");
+    const primerBoton =
+        document.querySelector(".menu button");
 
-    mostrarPagina("inicio", primerBoton);
+    mostrarPagina(
+        "inicio",
+        primerBoton
+    );
 
 };
 
@@ -629,3 +1242,4 @@ window.onload = function() {
 
 </body>
 </html>
+```
