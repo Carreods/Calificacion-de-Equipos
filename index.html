@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Gestión de Equipos Calificados</title>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -18,6 +20,10 @@ body {
     background: #f4f6f8;
     color: #222;
 }
+
+/* =========================
+   MENÚ LATERAL
+========================= */
 
 .sidebar {
     position: fixed;
@@ -57,6 +63,10 @@ body {
     border-left: 4px solid #60a5fa;
 }
 
+/* =========================
+   CONTENIDO
+========================= */
+
 .contenido {
     margin-left: 230px;
     padding: 30px;
@@ -79,6 +89,10 @@ h2 {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
+/* =========================
+   RESUMEN
+========================= */
+
 .resumen {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -97,6 +111,10 @@ h2 {
     font-weight: bold;
     color: #2563eb;
 }
+
+/* =========================
+   FORMULARIOS
+========================= */
 
 label {
     display: block;
@@ -127,6 +145,10 @@ input[readonly] {
 .form-grid .completo {
     grid-column: span 2;
 }
+
+/* =========================
+   BOTONES
+========================= */
 
 button {
     border: none;
@@ -166,6 +188,10 @@ button {
     color: white;
 }
 
+/* =========================
+   TABLAS
+========================= */
+
 .tabla-contenedor {
     overflow-x: auto;
 }
@@ -193,6 +219,14 @@ td {
 tr:hover {
     background: #f9fafb;
 }
+
+.acciones {
+    white-space: nowrap;
+}
+
+/* =========================
+   ESTADOS
+========================= */
 
 .estado {
     padding: 5px 8px;
@@ -249,10 +283,6 @@ tr:hover {
     color: #2563eb;
 }
 
-.oculto {
-    display: none;
-}
-
 .info {
     background: #eff6ff;
     border-left: 4px solid #2563eb;
@@ -261,11 +291,12 @@ tr:hover {
     border-radius: 4px;
 }
 
-.acciones {
-    white-space: nowrap;
-}
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 800px) {
+
     .sidebar {
         width: 180px;
     }
@@ -282,11 +313,17 @@ tr:hover {
     .form-grid .completo {
         grid-column: span 1;
     }
+
 }
+
 </style>
 </head>
 
 <body>
+
+<!-- =====================================================
+     MENÚ
+===================================================== -->
 
 <div class="sidebar">
 
@@ -295,6 +332,7 @@ tr:hover {
     </div>
 
     <ul class="menu">
+
         <li onclick="mostrarPagina('inicio', this)" class="activo">
             🏠 Inicio
         </li>
@@ -314,36 +352,57 @@ tr:hover {
         <li onclick="mostrarPagina('configuracion', this)">
             ⚙️ Configuración
         </li>
+
     </ul>
 
 </div>
 
+
+<!-- =====================================================
+     CONTENIDO
+===================================================== -->
+
 <div class="contenido" id="contenido"></div>
+
 
 <script>
 
-let equipos = JSON.parse(localStorage.getItem("equipos")) || [];
-let calificaciones = JSON.parse(localStorage.getItem("calificaciones")) || [];
+/* =====================================================
+   DATOS
+===================================================== */
+
+let equipos =
+    JSON.parse(localStorage.getItem("equipos")) || [];
+
+let calificaciones =
+    JSON.parse(localStorage.getItem("calificaciones")) || [];
 
 let equipoEditando = null;
 let calificacionEditando = null;
 
 
-/* =========================================================
+/* =====================================================
    GUARDAR DATOS
-========================================================= */
+===================================================== */
 
 function guardarDatos() {
 
-    localStorage.setItem("equipos", JSON.stringify(equipos));
-    localStorage.setItem("calificaciones", JSON.stringify(calificaciones));
+    localStorage.setItem(
+        "equipos",
+        JSON.stringify(equipos)
+    );
+
+    localStorage.setItem(
+        "calificaciones",
+        JSON.stringify(calificaciones)
+    );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    NAVEGACIÓN
-========================================================= */
+===================================================== */
 
 function mostrarPagina(pagina, elemento) {
 
@@ -378,21 +437,38 @@ function mostrarPagina(pagina, elemento) {
 }
 
 
-/* =========================================================
+/* =====================================================
    INICIO
-========================================================= */
+===================================================== */
 
 function mostrarInicio() {
 
-    let activos = equipos.filter(e => e.estado === "Activo").length;
+    let activos =
+        equipos.filter(
+            e => e.estado === "Activo"
+        ).length;
 
-    let reportesVencidos = calificaciones.filter(c => {
 
-        return c.documento === "Reporte" &&
-               c.vencimiento &&
-               new Date(c.vencimiento) < new Date();
+    let vencidos =
+        calificaciones.filter(c => {
 
-    }).length;
+            if (!c.vencimiento) {
+                return false;
+            }
+
+            let fecha =
+                new Date(
+                    c.vencimiento + "T00:00:00"
+                );
+
+            let hoy =
+                new Date();
+
+            hoy.setHours(0,0,0,0);
+
+            return fecha < hoy;
+
+        }).length;
 
 
     document.getElementById("contenido").innerHTML = `
@@ -403,38 +479,50 @@ function mostrarInicio() {
 
             <div class="resumen-card">
                 <div>Equipos registrados</div>
-                <div class="numero">${equipos.length}</div>
+                <div class="numero">
+                    ${equipos.length}
+                </div>
             </div>
 
             <div class="resumen-card">
                 <div>Equipos activos</div>
-                <div class="numero">${activos}</div>
+                <div class="numero">
+                    ${activos}
+                </div>
             </div>
 
             <div class="resumen-card">
                 <div>Calificaciones</div>
-                <div class="numero">${calificaciones.length}</div>
+                <div class="numero">
+                    ${calificaciones.length}
+                </div>
             </div>
 
             <div class="resumen-card">
-                <div>Reportes vencidos</div>
-                <div class="numero">${reportesVencidos}</div>
+                <div>Documentos vencidos</div>
+                <div class="numero">
+                    ${vencidos}
+                </div>
             </div>
 
         </div>
 
+
         <div class="tarjeta">
 
-            <h2>Gestión de Equipos Calificados</h2>
+            <h2>
+                Gestión de Equipos Calificados
+            </h2>
 
             <p>
-                Sistema para controlar equipos, calificaciones,
-                protocolos y reportes.
+                Sistema para controlar equipos,
+                calificaciones, protocolos y reportes.
             </p>
 
             <p>
-                Los reportes tienen una vigencia automática de
-                <strong>5 años</strong> desde su fecha de emisión.
+                Los documentos tienen una vigencia
+                automática de <strong>5 años</strong>
+                desde su fecha de emisión.
             </p>
 
         </div>
@@ -444,9 +532,9 @@ function mostrarInicio() {
 }
 
 
-/* =========================================================
+/* =====================================================
    EQUIPOS
-========================================================= */
+===================================================== */
 
 function mostrarEquipos() {
 
@@ -456,20 +544,32 @@ function mostrarEquipos() {
 
         <div class="tarjeta">
 
-            <button class="btn-principal"
-                    onclick="nuevoEquipo()">
+            <button
+                class="btn-principal"
+                onclick="nuevoEquipo()">
+
                 + Nuevo equipo
+
             </button>
 
-            <button class="btn-verde"
-                    onclick="document.getElementById('archivoExcel').click()">
+
+            <button
+                class="btn-verde"
+                onclick="document.getElementById('archivoExcel').click()">
+
                 📥 Importar Excel
+
             </button>
 
-            <button class="btn-secundario"
-                    onclick="descargarPlantilla()">
+
+            <button
+                class="btn-secundario"
+                onclick="descargarPlantilla()">
+
                 📊 Descargar plantilla
+
             </button>
+
 
             <input
                 type="file"
@@ -481,11 +581,16 @@ function mostrarEquipos() {
 
         </div>
 
+
         <div id="formularioEquipo"></div>
+
 
         <div class="tarjeta">
 
-            <h2>Equipos registrados</h2>
+            <h2>
+                Equipos registrados
+            </h2>
+
 
             <input
                 type="text"
@@ -494,72 +599,137 @@ function mostrarEquipos() {
                 oninput="buscarEquipos()"
             >
 
+
             <div id="tablaEquipos"></div>
 
         </div>
 
     `;
 
+
     mostrarTablaEquipos();
 
 }
 
 
+/* =====================================================
+   NUEVO EQUIPO
+===================================================== */
+
 function nuevoEquipo() {
 
     equipoEditando = null;
 
-    document.getElementById("formularioEquipo").innerHTML = `
+
+    document.getElementById(
+        "formularioEquipo"
+    ).innerHTML = `
 
         <div class="tarjeta">
 
-            <h2>Nuevo equipo</h2>
+            <h2>
+                Nuevo equipo
+            </h2>
+
 
             <div class="form-grid">
 
                 <div>
-                    <label>Código</label>
+
+                    <label>
+                        Código
+                    </label>
+
                     <input id="codigoEquipo">
+
                 </div>
 
+
                 <div>
-                    <label>Nombre del equipo</label>
+
+                    <label>
+                        Nombre del equipo
+                    </label>
+
                     <input id="nombreEquipo">
+
                 </div>
 
+
                 <div>
-                    <label>Área</label>
+
+                    <label>
+                        Área
+                    </label>
+
                     <input id="areaEquipo">
+
                 </div>
 
+
                 <div>
-                    <label>Ubicación</label>
+
+                    <label>
+                        Ubicación
+                    </label>
+
                     <input id="ubicacionEquipo">
+
                 </div>
 
+
                 <div>
-                    <label>Fabricante</label>
+
+                    <label>
+                        Fabricante
+                    </label>
+
                     <input id="fabricanteEquipo">
+
                 </div>
 
+
                 <div>
-                    <label>Modelo</label>
+
+                    <label>
+                        Modelo
+                    </label>
+
                     <input id="modeloEquipo">
+
                 </div>
 
+
                 <div>
-                    <label>N.º de serie</label>
+
+                    <label>
+                        N.º de serie
+                    </label>
+
                     <input id="serieEquipo">
+
                 </div>
 
+
                 <div>
-                    <label>Estado</label>
+
+                    <label>
+                        Estado
+                    </label>
 
                     <select id="estadoEquipo">
 
-                        <option>Activo</option>
-                        <option>En mantenimiento</option>
-                        <option>Fuera de servicio</option>
+                        <option>
+                            Activo
+                        </option>
+
+                        <option>
+                            En mantenimiento
+                        </option>
+
+                        <option>
+                            Fuera de servicio
+                        </option>
 
                     </select>
 
@@ -567,14 +737,22 @@ function nuevoEquipo() {
 
             </div>
 
-            <button class="btn-principal"
-                    onclick="guardarEquipo()">
+
+            <button
+                class="btn-principal"
+                onclick="guardarEquipo()">
+
                 Guardar equipo
+
             </button>
 
-            <button class="btn-secundario"
-                    onclick="cancelarFormularioEquipo()">
+
+            <button
+                class="btn-secundario"
+                onclick="cancelarFormularioEquipo()">
+
                 Cancelar
+
             </button>
 
         </div>
@@ -584,25 +762,65 @@ function nuevoEquipo() {
 }
 
 
+/* =====================================================
+   GUARDAR EQUIPO
+===================================================== */
+
 function guardarEquipo() {
 
     let equipo = {
 
-        codigo: document.getElementById("codigoEquipo").value.trim(),
-        nombre: document.getElementById("nombreEquipo").value.trim(),
-        area: document.getElementById("areaEquipo").value.trim(),
-        ubicacion: document.getElementById("ubicacionEquipo").value.trim(),
-        fabricante: document.getElementById("fabricanteEquipo").value.trim(),
-        modelo: document.getElementById("modeloEquipo").value.trim(),
-        serie: document.getElementById("serieEquipo").value.trim(),
-        estado: document.getElementById("estadoEquipo").value
+        codigo:
+            document.getElementById(
+                "codigoEquipo"
+            ).value.trim(),
+
+        nombre:
+            document.getElementById(
+                "nombreEquipo"
+            ).value.trim(),
+
+        area:
+            document.getElementById(
+                "areaEquipo"
+            ).value.trim(),
+
+        ubicacion:
+            document.getElementById(
+                "ubicacionEquipo"
+            ).value.trim(),
+
+        fabricante:
+            document.getElementById(
+                "fabricanteEquipo"
+            ).value.trim(),
+
+        modelo:
+            document.getElementById(
+                "modeloEquipo"
+            ).value.trim(),
+
+        serie:
+            document.getElementById(
+                "serieEquipo"
+            ).value.trim(),
+
+        estado:
+            document.getElementById(
+                "estadoEquipo"
+            ).value
 
     };
 
 
-    if (!equipo.codigo || !equipo.nombre) {
+    if (
+        !equipo.codigo ||
+        !equipo.nombre
+    ) {
 
-        alert("Debes ingresar al menos el código y el nombre del equipo.");
+        alert(
+            "Debes ingresar al menos el código y el nombre del equipo."
+        );
 
         return;
 
@@ -615,93 +833,180 @@ function guardarEquipo() {
 
     } else {
 
-        equipos[equipoEditando] = equipo;
+        equipos[equipoEditando] =
+            equipo;
 
     }
 
 
     guardarDatos();
 
-    document.getElementById("formularioEquipo").innerHTML = "";
+
+    document.getElementById(
+        "formularioEquipo"
+    ).innerHTML = "";
+
 
     mostrarTablaEquipos();
 
-    alert("Equipo guardado correctamente.");
+
+    alert(
+        "Equipo guardado correctamente."
+    );
 
 }
 
 
+/* =====================================================
+   EDITAR EQUIPO
+===================================================== */
+
 function editarEquipo(indice) {
 
-    let equipo = equipos[indice];
+    let equipo =
+        equipos[indice];
 
-    equipoEditando = indice;
+    equipoEditando =
+        indice;
 
 
-    document.getElementById("formularioEquipo").innerHTML = `
+    document.getElementById(
+        "formularioEquipo"
+    ).innerHTML = `
 
         <div class="tarjeta">
 
-            <h2>Editar equipo</h2>
+            <h2>
+                Editar equipo
+            </h2>
+
 
             <div class="form-grid">
 
                 <div>
-                    <label>Código</label>
-                    <input id="codigoEquipo"
-                           value="${escapeHTML(equipo.codigo)}">
+
+                    <label>
+                        Código
+                    </label>
+
+                    <input
+                        id="codigoEquipo"
+                        value="${escapeHTML(equipo.codigo)}"
+                    >
+
                 </div>
 
-                <div>
-                    <label>Nombre del equipo</label>
-                    <input id="nombreEquipo"
-                           value="${escapeHTML(equipo.nombre)}">
-                </div>
 
                 <div>
-                    <label>Área</label>
-                    <input id="areaEquipo"
-                           value="${escapeHTML(equipo.area)}">
+
+                    <label>
+                        Nombre del equipo
+                    </label>
+
+                    <input
+                        id="nombreEquipo"
+                        value="${escapeHTML(equipo.nombre)}"
+                    >
+
                 </div>
 
-                <div>
-                    <label>Ubicación</label>
-                    <input id="ubicacionEquipo"
-                           value="${escapeHTML(equipo.ubicacion)}">
-                </div>
 
                 <div>
-                    <label>Fabricante</label>
-                    <input id="fabricanteEquipo"
-                           value="${escapeHTML(equipo.fabricante)}">
+
+                    <label>
+                        Área
+                    </label>
+
+                    <input
+                        id="areaEquipo"
+                        value="${escapeHTML(equipo.area)}"
+                    >
+
                 </div>
 
-                <div>
-                    <label>Modelo</label>
-                    <input id="modeloEquipo"
-                           value="${escapeHTML(equipo.modelo)}">
-                </div>
 
                 <div>
-                    <label>N.º de serie</label>
-                    <input id="serieEquipo"
-                           value="${escapeHTML(equipo.serie)}">
+
+                    <label>
+                        Ubicación
+                    </label>
+
+                    <input
+                        id="ubicacionEquipo"
+                        value="${escapeHTML(equipo.ubicacion)}"
+                    >
+
                 </div>
 
+
                 <div>
-                    <label>Estado</label>
+
+                    <label>
+                        Fabricante
+                    </label>
+
+                    <input
+                        id="fabricanteEquipo"
+                        value="${escapeHTML(equipo.fabricante)}"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Modelo
+                    </label>
+
+                    <input
+                        id="modeloEquipo"
+                        value="${escapeHTML(equipo.modelo)}"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        N.º de serie
+                    </label>
+
+                    <input
+                        id="serieEquipo"
+                        value="${escapeHTML(equipo.serie)}"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Estado
+                    </label>
 
                     <select id="estadoEquipo">
 
-                        <option ${equipo.estado === "Activo" ? "selected" : ""}>
+                        <option
+                            ${equipo.estado === "Activo"
+                                ? "selected"
+                                : ""}>
                             Activo
                         </option>
 
-                        <option ${equipo.estado === "En mantenimiento" ? "selected" : ""}>
+                        <option
+                            ${equipo.estado === "En mantenimiento"
+                                ? "selected"
+                                : ""}>
                             En mantenimiento
                         </option>
 
-                        <option ${equipo.estado === "Fuera de servicio" ? "selected" : ""}>
+                        <option
+                            ${equipo.estado === "Fuera de servicio"
+                                ? "selected"
+                                : ""}>
                             Fuera de servicio
                         </option>
 
@@ -711,14 +1016,22 @@ function editarEquipo(indice) {
 
             </div>
 
-            <button class="btn-principal"
-                    onclick="guardarEquipo()">
+
+            <button
+                class="btn-principal"
+                onclick="guardarEquipo()">
+
                 Guardar cambios
+
             </button>
 
-            <button class="btn-secundario"
-                    onclick="cancelarFormularioEquipo()">
+
+            <button
+                class="btn-secundario"
+                onclick="cancelarFormularioEquipo()">
+
                 Cancelar
+
             </button>
 
         </div>
@@ -728,62 +1041,131 @@ function editarEquipo(indice) {
 }
 
 
+/* =====================================================
+   CANCELAR EQUIPO
+===================================================== */
+
 function cancelarFormularioEquipo() {
 
-    document.getElementById("formularioEquipo").innerHTML = "";
+    document.getElementById(
+        "formularioEquipo"
+    ).innerHTML = "";
 
     equipoEditando = null;
 
 }
 
 
+/* =====================================================
+   ELIMINAR EQUIPO
+===================================================== */
+
 function eliminarEquipo(indice) {
 
-    let equipo = equipos[indice];
+    let equipo =
+        equipos[indice];
+
 
     if (!confirm(
         "¿Seguro que deseas eliminar el equipo " +
-        equipo.codigo + "?"
+        equipo.codigo +
+        "?"
     )) {
+
         return;
+
     }
 
 
-    equipos.splice(indice, 1);
+    equipos.splice(
+        indice,
+        1
+    );
+
 
     guardarDatos();
+
 
     mostrarTablaEquipos();
 
 }
 
 
+/* =====================================================
+   BUSCAR EQUIPOS
+===================================================== */
+
 function buscarEquipos() {
 
     mostrarTablaEquipos(
-        document.getElementById("busquedaEquipo").value
+        document.getElementById(
+            "busquedaEquipo"
+        ).value
     );
 
 }
 
 
-function mostrarTablaEquipos(filtro = "") {
+/* =====================================================
+   TABLA EQUIPOS
+===================================================== */
 
-    let texto = filtro.toLowerCase();
+function mostrarTablaEquipos(
+    filtro = ""
+) {
 
-    let lista = equipos.filter(e => {
+    let texto =
+        filtro.toLowerCase();
 
-        return (
-            (e.codigo || "").toLowerCase().includes(texto) ||
-            (e.nombre || "").toLowerCase().includes(texto) ||
-            (e.area || "").toLowerCase().includes(texto) ||
-            (e.ubicacion || "").toLowerCase().includes(texto) ||
-            (e.fabricante || "").toLowerCase().includes(texto) ||
-            (e.modelo || "").toLowerCase().includes(texto) ||
-            (e.serie || "").toLowerCase().includes(texto)
-        );
 
-    });
+    let lista =
+        equipos.filter(e => {
+
+            return (
+
+                (e.codigo || "")
+                    .toLowerCase()
+                    .includes(texto)
+
+                ||
+
+                (e.nombre || "")
+                    .toLowerCase()
+                    .includes(texto)
+
+                ||
+
+                (e.area || "")
+                    .toLowerCase()
+                    .includes(texto)
+
+                ||
+
+                (e.ubicacion || "")
+                    .toLowerCase()
+                    .includes(texto)
+
+                ||
+
+                (e.fabricante || "")
+                    .toLowerCase()
+                    .includes(texto)
+
+                ||
+
+                (e.modelo || "")
+                    .toLowerCase()
+                    .includes(texto)
+
+                ||
+
+                (e.serie || "")
+                    .toLowerCase()
+                    .includes(texto)
+
+            );
+
+        });
 
 
     let html = `
@@ -795,6 +1177,7 @@ function mostrarTablaEquipos(filtro = "") {
             <thead>
 
                 <tr>
+
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Área</th>
@@ -804,6 +1187,7 @@ function mostrarTablaEquipos(filtro = "") {
                     <th>N.º de serie</th>
                     <th>Estado</th>
                     <th>Acciones</th>
+
                 </tr>
 
             </thead>
@@ -815,20 +1199,40 @@ function mostrarTablaEquipos(filtro = "") {
 
     lista.forEach(equipo => {
 
-        let indice = equipos.indexOf(equipo);
+        let indice =
+            equipos.indexOf(equipo);
+
 
         let claseEstado = "";
 
+
         if (equipo.estado === "Activo") {
-            claseEstado = "estado-activo";
+
+            claseEstado =
+                "estado-activo";
+
         }
 
-        if (equipo.estado === "En mantenimiento") {
-            claseEstado = "estado-mantenimiento";
+
+        if (
+            equipo.estado ===
+            "En mantenimiento"
+        ) {
+
+            claseEstado =
+                "estado-mantenimiento";
+
         }
 
-        if (equipo.estado === "Fuera de servicio") {
-            claseEstado = "estado-fuera";
+
+        if (
+            equipo.estado ===
+            "Fuera de servicio"
+        ) {
+
+            claseEstado =
+                "estado-fuera";
+
         }
 
 
@@ -836,36 +1240,60 @@ function mostrarTablaEquipos(filtro = "") {
 
             <tr>
 
-                <td><strong>${escapeHTML(equipo.codigo)}</strong></td>
-
-                <td>${escapeHTML(equipo.nombre)}</td>
-
-                <td>${escapeHTML(equipo.area)}</td>
-
-                <td>${escapeHTML(equipo.ubicacion)}</td>
-
-                <td>${escapeHTML(equipo.fabricante)}</td>
-
-                <td>${escapeHTML(equipo.modelo)}</td>
-
-                <td>${escapeHTML(equipo.serie)}</td>
+                <td>
+                    <strong>
+                        ${escapeHTML(equipo.codigo)}
+                    </strong>
+                </td>
 
                 <td>
+                    ${escapeHTML(equipo.nombre)}
+                </td>
+
+                <td>
+                    ${escapeHTML(equipo.area)}
+                </td>
+
+                <td>
+                    ${escapeHTML(equipo.ubicacion)}
+                </td>
+
+                <td>
+                    ${escapeHTML(equipo.fabricante)}
+                </td>
+
+                <td>
+                    ${escapeHTML(equipo.modelo)}
+                </td>
+
+                <td>
+                    ${escapeHTML(equipo.serie)}
+                </td>
+
+                <td>
+
                     <span class="estado ${claseEstado}">
                         ${escapeHTML(equipo.estado)}
                     </span>
+
                 </td>
 
                 <td class="acciones">
 
-                    <button class="btn-amarillo"
-                            onclick="editarEquipo(${indice})">
+                    <button
+                        class="btn-amarillo"
+                        onclick="editarEquipo(${indice})">
+
                         Editar
+
                     </button>
 
-                    <button class="btn-rojo"
-                            onclick="eliminarEquipo(${indice})">
+                    <button
+                        class="btn-rojo"
+                        onclick="eliminarEquipo(${indice})">
+
                         Eliminar
+
                     </button>
 
                 </td>
@@ -888,159 +1316,248 @@ function mostrarTablaEquipos(filtro = "") {
     `;
 
 
-    document.getElementById("tablaEquipos").innerHTML = html;
+    document.getElementById(
+        "tablaEquipos"
+    ).innerHTML = html;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    IMPORTAR EXCEL
-========================================================= */
+===================================================== */
 
 function importarExcel(event) {
 
-    let archivo = event.target.files[0];
-
-    if (!archivo) return;
-
-
-    let lector = new FileReader();
+    let archivo =
+        event.target.files[0];
 
 
-    lector.onload = function(e) {
-
-        try {
-
-            let datos = new Uint8Array(e.target.result);
-
-            let libro = XLSX.read(datos, {
-                type: "array"
-            });
-
-            let hoja = libro.Sheets[libro.SheetNames[0]];
-
-            let filas = XLSX.utils.sheet_to_json(hoja);
+    if (!archivo) {
+        return;
+    }
 
 
-            let nuevos = 0;
+    let lector =
+        new FileReader();
 
 
-            filas.forEach(fila => {
+    lector.onload =
+        function(e) {
 
-                let codigo = obtenerColumna(
-                    fila,
-                    ["Código", "Codigo", "codigo"]
+            try {
+
+                let datos =
+                    new Uint8Array(
+                        e.target.result
+                    );
+
+
+                let libro =
+                    XLSX.read(
+                        datos,
+                        {
+                            type: "array"
+                        }
+                    );
+
+
+                let hoja =
+                    libro.Sheets[
+                        libro.SheetNames[0]
+                    ];
+
+
+                let filas =
+                    XLSX.utils.sheet_to_json(
+                        hoja
+                    );
+
+
+                let nuevos = 0;
+
+
+                filas.forEach(fila => {
+
+                    let codigo =
+                        obtenerColumna(
+                            fila,
+                            [
+                                "Código",
+                                "Codigo",
+                                "codigo"
+                            ]
+                        );
+
+
+                    let nombre =
+                        obtenerColumna(
+                            fila,
+                            [
+                                "Nombre del equipo",
+                                "Nombre",
+                                "nombre"
+                            ]
+                        );
+
+
+                    if (
+                        !codigo ||
+                        !nombre
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    let equipo = {
+
+                        codigo: codigo,
+
+                        nombre: nombre,
+
+                        area:
+                            obtenerColumna(
+                                fila,
+                                [
+                                    "Área",
+                                    "Area",
+                                    "area"
+                                ]
+                            ),
+
+                        ubicacion:
+                            obtenerColumna(
+                                fila,
+                                [
+                                    "Ubicación",
+                                    "Ubicacion",
+                                    "ubicacion"
+                                ]
+                            ),
+
+                        fabricante:
+                            obtenerColumna(
+                                fila,
+                                [
+                                    "Fabricante",
+                                    "fabricante"
+                                ]
+                            ),
+
+                        modelo:
+                            obtenerColumna(
+                                fila,
+                                [
+                                    "Modelo",
+                                    "modelo"
+                                ]
+                            ),
+
+                        serie:
+                            obtenerColumna(
+                                fila,
+                                [
+                                    "N.º de serie",
+                                    "N° de serie",
+                                    "Nº de serie",
+                                    "Numero de serie",
+                                    "N.º Serie",
+                                    "Serie"
+                                ]
+                            ),
+
+                        estado:
+                            obtenerColumna(
+                                fila,
+                                [
+                                    "Estado",
+                                    "estado"
+                                ]
+                            ) || "Activo"
+
+                    };
+
+
+                    let existe =
+                        equipos.some(
+                            x =>
+                                x.codigo ===
+                                equipo.codigo
+                        );
+
+
+                    if (!existe) {
+
+                        equipos.push(
+                            equipo
+                        );
+
+                        nuevos++;
+
+                    }
+
+                });
+
+
+                guardarDatos();
+
+
+                mostrarTablaEquipos();
+
+
+                alert(
+                    "Importación terminada.\n\n" +
+                    "Equipos nuevos agregados: " +
+                    nuevos
                 );
 
-                let nombre = obtenerColumna(
-                    fila,
-                    ["Nombre del equipo", "Nombre", "nombre"]
+
+            } catch (error) {
+
+                alert(
+                    "No se pudo leer el archivo Excel."
                 );
 
-                if (!codigo || !nombre) return;
+                console.error(error);
+
+            }
+
+        };
 
 
-                let equipo = {
+    lector.readAsArrayBuffer(
+        archivo
+    );
 
-                    codigo: codigo,
-                    nombre: nombre,
-
-                    area: obtenerColumna(
-                        fila,
-                        ["Área", "Area", "area"]
-                    ),
-
-                    ubicacion: obtenerColumna(
-                        fila,
-                        ["Ubicación", "Ubicacion", "ubicacion"]
-                    ),
-
-                    fabricante: obtenerColumna(
-                        fila,
-                        ["Fabricante", "fabricante"]
-                    ),
-
-                    modelo: obtenerColumna(
-                        fila,
-                        ["Modelo", "modelo"]
-                    ),
-
-                    serie: obtenerColumna(
-                        fila,
-                        [
-                            "N.º de serie",
-                            "N° de serie",
-                            "Nº de serie",
-                            "Numero de serie",
-                            "N.º Serie",
-                            "Serie"
-                        ]
-                    ),
-
-                    estado: obtenerColumna(
-                        fila,
-                        ["Estado", "estado"]
-                    ) || "Activo"
-
-                };
-
-
-                let existe = equipos.some(
-                    x => x.codigo === equipo.codigo
-                );
-
-
-                if (!existe) {
-
-                    equipos.push(equipo);
-
-                    nuevos++;
-
-                }
-
-            });
-
-
-            guardarDatos();
-
-            mostrarTablaEquipos();
-
-            alert(
-                "Importación terminada.\n\n" +
-                "Equipos nuevos agregados: " + nuevos
-            );
-
-
-        } catch (error) {
-
-            alert(
-                "No se pudo leer el archivo Excel."
-            );
-
-            console.error(error);
-
-        }
-
-    };
-
-
-    lector.readAsArrayBuffer(archivo);
 
     event.target.value = "";
 
 }
 
 
-function obtenerColumna(fila, nombres) {
+/* =====================================================
+   OBTENER COLUMNA EXCEL
+===================================================== */
 
-    for (let nombre of nombres) {
+function obtenerColumna(
+    fila,
+    nombres
+) {
+
+    for (
+        let nombre of nombres
+    ) {
 
         if (
             fila[nombre] !== undefined &&
             fila[nombre] !== null
         ) {
 
-            return String(fila[nombre]).trim();
+            return String(
+                fila[nombre]
+            ).trim();
 
         }
 
@@ -1051,9 +1568,9 @@ function obtenerColumna(fila, nombres) {
 }
 
 
-/* =========================================================
+/* =====================================================
    PLANTILLA EXCEL
-========================================================= */
+===================================================== */
 
 function descargarPlantilla() {
 
@@ -1084,9 +1601,15 @@ function descargarPlantilla() {
     ];
 
 
-    let hoja = XLSX.utils.json_to_sheet(datos);
+    let hoja =
+        XLSX.utils.json_to_sheet(
+            datos
+        );
 
-    let libro = XLSX.utils.book_new();
+
+    let libro =
+        XLSX.utils.book_new();
+
 
     XLSX.utils.book_append_sheet(
         libro,
@@ -1103,30 +1626,43 @@ function descargarPlantilla() {
 }
 
 
-/* =========================================================
+/* =====================================================
    CALIFICACIONES
-========================================================= */
+===================================================== */
 
 function mostrarCalificaciones() {
 
-    document.getElementById("contenido").innerHTML = `
+    document.getElementById(
+        "contenido"
+    ).innerHTML = `
 
-        <h1>Calificaciones</h1>
+        <h1>
+            Calificaciones
+        </h1>
+
 
         <div class="tarjeta">
 
-            <button class="btn-principal"
-                    onclick="nuevaCalificacion()">
+            <button
+                class="btn-principal"
+                onclick="nuevaCalificacion()">
+
                 + Nueva calificación
+
             </button>
 
         </div>
 
+
         <div id="formularioCalificacion"></div>
+
 
         <div class="tarjeta">
 
-            <h2>Registro de protocolos y reportes</h2>
+            <h2>
+                Registro de protocolos y reportes
+            </h2>
+
 
             <input
                 type="text"
@@ -1134,6 +1670,7 @@ function mostrarCalificaciones() {
                 placeholder="Buscar por equipo, código o tipo..."
                 oninput="buscarCalificaciones()"
             >
+
 
             <div id="tablaCalificaciones"></div>
 
@@ -1146,6 +1683,10 @@ function mostrarCalificaciones() {
 
 }
 
+
+/* =====================================================
+   NUEVA CALIFICACIÓN
+===================================================== */
 
 function nuevaCalificacion() {
 
@@ -1165,18 +1706,28 @@ function nuevaCalificacion() {
 
     let opcionesEquipos = "";
 
-    equipos.forEach((equipo, indice) => {
 
-        opcionesEquipos += `
+    equipos.forEach(
+        (equipo, indice) => {
 
-            <option value="${indice}">
-                ${escapeHTML(equipo.codigo)}
-                - ${escapeHTML(equipo.nombre)}
-            </option>
+            opcionesEquipos += `
 
-        `;
+                <option value="${indice}">
 
-    });
+                    ${escapeHTML(
+                        equipo.codigo
+                    )}
+                    -
+                    ${escapeHTML(
+                        equipo.nombre
+                    )}
+
+                </option>
+
+            `;
+
+        }
+    );
 
 
     document.getElementById(
@@ -1185,20 +1736,31 @@ function nuevaCalificacion() {
 
         <div class="tarjeta">
 
-            <h2>Nueva calificación</h2>
+            <h2>
+                Nueva calificación
+            </h2>
+
 
             <div class="info">
 
-                El código se generará automáticamente según
-                el tipo de calificación, documento, equipo y versión.
+                Al ingresar la fecha de emisión,
+                la fecha de vencimiento se calculará
+                automáticamente a 5 años.
 
             </div>
 
+
             <div class="form-grid">
+
+
+                <!-- EQUIPO -->
 
                 <div class="completo">
 
-                    <label>Equipo</label>
+                    <label>
+                        Equipo
+                    </label>
+
 
                     <select
                         id="calEquipo"
@@ -1215,9 +1777,14 @@ function nuevaCalificacion() {
                 </div>
 
 
+                <!-- TIPO -->
+
                 <div>
 
-                    <label>Tipo de calificación</label>
+                    <label>
+                        Tipo de calificación
+                    </label>
+
 
                     <select
                         id="calTipo"
@@ -1244,9 +1811,14 @@ function nuevaCalificacion() {
                 </div>
 
 
+                <!-- DOCUMENTO -->
+
                 <div>
 
-                    <label>Tipo de documento</label>
+                    <label>
+                        Tipo de documento
+                    </label>
+
 
                     <select
                         id="calDocumento"
@@ -1269,9 +1841,14 @@ function nuevaCalificacion() {
                 </div>
 
 
+                <!-- VERSION -->
+
                 <div>
 
-                    <label>Versión</label>
+                    <label>
+                        Versión
+                    </label>
+
 
                     <input
                         type="text"
@@ -1283,9 +1860,14 @@ function nuevaCalificacion() {
                 </div>
 
 
+                <!-- FECHA EMISIÓN -->
+
                 <div>
 
-                    <label>Fecha de emisión</label>
+                    <label>
+                        Fecha de emisión
+                    </label>
+
 
                     <input
                         type="date"
@@ -1296,9 +1878,14 @@ function nuevaCalificacion() {
                 </div>
 
 
-                <div id="campoVencimiento">
+                <!-- FECHA VENCIMIENTO -->
 
-                    <label>Fecha de vencimiento</label>
+                <div>
+
+                    <label>
+                        Fecha de vencimiento
+                    </label>
+
 
                     <input
                         type="date"
@@ -1309,9 +1896,14 @@ function nuevaCalificacion() {
                 </div>
 
 
+                <!-- CÓDIGO -->
+
                 <div class="completo">
 
-                    <label>Código generado</label>
+                    <label>
+                        Código generado
+                    </label>
+
 
                     <input
                         type="text"
@@ -1348,32 +1940,54 @@ function nuevaCalificacion() {
     `;
 
 
-    document.getElementById("calFecha").value =
+    document.getElementById(
+        "calFecha"
+    ).value =
         obtenerFechaActual();
 
+
+    // Generar automáticamente
+    // el vencimiento de la fecha actual
 
     calcularVencimiento();
 
 }
 
 
+/* =====================================================
+   GENERAR CÓDIGO
+===================================================== */
+
 function generarCodigoCalificacion() {
 
     let equipoIndice =
-        document.getElementById("calEquipo").value;
+        document.getElementById(
+            "calEquipo"
+        ).value;
+
 
     let tipo =
-        document.getElementById("calTipo").value;
+        document.getElementById(
+            "calTipo"
+        ).value;
+
 
     let documento =
-        document.getElementById("calDocumento").value;
+        document.getElementById(
+            "calDocumento"
+        ).value;
+
 
     let version =
-        document.getElementById("calVersion").value.trim();
+        document.getElementById(
+            "calVersion"
+        ).value.trim();
 
 
     let codigoCampo =
-        document.getElementById("calCodigo");
+        document.getElementById(
+            "calCodigo"
+        );
 
 
     if (
@@ -1390,26 +2004,51 @@ function generarCodigoCalificacion() {
     }
 
 
-    let equipo = equipos[equipoIndice];
+    let equipo =
+        equipos[equipoIndice];
 
 
     let prefijo = "";
 
 
-    if (documento === "Protocolo") {
+    /* PROTOCOLOS */
 
-        if (tipo === "IQ") prefijo = "PCI";
-        if (tipo === "OQ") prefijo = "PCO";
-        if (tipo === "PQ") prefijo = "PCD";
+    if (
+        documento === "Protocolo"
+    ) {
+
+        if (tipo === "IQ") {
+            prefijo = "PCI";
+        }
+
+        if (tipo === "OQ") {
+            prefijo = "PCO";
+        }
+
+        if (tipo === "PQ") {
+            prefijo = "PCD";
+        }
 
     }
 
 
-    if (documento === "Reporte") {
+    /* REPORTES */
 
-        if (tipo === "IQ") prefijo = "RCI";
-        if (tipo === "OQ") prefijo = "RCO";
-        if (tipo === "PQ") prefijo = "RCD";
+    if (
+        documento === "Reporte"
+    ) {
+
+        if (tipo === "IQ") {
+            prefijo = "RCI";
+        }
+
+        if (tipo === "OQ") {
+            prefijo = "RCO";
+        }
+
+        if (tipo === "PQ") {
+            prefijo = "RCD";
+        }
 
     }
 
@@ -1422,64 +2061,163 @@ function generarCodigoCalificacion() {
         version;
 
 
+    // También actualizamos
+    // el vencimiento
+
     calcularVencimiento();
 
 }
 
 
+/* =====================================================
+   CALCULAR VENCIMIENTO
+   PROTOCOLO Y REPORTE
+===================================================== */
+
 function calcularVencimiento() {
 
-    let fecha = document.getElementById("calFecha");
-    let vencimiento = document.getElementById("calVencimiento");
+    let fecha =
+        document.getElementById(
+            "calFecha"
+        );
 
-    if (!fecha || !vencimiento) {
+
+    let vencimiento =
+        document.getElementById(
+            "calVencimiento"
+        );
+
+
+    if (
+        !fecha ||
+        !vencimiento
+    ) {
+
         return;
+
     }
 
-    // Si no hay fecha de emisión, limpiar vencimiento
+
+    /* SI NO HAY FECHA */
+
     if (!fecha.value) {
+
         vencimiento.value = "";
+
         return;
+
     }
 
-    // Tomar fecha de emisión
-    let fechaEmision = new Date(fecha.value + "T00:00:00");
 
-    // Sumar 5 años
+    /*
+       TOMAMOS LA FECHA DE EMISIÓN
+       Y SUMAMOS 5 AÑOS
+    */
+
+    let fechaEmision =
+        new Date(
+            fecha.value +
+            "T00:00:00"
+        );
+
+
     fechaEmision.setFullYear(
         fechaEmision.getFullYear() + 5
     );
 
-    // Mostrar inmediatamente la fecha de vencimiento
+
+    /*
+       MOSTRAR INMEDIATAMENTE
+       LA FECHA DE VENCIMIENTO
+    */
+
     vencimiento.value =
-        formatearFechaInput(fechaEmision);
+        formatearFechaInput(
+            fechaEmision
+        );
 
 }
 
 
+/* =====================================================
+   GUARDAR CALIFICACIÓN
+===================================================== */
+
 function guardarCalificacion() {
 
     let equipoIndice =
-        document.getElementById("calEquipo").value;
+        document.getElementById(
+            "calEquipo"
+        ).value;
+
 
     let tipo =
-        document.getElementById("calTipo").value;
+        document.getElementById(
+            "calTipo"
+        ).value;
+
 
     let documento =
-        document.getElementById("calDocumento").value;
+        document.getElementById(
+            "calDocumento"
+        ).value;
+
 
     let version =
-        document.getElementById("calVersion").value.trim();
+        document.getElementById(
+            "calVersion"
+        ).value.trim();
+
 
     let fecha =
-        document.getElementById("calFecha").value;
+        document.getElementById(
+            "calFecha"
+        ).value;
+
 
     let codigo =
-        document.getElementById("calCodigo").value;
+        document.getElementById(
+            "calCodigo"
+        ).value;
 
-    let vencimiento =
-        document.getElementById("calVencimiento").value;
 
+    /*
+       IMPORTANTE:
+
+       Calculamos nuevamente
+       la fecha de vencimiento
+       JUSTO ANTES DE GUARDAR.
+
+       De esta forma nunca queda
+       vacío el valor guardado.
+    */
+
+    let vencimiento = "";
+
+
+    if (fecha) {
+
+        let fechaVencimiento =
+            new Date(
+                fecha +
+                "T00:00:00"
+            );
+
+
+        fechaVencimiento.setFullYear(
+            fechaVencimiento.getFullYear() + 5
+        );
+
+
+        vencimiento =
+            formatearFechaInput(
+                fechaVencimiento
+            );
+
+    }
+
+
+    /* VALIDACIÓN */
 
     if (
         equipoIndice === "" ||
@@ -1498,104 +2236,158 @@ function guardarCalificacion() {
     }
 
 
-    let equipo = equipos[equipoIndice];
+    let equipo =
+        equipos[equipoIndice];
 
+
+    /*
+       REGISTRO COMPLETO
+
+       Tanto Protocolo como Reporte
+       guardan fecha de emisión
+       y fecha de vencimiento.
+    */
 
     let registro = {
 
-        equipoCodigo: equipo.codigo,
+        equipoCodigo:
+            equipo.codigo,
 
-        equipoNombre: equipo.nombre,
+        equipoNombre:
+            equipo.nombre,
 
-        tipo: tipo,
+        tipo:
+            tipo,
 
-        documento: documento,
+        documento:
+            documento,
 
-        version: version,
+        version:
+            version,
 
-        codigo: codigo,
+        codigo:
+            codigo,
 
-        fecha: fecha,
+        fecha:
+            fecha,
 
         vencimiento:
-            documento === "Reporte"
-                ? vencimiento
-                : ""
+            vencimiento
 
     };
 
 
-    if (calificacionEditando === null) {
+    /* NUEVO */
 
-        calificaciones.push(registro);
+    if (
+        calificacionEditando === null
+    ) {
 
-    } else {
-
-        calificaciones[calificacionEditando] =
-            registro;
+        calificaciones.push(
+            registro
+        );
 
     }
 
 
+    /* EDITAR */
+
+    else {
+
+        calificaciones[
+            calificacionEditando
+        ] = registro;
+
+    }
+
+
+    /*
+       GUARDAR EN LOCALSTORAGE
+    */
+
     guardarDatos();
+
+
+    /*
+       LIMPIAR FORMULARIO
+    */
 
     document.getElementById(
         "formularioCalificacion"
     ).innerHTML = "";
 
+
+    /*
+       ACTUALIZAR TABLA
+    */
+
     mostrarTablaCalificaciones();
 
+
+    calificacionEditando = null;
+
+
     alert(
-        "Registro guardado correctamente."
+        "Registro guardado correctamente.\n\n" +
+        "Fecha de emisión: " +
+        formatearFecha(fecha) +
+        "\n" +
+        "Fecha de vencimiento: " +
+        formatearFecha(vencimiento)
     );
 
 }
 
 
-function cancelarCalificacion() {
-
-    document.getElementById(
-        "formularioCalificacion"
-    ).innerHTML = "";
-
-    calificacionEditando = null;
-
-}
-
-
-/* =========================================================
+/* =====================================================
    EDITAR CALIFICACIÓN
-========================================================= */
+===================================================== */
 
-function editarCalificacion(indice) {
+function editarCalificacion(
+    indice
+) {
 
-    let registro = calificaciones[indice];
+    let registro =
+        calificaciones[indice];
 
-    calificacionEditando = indice;
+
+    calificacionEditando =
+        indice;
 
 
     let opcionesEquipos = "";
 
-    equipos.forEach((equipo, i) => {
 
-        let seleccionado =
-            equipo.codigo === registro.equipoCodigo
-                ? "selected"
-                : "";
+    equipos.forEach(
+        (equipo, i) => {
+
+            let seleccionado =
+                equipo.codigo ===
+                registro.equipoCodigo
+                    ? "selected"
+                    : "";
 
 
-        opcionesEquipos += `
+            opcionesEquipos += `
 
-            <option value="${i}" ${seleccionado}>
+                <option
+                    value="${i}"
+                    ${seleccionado}>
 
-                ${escapeHTML(equipo.codigo)}
-                - ${escapeHTML(equipo.nombre)}
+                    ${escapeHTML(
+                        equipo.codigo
+                    )}
+                    -
+                    ${escapeHTML(
+                        equipo.nombre
+                    )}
 
-            </option>
+                </option>
 
-        `;
+            `;
 
-    });
+        }
+    );
 
 
     document.getElementById(
@@ -1604,13 +2396,29 @@ function editarCalificacion(indice) {
 
         <div class="tarjeta">
 
-            <h2>Editar calificación</h2>
+            <h2>
+                Editar calificación
+            </h2>
+
+
+            <div class="info">
+
+                La fecha de vencimiento se calcula
+                automáticamente a 5 años desde
+                la fecha de emisión.
+
+            </div>
+
 
             <div class="form-grid">
 
+
                 <div class="completo">
 
-                    <label>Equipo</label>
+                    <label>
+                        Equipo
+                    </label>
+
 
                     <select
                         id="calEquipo"
@@ -1625,25 +2433,45 @@ function editarCalificacion(indice) {
 
                 <div>
 
-                    <label>Tipo de calificación</label>
+                    <label>
+                        Tipo de calificación
+                    </label>
+
 
                     <select
                         id="calTipo"
                         onchange="generarCodigoCalificacion()">
 
-                        <option value="IQ"
-                            ${registro.tipo === "IQ" ? "selected" : ""}>
+                        <option
+                            value="IQ"
+                            ${registro.tipo === "IQ"
+                                ? "selected"
+                                : ""}>
+
                             IQ
+
                         </option>
 
-                        <option value="OQ"
-                            ${registro.tipo === "OQ" ? "selected" : ""}>
+
+                        <option
+                            value="OQ"
+                            ${registro.tipo === "OQ"
+                                ? "selected"
+                                : ""}>
+
                             OQ
+
                         </option>
 
-                        <option value="PQ"
-                            ${registro.tipo === "PQ" ? "selected" : ""}>
+
+                        <option
+                            value="PQ"
+                            ${registro.tipo === "PQ"
+                                ? "selected"
+                                : ""}>
+
                             PQ
+
                         </option>
 
                     </select>
@@ -1653,20 +2481,34 @@ function editarCalificacion(indice) {
 
                 <div>
 
-                    <label>Tipo de documento</label>
+                    <label>
+                        Tipo de documento
+                    </label>
+
 
                     <select
                         id="calDocumento"
                         onchange="generarCodigoCalificacion()">
 
-                        <option value="Protocolo"
-                            ${registro.documento === "Protocolo" ? "selected" : ""}>
+                        <option
+                            value="Protocolo"
+                            ${registro.documento === "Protocolo"
+                                ? "selected"
+                                : ""}>
+
                             Protocolo
+
                         </option>
 
-                        <option value="Reporte"
-                            ${registro.documento === "Reporte" ? "selected" : ""}>
+
+                        <option
+                            value="Reporte"
+                            ${registro.documento === "Reporte"
+                                ? "selected"
+                                : ""}>
+
                             Reporte
+
                         </option>
 
                     </select>
@@ -1676,12 +2518,17 @@ function editarCalificacion(indice) {
 
                 <div>
 
-                    <label>Versión</label>
+                    <label>
+                        Versión
+                    </label>
+
 
                     <input
                         type="text"
                         id="calVersion"
-                        value="${escapeHTML(registro.version)}"
+                        value="${escapeHTML(
+                            registro.version
+                        )}"
                         oninput="generarCodigoCalificacion()"
                     >
 
@@ -1690,7 +2537,10 @@ function editarCalificacion(indice) {
 
                 <div>
 
-                    <label>Fecha de emisión</label>
+                    <label>
+                        Fecha de emisión
+                    </label>
+
 
                     <input
                         type="date"
@@ -1704,7 +2554,10 @@ function editarCalificacion(indice) {
 
                 <div>
 
-                    <label>Fecha de vencimiento</label>
+                    <label>
+                        Fecha de vencimiento
+                    </label>
+
 
                     <input
                         type="date"
@@ -1718,13 +2571,18 @@ function editarCalificacion(indice) {
 
                 <div class="completo">
 
-                    <label>Código generado</label>
+                    <label>
+                        Código generado
+                    </label>
+
 
                     <input
                         type="text"
                         id="calCodigo"
                         class="codigo-generado"
-                        value="${escapeHTML(registro.codigo)}"
+                        value="${escapeHTML(
+                            registro.codigo
+                        )}"
                         readonly
                     >
 
@@ -1755,12 +2613,40 @@ function editarCalificacion(indice) {
     `;
 
 
-    generarCodigoCalificacion();
+    /*
+       Recalcular inmediatamente
+       para asegurar consistencia
+    */
+
+    calcularVencimiento();
 
 }
 
 
-function eliminarCalificacion(indice) {
+/* =====================================================
+   CANCELAR CALIFICACIÓN
+===================================================== */
+
+function cancelarCalificacion() {
+
+    document.getElementById(
+        "formularioCalificacion"
+    ).innerHTML = "";
+
+
+    calificacionEditando =
+        null;
+
+}
+
+
+/* =====================================================
+   ELIMINAR CALIFICACIÓN
+===================================================== */
+
+function eliminarCalificacion(
+    indice
+) {
 
     let registro =
         calificaciones[indice];
@@ -1777,18 +2663,23 @@ function eliminarCalificacion(indice) {
     }
 
 
-    calificaciones.splice(indice, 1);
+    calificaciones.splice(
+        indice,
+        1
+    );
+
 
     guardarDatos();
+
 
     mostrarTablaCalificaciones();
 
 }
 
 
-/* =========================================================
-   TABLA CALIFICACIONES
-========================================================= */
+/* =====================================================
+   BUSCAR CALIFICACIONES
+===================================================== */
 
 function buscarCalificaciones() {
 
@@ -1801,6 +2692,93 @@ function buscarCalificaciones() {
 }
 
 
+/* =====================================================
+   ESTADO DEL DOCUMENTO
+===================================================== */
+
+function obtenerEstadoDocumento(
+    vencimiento
+) {
+
+    if (!vencimiento) {
+
+        return {
+            texto: "Sin vencimiento",
+            clase: "vigente"
+        };
+
+    }
+
+
+    let hoy =
+        new Date();
+
+    hoy.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    let fechaVencimiento =
+        new Date(
+            vencimiento +
+            "T00:00:00"
+        );
+
+
+    let diferencia =
+        Math.ceil(
+            (
+                fechaVencimiento -
+                hoy
+            ) /
+            (
+                1000 *
+                60 *
+                60 *
+                24
+            )
+        );
+
+
+    if (
+        diferencia < 0
+    ) {
+
+        return {
+            texto: "Vencido",
+            clase: "vencido"
+        };
+
+    }
+
+
+    if (
+        diferencia <= 180
+    ) {
+
+        return {
+            texto: "Próximo a vencer",
+            clase: "proximo"
+        };
+
+    }
+
+
+    return {
+        texto: "Vigente",
+        clase: "vigente"
+    };
+
+}
+
+
+/* =====================================================
+   TABLA CALIFICACIONES
+===================================================== */
+
 function mostrarTablaCalificaciones(
     filtro = ""
 ) {
@@ -1810,41 +2788,43 @@ function mostrarTablaCalificaciones(
 
 
     let lista =
-        calificaciones.filter(c => {
+        calificaciones.filter(
+            c => {
 
-            return (
+                return (
 
-                (c.equipoCodigo || "")
-                    .toLowerCase()
-                    .includes(texto)
+                    (c.equipoCodigo || "")
+                        .toLowerCase()
+                        .includes(texto)
 
-                ||
+                    ||
 
-                (c.equipoNombre || "")
-                    .toLowerCase()
-                    .includes(texto)
+                    (c.equipoNombre || "")
+                        .toLowerCase()
+                        .includes(texto)
 
-                ||
+                    ||
 
-                (c.codigo || "")
-                    .toLowerCase()
-                    .includes(texto)
+                    (c.codigo || "")
+                        .toLowerCase()
+                        .includes(texto)
 
-                ||
+                    ||
 
-                (c.tipo || "")
-                    .toLowerCase()
-                    .includes(texto)
+                    (c.tipo || "")
+                        .toLowerCase()
+                        .includes(texto)
 
-                ||
+                    ||
 
-                (c.documento || "")
-                    .toLowerCase()
-                    .includes(texto)
+                    (c.documento || "")
+                        .toLowerCase()
+                        .includes(texto)
 
-            );
+                );
 
-        });
+            }
+        );
 
 
     let html = `
@@ -1879,186 +2859,150 @@ function mostrarTablaCalificaciones(
 
             </thead>
 
+
             <tbody>
 
     `;
 
 
-    lista.forEach(registro => {
+    lista.forEach(
+        registro => {
 
-        let indice =
-            calificaciones.indexOf(registro);
-
-
-        let estado = "";
-
-        let clase = "";
-
-
-        if (registro.documento === "Reporte") {
-
-            let hoy =
-                new Date();
-
-            hoy.setHours(0,0,0,0);
-
-
-            let fechaVencimiento =
-                new Date(
-                    registro.vencimiento +
-                    "T00:00:00"
+            let indice =
+                calificaciones.indexOf(
+                    registro
                 );
 
 
-            let diferencia =
-                Math.ceil(
-                    (
-                        fechaVencimiento - hoy
-                    ) /
-                    (1000 * 60 * 60 * 24)
+            let estado =
+                obtenerEstadoDocumento(
+                    registro.vencimiento
                 );
 
 
-            if (diferencia < 0) {
+            html += `
 
-                estado = "Vencido";
+                <tr>
 
-                clase = "vencido";
 
-            } else if (diferencia <= 180) {
+                    <td>
 
-                estado =
-                    "Próximo a vencer";
+                        <strong>
+                            ${escapeHTML(
+                                registro.equipoCodigo
+                            )}
+                        </strong>
 
-                clase = "proximo";
+                        <br>
 
-            } else {
+                        ${escapeHTML(
+                            registro.equipoNombre
+                        )}
 
-                estado = "Vigente";
+                    </td>
 
-                clase = "vigente";
 
-            }
+                    <td>
 
-        } else {
+                        ${escapeHTML(
+                            registro.tipo
+                        )}
 
-            estado = "Registrado";
+                    </td>
 
-            clase = "vigente";
+
+                    <td>
+
+                        ${escapeHTML(
+                            registro.documento
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            ${escapeHTML(
+                                registro.codigo
+                            )}
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHTML(
+                            registro.version
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatearFecha(
+                            registro.fecha
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            registro.vencimiento
+                            ?
+                            formatearFecha(
+                                registro.vencimiento
+                            )
+                            :
+                            "—"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="${estado.clase}">
+
+                            ${estado.texto}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="acciones">
+
+                        <button
+                            class="btn-amarillo"
+                            onclick="editarCalificacion(${indice})">
+
+                            Editar
+
+                        </button>
+
+
+                        <button
+                            class="btn-rojo"
+                            onclick="eliminarCalificacion(${indice})">
+
+                            Eliminar
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
 
         }
-
-
-        html += `
-
-            <tr>
-
-                <td>
-
-                    <strong>
-                        ${escapeHTML(
-                            registro.equipoCodigo
-                        )}
-                    </strong>
-
-                    <br>
-
-                    ${escapeHTML(
-                        registro.equipoNombre
-                    )}
-
-                </td>
-
-
-                <td>
-                    ${escapeHTML(
-                        registro.tipo
-                    )}
-                </td>
-
-
-                <td>
-                    ${escapeHTML(
-                        registro.documento
-                    )}
-                </td>
-
-
-                <td>
-
-                    <strong>
-                        ${escapeHTML(
-                            registro.codigo
-                        )}
-                    </strong>
-
-                </td>
-
-
-                <td>
-                    ${escapeHTML(
-                        registro.version
-                    )}
-                </td>
-
-
-                <td>
-                    ${formatearFecha(
-                        registro.fecha
-                    )}
-                </td>
-
-
-                <td>
-
-                    ${
-                        registro.vencimiento
-                        ?
-                        formatearFecha(
-                            registro.vencimiento
-                        )
-                        :
-                        "—"
-                    }
-
-                </td>
-
-
-                <td>
-
-                    <span class="${clase}">
-                        ${estado}
-                    </span>
-
-                </td>
-
-
-                <td class="acciones">
-
-                    <button
-                        class="btn-amarillo"
-                        onclick="editarCalificacion(${indice})">
-
-                        Editar
-
-                    </button>
-
-
-                    <button
-                        class="btn-rojo"
-                        onclick="eliminarCalificacion(${indice})">
-
-                        Eliminar
-
-                    </button>
-
-                </td>
-
-            </tr>
-
-        `;
-
-    });
+    );
 
 
     html += `
@@ -2079,28 +3023,38 @@ function mostrarTablaCalificaciones(
 }
 
 
-/* =========================================================
+/* =====================================================
    DOCUMENTOS
-========================================================= */
+===================================================== */
 
 function mostrarDocumentos() {
 
-    document.getElementById("contenido").innerHTML = `
+    document.getElementById(
+        "contenido"
+    ).innerHTML = `
 
-        <h1>Documentos</h1>
+        <h1>
+            Documentos
+        </h1>
+
 
         <div class="tarjeta">
 
-            <h2>Control documental</h2>
+            <h2>
+                Control documental
+            </h2>
+
 
             <p>
-                En esta sección se visualizarán posteriormente
-                los documentos asociados a los equipos.
+                Los protocolos y reportes se registran
+                desde la sección
+                <strong>Calificaciones</strong>.
             </p>
 
+
             <p>
-                Por ahora, los protocolos y reportes se registran
-                desde la sección <strong>Calificaciones</strong>.
+                Cada documento mantiene su propia
+                fecha de emisión y fecha de vencimiento.
             </p>
 
         </div>
@@ -2110,31 +3064,41 @@ function mostrarDocumentos() {
 }
 
 
-/* =========================================================
+/* =====================================================
    CONFIGURACIÓN
-========================================================= */
+===================================================== */
 
 function mostrarConfiguracion() {
 
-    document.getElementById("contenido").innerHTML = `
+    document.getElementById(
+        "contenido"
+    ).innerHTML = `
 
-        <h1>Configuración</h1>
+        <h1>
+            Configuración
+        </h1>
+
 
         <div class="tarjeta">
 
-            <h2>Configuración del sistema</h2>
+            <h2>
+                Configuración del sistema
+            </h2>
+
 
             <p>
                 Sistema de gestión de equipos calificados.
             </p>
 
-            <p>
-                Los datos se almacenan localmente en este
-                navegador.
-            </p>
 
             <p>
-                Vigencia de reportes:
+                Los datos se almacenan actualmente
+                en este navegador.
+            </p>
+
+
+            <p>
+                Vigencia de documentos:
                 <strong>5 años</strong>
             </p>
 
@@ -2145,50 +3109,84 @@ function mostrarConfiguracion() {
 }
 
 
-/* =========================================================
-   FUNCIONES AUXILIARES
-========================================================= */
+/* =====================================================
+   FECHA ACTUAL
+===================================================== */
 
 function obtenerFechaActual() {
 
-    let hoy = new Date();
+    let hoy =
+        new Date();
 
-    return formatearFechaInput(hoy);
+
+    return formatearFechaInput(
+        hoy
+    );
 
 }
 
 
-function formatearFechaInput(fecha) {
+/* =====================================================
+   FORMATO FECHA PARA INPUT
+===================================================== */
+
+function formatearFechaInput(
+    fecha
+) {
 
     let año =
         fecha.getFullYear();
 
+
     let mes =
         String(
             fecha.getMonth() + 1
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
+
 
     let dia =
         String(
             fecha.getDate()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
-    return `${año}-${mes}-${dia}`;
+    return (
+        año +
+        "-" +
+        mes +
+        "-" +
+        dia
+    );
 
 }
 
 
-function formatearFecha(fecha) {
+/* =====================================================
+   FORMATO FECHA PARA MOSTRAR
+===================================================== */
 
-    if (!fecha) return "—";
+function formatearFecha(
+    fecha
+) {
+
+    if (!fecha) {
+        return "—";
+    }
 
 
     let partes =
         fecha.split("-");
 
 
-    if (partes.length !== 3) {
+    if (
+        partes.length !== 3
+    ) {
 
         return fecha;
 
@@ -2206,10 +3204,18 @@ function formatearFecha(fecha) {
 }
 
 
-function escapeHTML(valor) {
+/* =====================================================
+   SEGURIDAD HTML
+===================================================== */
 
-    if (valor === null ||
-        valor === undefined) {
+function escapeHTML(
+    valor
+) {
+
+    if (
+        valor === null ||
+        valor === undefined
+    ) {
 
         return "";
 
@@ -2218,28 +3224,44 @@ function escapeHTML(valor) {
 
     return String(valor)
 
-        .replace(/&/g, "&amp;")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-        .replace(/</g, "&lt;")
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-        .replace(/>/g, "&gt;")
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-        .replace(/"/g, "&quot;")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        .replace(/'/g, "&#039;");
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
-/* =========================================================
-   INICIO DE LA APLICACIÓN
-========================================================= */
+/* =====================================================
+   INICIAR
+===================================================== */
 
-window.onload = function() {
+window.onload =
+    function() {
 
-    mostrarInicio();
+        mostrarInicio();
 
-};
+    };
 
 </script>
 
