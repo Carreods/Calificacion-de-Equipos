@@ -46,35 +46,47 @@ button{border:0;border-radius:8px;padding:9px 13px;cursor:pointer;font-weight:70
 .verde-bg{background:#dcf8e8}.amarillo-bg{background:#fff3d8}.rojo-bg{background:#fde4e6}.azul-bg{background:#e7f1ff}
 .resumen-titulo{font-size:12px;color:#66788a}.resumen-numero{font-size:24px;font-weight:800;margin-top:2px}
 .seccion-titulo{font-size:17px;font-weight:700;margin:5px 0 12px}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.completo{grid-column:1/-1}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.completo{grid-column:1/-1}
 label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}
 input,select{width:100%;padding:10px 11px;min-height:40px;border:1px solid #d4dae0;border-radius:8px;background:#fff;font-size:13px;outline:none}
 input[readonly]{background:#edf1f4;color:#50606f}
-.acciones-form{display:flex;gap:9px;margin-top:14px}.acciones-form button{flex:1}
+.acciones-form{display:flex;gap:9px;margin-top:14px}
+.acciones-form button{flex:1}
 .tabla-contenedor{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{padding:11px 9px;text-align:left;background:#f3f5f6;border-bottom:1px solid #dfe3e8;color:#455565;white-space:nowrap}
 td{padding:11px 9px;border-bottom:1px solid #e6e9ed;vertical-align:middle}
 tr:hover td{background:#fafbfc}
-.acciones-tabla{display:flex;gap:5px}.codigo{font-weight:700}.subdato{font-size:11px;color:#748291;margin-top:3px}
+.acciones-tabla{display:flex;gap:5px}
+.codigo{font-weight:700}
+.subdato{font-size:11px;color:#748291;margin-top:3px}
 .badge{display:inline-block;padding:6px 10px;border-radius:18px;font-size:11px;font-weight:700;white-space:nowrap}
-.vigente{background:#def7e8;color:#17854b}.proximo{background:#fff0cc;color:#c98200}.vencido{background:#fde0e2;color:#d91f2b}.neutro{background:#edf1f4;color:#66788a}
+.vigente{background:#def7e8;color:#17854b}
+.proximo{background:#fff0cc;color:#c98200}
+.vencido{background:#fde0e2;color:#d91f2b}
+.neutro{background:#edf1f4;color:#66788a}
 .filtros{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:9px;margin-bottom:14px}
 .dashboard-dos{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .ficha-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .ficha-dato{background:#f7f8fa;border-radius:9px;padding:12px}
-.ficha-label{font-size:11px;color:#71808f}.ficha-valor{font-size:14px;font-weight:700;margin-top:4px}
+.ficha-label{font-size:11px;color:#71808f}
+.ficha-valor{font-size:14px;font-weight:700;margin-top:4px}
 .cal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .cal-card{border:1px solid #e1e5e9;border-radius:12px;padding:15px}
 .cal-card h3{margin:0 0 11px;font-size:15px}
-.doc-linea{padding:9px 0;border-top:1px solid #edf0f2}.doc-linea:first-of-type{border-top:0}
-.enlace-equipo{cursor:pointer;color:#d60916;font-weight:700}.enlace-equipo:hover{text-decoration:underline}
-.info{background:#e7f3ff;color:#196cb8;padding:11px;border-radius:8px;font-size:12px;margin-top:10px}
+.doc-linea{padding:9px 0;border-top:1px solid #edf0f2}
+.doc-linea:first-of-type{border-top:0}
+.enlace-equipo{cursor:pointer;color:#d60916;font-weight:700}
+.enlace-equipo:hover{text-decoration:underline}
+.modo-consulta{background:#e7f1ff;color:#196cb8;padding:9px 12px;border-radius:8px;font-size:12px;margin-bottom:18px}
 .login-overlay{position:fixed;inset:0;background:rgba(20,30,40,.45);display:flex;align-items:center;justify-content:center;z-index:1000}
 .login-card{width:360px;max-width:calc(100% - 30px);background:#fff;border-radius:14px;padding:24px;box-shadow:0 15px 40px rgba(0,0,0,.18)}
-.login-card h2{margin:0 0 5px}.login-card p{font-size:12px;color:#71808f;margin:0 0 18px}
+.login-card h2{margin:0 0 5px}
+.login-card p{font-size:12px;color:#71808f;margin:0 0 18px}
 .login-error{font-size:12px;color:#d91f2b;margin-bottom:10px;display:none}
-.modo-consulta{background:#e7f1ff;color:#196cb8;padding:9px 12px;border-radius:8px;font-size:12px;margin-bottom:18px}
+.semaforo-punto{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:-1px}
+.punto-verde{background:#20a35b}.punto-amarillo{background:#e6a400}.punto-rojo{background:#dc303c}.punto-gris{background:#a8b1ba}
 @media(max-width:1100px){.dashboard-dos,.cal-grid{grid-template-columns:1fr}.resumen{grid-template-columns:1fr 1fr}.filtros{grid-template-columns:1fr 1fr}}
 @media(max-width:800px){.sidebar{width:180px}.contenido{margin-left:180px;padding:15px}.resumen,.form-grid,.ficha-grid,.filtros{grid-template-columns:1fr}.completo{grid-column:auto}}
 </style>
@@ -123,17 +135,21 @@ tr:hover td{background:#fafbfc}
 </div>
 
 <script>
-/* CREDENCIALES TEMPORALES */
-const ADMIN_USUARIO="admin";
-const ADMIN_CLAVE="SACM2026";
-
+const ADMIN_USUARIO="admin",ADMIN_CLAVE="SACM2026";
 let esAdmin=sessionStorage.getItem("adminSACM")==="true";
 let equipos=JSON.parse(localStorage.getItem("equipos"))||[];
 let calificaciones=JSON.parse(localStorage.getItem("calificaciones"))||[];
 let manuales=JSON.parse(localStorage.getItem("manuales"))||[];
 let equipoEditando=null,calificacionEditando=null,manualEditando=null;
 
-equipos=equipos.map(e=>({codigo:e.codigo||"",nombre:e.nombre||"",area:e.area||"",aplicaPQ:e.aplicaPQ===false?false:true}));
+/* Mantiene datos antiguos y agrega ubicación si todavía no existe */
+equipos=equipos.map(e=>({
+ codigo:e.codigo||"",
+ nombre:e.nombre||"",
+ area:e.area||"",
+ ubicacion:e.ubicacion||"",
+ aplicaPQ:e.aplicaPQ===false?false:true
+}));
 guardarDatos();
 
 function guardarDatos(){
@@ -142,15 +158,16 @@ function guardarDatos(){
  localStorage.setItem("manuales",JSON.stringify(manuales));
 }
 
+/* ================= USUARIOS ================= */
+
 function cargarMenu(){
- let m=document.getElementById("menuPrincipal");
- let html=`<li class="activo" data-pagina="inicio" onclick="mostrarPagina('inicio',this)"><span class="menu-icono">⌂</span>Inicio</li>
- <li data-pagina="equipos" onclick="mostrarPagina('equipos',this)"><span class="menu-icono">⚙</span>Equipos</li>`;
- if(esAdmin)html+=`
- <li data-pagina="calificaciones" onclick="mostrarPagina('calificaciones',this)"><span class="menu-icono">▣</span>Calificaciones</li>
- <li data-pagina="manuales" onclick="mostrarPagina('manuales',this)"><span class="menu-icono">▤</span>Manuales</li>
- <li data-pagina="base" onclick="mostrarPagina('base',this)"><span class="menu-icono">◉</span>Base de datos</li>`;
- m.innerHTML=html;
+ let h=`<li class="activo" onclick="mostrarPagina('inicio',this)"><span class="menu-icono">⌂</span>Inicio</li>
+ <li onclick="mostrarPagina('equipos',this)"><span class="menu-icono">⚙</span>Equipos</li>`;
+ if(esAdmin)h+=`
+ <li onclick="mostrarPagina('calificaciones',this)"><span class="menu-icono">▣</span>Calificaciones</li>
+ <li onclick="mostrarPagina('manuales',this)"><span class="menu-icono">▤</span>Manuales</li>
+ <li onclick="mostrarPagina('base',this)"><span class="menu-icono">◉</span>Base de datos</li>`;
+ document.getElementById("menuPrincipal").innerHTML=h;
  document.getElementById("nombreUsuario").textContent=esAdmin?"ADMINISTRADOR":"MODO CONSULTA";
  document.getElementById("areaUsuario").textContent=esAdmin?"SAC-M · Edición habilitada":"Solo lectura";
  document.getElementById("btnAcceso").style.display=esAdmin?"none":"block";
@@ -164,15 +181,12 @@ function abrirLogin(){
  document.getElementById("loginError").style.display="none";
  setTimeout(()=>document.getElementById("loginUsuario").focus(),50);
 }
-
 function cerrarLogin(){document.getElementById("loginModal").style.display="none"}
 
 function iniciarSesion(){
- let u=document.getElementById("loginUsuario").value.trim();
- let c=document.getElementById("loginClave").value;
+ let u=val("loginUsuario"),c=document.getElementById("loginClave").value;
  if(u===ADMIN_USUARIO&&c===ADMIN_CLAVE){
-  esAdmin=true;
-  sessionStorage.setItem("adminSACM","true");
+  esAdmin=true;sessionStorage.setItem("adminSACM","true");
   cerrarLogin();cargarMenu();mostrarInicio();
  }else document.getElementById("loginError").style.display="block";
 }
@@ -182,33 +196,58 @@ function cerrarSesion(){
  esAdmin=false;sessionStorage.removeItem("adminSACM");cargarMenu();mostrarInicio();
 }
 
-function mostrarPagina(pagina,el){
- if(["calificaciones","manuales","base"].includes(pagina)&&!esAdmin)return mostrarInicio();
+function mostrarPagina(p,el){
+ if(["calificaciones","manuales","base"].includes(p)&&!esAdmin)return mostrarInicio();
  document.querySelectorAll(".menu li").forEach(x=>x.classList.remove("activo"));
  if(el)el.classList.add("activo");
- if(pagina==="inicio")mostrarInicio();
- if(pagina==="equipos")mostrarEquipos();
- if(pagina==="calificaciones")mostrarCalificaciones();
- if(pagina==="manuales")mostrarManuales();
- if(pagina==="base")mostrarBase();
+ if(p==="inicio")mostrarInicio();
+ if(p==="equipos")mostrarEquipos();
+ if(p==="calificaciones")mostrarCalificaciones();
+ if(p==="manuales")mostrarManuales();
+ if(p==="base")mostrarBase();
 }
+
+/* ================= SEMÁFOROS ================= */
 
 function estadoFecha(fecha){
- if(!fecha)return{texto:"Sin fecha",clase:"neutro"};
+ if(!fecha)return{texto:"Sin fecha",clase:"neutro",nivel:0};
  let hoy=new Date();hoy.setHours(0,0,0,0);
  let f=new Date(fecha+"T00:00:00"),dias=Math.ceil((f-hoy)/86400000);
- if(dias<0)return{texto:"Vencido",clase:"vencido"};
- if(dias<=180)return{texto:"Próximo",clase:"proximo"};
- return{texto:"Vigente",clase:"vigente"};
+ if(dias<0)return{texto:"Vencido",clase:"vencido",nivel:3};
+ if(dias<=180)return{texto:"Próximo",clase:"proximo",nivel:2};
+ return{texto:"Vigente",clase:"vigente",nivel:1};
 }
 
-function contarEstados(lista,campo="vencimiento"){
+function estadoLista(lista){
+ if(!lista.length)return{texto:"Sin registros",clase:"neutro",nivel:0};
+ let peor={texto:"Vigente",clase:"vigente",nivel:1};
+ lista.forEach(x=>{
+  let s=estadoFecha(x.vencimiento);
+  if(s.nivel>peor.nivel)peor=s;
+ });
+ return peor;
+}
+
+function estadoGeneralEquipo(codigo){
+ let c=calificaciones.filter(x=>x.equipoCodigo===codigo);
+ let m=manuales.filter(x=>x.equipoCodigo===codigo);
+ if(!c.length&&!m.length)return{texto:"Sin registros",clase:"neutro",nivel:0};
+ let ec=estadoLista(c),em=estadoLista(m);
+ return ec.nivel>=em.nivel?ec:em;
+}
+
+function puntoEstado(s){
+ let p=s.clase==="vigente"?"punto-verde":s.clase==="proximo"?"punto-amarillo":s.clase==="vencido"?"punto-rojo":"punto-gris";
+ return `<span class="semaforo-punto ${p}"></span><span class="badge ${s.clase}">${s.texto}</span>`;
+}
+
+function contarEstados(lista){
  let r={vigentes:0,proximos:0,vencidos:0};
  lista.forEach(x=>{
-  let e=estadoFecha(x[campo]);
-  if(e.texto==="Vigente")r.vigentes++;
-  if(e.texto==="Próximo")r.proximos++;
-  if(e.texto==="Vencido")r.vencidos++;
+  let s=estadoFecha(x.vencimiento);
+  if(s.texto==="Vigente")r.vigentes++;
+  if(s.texto==="Próximo")r.proximos++;
+  if(s.texto==="Vencido")r.vencidos++;
  });
  return r;
 }
@@ -217,9 +256,13 @@ function contarEstados(lista,campo="vencimiento"){
 
 function mostrarInicio(){
  let c=contarEstados(calificaciones),m=contarEstados(manuales);
+
  document.getElementById("contenido").innerHTML=`
- <div class="topbar"><div><h1 class="titulo-pagina">Panel de control</h1><div class="subtitulo-pagina">Estado general de calificaciones y manuales operativos</div></div></div>
- ${!esAdmin?`<div class="modo-consulta">👁 Estás en modo consulta. Puedes revisar equipos, calificaciones y fechas, pero no modificar información.</div>`:""}
+ <div class="topbar">
+  <div><h1 class="titulo-pagina">Panel de control</h1><div class="subtitulo-pagina">Estado general de calificaciones y manuales operativos</div></div>
+ </div>
+
+ ${!esAdmin?`<div class="modo-consulta">👁 Estás en modo consulta. Puedes revisar equipos, documentos y fechas, pero no modificar información.</div>`:""}
 
  <div class="dashboard-dos">
   <div>
@@ -230,6 +273,7 @@ function mostrarInicio(){
     ${cardSemaforo("!","Vencidas",c.vencidos,"rojo-bg")}
    </div>
   </div>
+
   <div>
    <div class="seccion-titulo">Manuales Operativos</div>
    <div class="resumen">
@@ -241,12 +285,9 @@ function mostrarInicio(){
  </div>
 
  <div class="tarjeta">
-  <h2>Equipos</h2>
-  <div class="resumen">
-   <div class="resumen-card"><div class="resumen-icono azul-bg">⚙</div><div><div class="resumen-titulo">Total equipos</div><div class="resumen-numero">${equipos.length}</div></div></div>
-   <div class="resumen-card"><div class="resumen-icono azul-bg">PQ</div><div><div class="resumen-titulo">Equipos con PQ</div><div class="resumen-numero">${equipos.filter(e=>e.aplicaPQ).length}</div></div></div>
-   <div class="resumen-card"><div class="resumen-icono azul-bg">MO</div><div><div class="resumen-titulo">Manuales registrados</div><div class="resumen-numero">${manuales.length}</div></div></div>
-  </div>
+  <h2>Estado por equipo</h2>
+  <div class="subdato" style="margin-bottom:14px">El estado general considera Calificaciones y Manual Operativo.</div>
+  ${tablaSemaforoEquipos()}
  </div>`;
 }
 
@@ -254,16 +295,44 @@ function cardSemaforo(icono,titulo,numero,clase){
  return `<div class="resumen-card"><div class="resumen-icono ${clase}">${icono}</div><div><div class="resumen-titulo">${titulo}</div><div class="resumen-numero">${numero}</div></div></div>`;
 }
 
+function tablaSemaforoEquipos(){
+ if(!equipos.length)return`<div class="subdato">No hay equipos registrados.</div>`;
+
+ let h=`<div class="tabla-contenedor"><table>
+ <thead><tr><th>Equipo</th><th>Nombre</th><th>Área</th><th>Ubicación</th><th>Calificaciones</th><th>Manual</th><th>Estado general</th></tr></thead><tbody>`;
+
+ equipos.forEach((e,i)=>{
+  let ec=estadoLista(calificaciones.filter(x=>x.equipoCodigo===e.codigo));
+  let em=estadoLista(manuales.filter(x=>x.equipoCodigo===e.codigo));
+  let eg=estadoGeneralEquipo(e.codigo);
+
+  h+=`<tr>
+   <td><span class="enlace-equipo" onclick="verFichaEquipo(${i})">${esc(e.codigo)}</span></td>
+   <td>${esc(e.nombre)}</td>
+   <td>${esc(e.area)}</td>
+   <td>${esc(e.ubicacion)||"—"}</td>
+   <td>${puntoEstado(ec)}</td>
+   <td>${puntoEstado(em)}</td>
+   <td>${puntoEstado(eg)}</td>
+  </tr>`;
+ });
+
+ return h+"</tbody></table></div>";
+}
+
 /* ================= EQUIPOS ================= */
 
 function mostrarEquipos(){
  document.getElementById("contenido").innerHTML=`
  <div class="topbar">
-  <div><h1 class="titulo-pagina">Equipos</h1><div class="subtitulo-pagina">${esAdmin?"Registro maestro de equipos":"Consulta de equipos y documentación"}</div></div>
+  <div>
+   <h1 class="titulo-pagina">Equipos</h1>
+   <div class="subtitulo-pagina">${esAdmin?"Registro maestro de equipos":"Consulta de equipos y documentación"}</div>
+  </div>
   ${esAdmin?`<button class="btn-rojo-principal" onclick="nuevoEquipo()">+ Nuevo equipo</button>`:""}
  </div>
 
- ${!esAdmin?`<div class="modo-consulta">Selecciona el código de un equipo para revisar su Manual Operativo y sus calificaciones.</div>`:""}
+ ${!esAdmin?`<div class="modo-consulta">Selecciona el código del equipo para revisar Manual Operativo, IQ, OQ y PQ cuando corresponda.</div>`:""}
 
  ${esAdmin?`
  <div class="tarjeta">
@@ -275,66 +344,125 @@ function mostrarEquipos(){
  </div>`:""}
 
  <div id="formEquipo"></div>
+
  <div class="tarjeta">
   <h2>Equipos registrados</h2>
-  <input id="buscarEquipo" placeholder="Buscar por código, nombre o área..." oninput="tablaEquipos()">
+  <input id="buscarEquipo" placeholder="Buscar por código, nombre, área o ubicación..." oninput="tablaEquipos()">
   <div id="tablaEquipos" style="margin-top:14px"></div>
  </div>`;
+
  tablaEquipos();
 }
 
 function nuevoEquipo(){
  if(!esAdmin)return;
  equipoEditando=null;
+
  document.getElementById("formEquipo").innerHTML=`
  <div class="tarjeta">
   <h2>Nuevo equipo</h2>
+
   <div class="form-grid">
    <div><label>Código *</label><input id="eqCodigo" placeholder="Ej: E780/EF"></div>
    <div><label>Nombre *</label><input id="eqNombre"></div>
    <div><label>Área *</label><input id="eqArea"></div>
+   <div><label>Ubicación</label><input id="eqUbicacion" placeholder="Ej: Sala de Envasado"></div>
    <div><label>¿Aplica PQ?</label><select id="eqPQ"><option value="si">Sí</option><option value="no">No</option></select></div>
   </div>
-  <div class="acciones-form"><button class="btn-principal" onclick="guardarEquipo()">Guardar</button><button class="btn-secundario" onclick="document.getElementById('formEquipo').innerHTML=''">Cancelar</button></div>
+
+  <div class="acciones-form">
+   <button class="btn-principal" onclick="guardarEquipo()">Guardar</button>
+   <button class="btn-secundario" onclick="document.getElementById('formEquipo').innerHTML=''">Cancelar</button>
+  </div>
  </div>`;
 }
 
 function guardarEquipo(){
  if(!esAdmin)return;
- let e={codigo:val("eqCodigo"),nombre:val("eqNombre"),area:val("eqArea"),aplicaPQ:document.getElementById("eqPQ").value==="si"};
+
+ let e={
+  codigo:val("eqCodigo"),
+  nombre:val("eqNombre"),
+  area:val("eqArea"),
+  ubicacion:val("eqUbicacion"),
+  aplicaPQ:document.getElementById("eqPQ").value==="si"
+ };
+
  if(!e.codigo||!e.nombre||!e.area)return alert("Completa código, nombre y área.");
- if(equipoEditando===null)equipos.push(e);else equipos[equipoEditando]=e;
- guardarDatos();mostrarEquipos();
+
+ if(equipoEditando===null)equipos.push(e);
+ else equipos[equipoEditando]=e;
+
+ guardarDatos();
+ mostrarEquipos();
 }
 
 function editarEquipo(i){
  if(!esAdmin)return;
- let e=equipos[i];nuevoEquipo();equipoEditando=i;
+
+ let e=equipos[i];
+ nuevoEquipo();
+ equipoEditando=i;
+
  document.getElementById("eqCodigo").value=e.codigo;
  document.getElementById("eqNombre").value=e.nombre;
  document.getElementById("eqArea").value=e.area;
+ document.getElementById("eqUbicacion").value=e.ubicacion||"";
  document.getElementById("eqPQ").value=e.aplicaPQ?"si":"no";
 }
 
 function eliminarEquipo(i){
  if(!esAdmin)return;
  if(!confirm("¿Eliminar "+equipos[i].codigo+"?"))return;
- equipos.splice(i,1);guardarDatos();tablaEquipos();
+
+ equipos.splice(i,1);
+ guardarDatos();
+ tablaEquipos();
 }
 
 function tablaEquipos(){
  let q=(document.getElementById("buscarEquipo")?.value||"").toLowerCase();
- let lista=equipos.filter(e=>[e.codigo,e.nombre,e.area].some(x=>(x||"").toLowerCase().includes(q)));
- let h=`<div class="tabla-contenedor"><table><thead><tr><th>Código</th><th>Nombre</th><th>Área</th><th>Aplica PQ</th>${esAdmin?"<th>Acciones</th>":""}</tr></thead><tbody>`;
+
+ let lista=equipos.filter(e=>
+  [e.codigo,e.nombre,e.area,e.ubicacion].some(x=>(x||"").toLowerCase().includes(q))
+ );
+
+ let h="";
+
+ if(esAdmin){
+  h=`<div class="tabla-contenedor"><table>
+  <thead><tr><th>Código</th><th>Nombre</th><th>Área</th><th>Ubicación</th><th>Aplica PQ</th><th>Acciones</th></tr></thead><tbody>`;
+ }else{
+  h=`<div class="tabla-contenedor"><table>
+  <thead><tr><th>Código</th><th>Nombre</th><th>Área</th><th>Ubicación</th><th>Estado</th></tr></thead><tbody>`;
+ }
+
  lista.forEach(e=>{
-  let i=equipos.indexOf(e);
-  h+=`<tr>
-   <td><span class="enlace-equipo" onclick="verFichaEquipo(${i})">${esc(e.codigo)}</span></td>
-   <td>${esc(e.nombre)}</td><td>${esc(e.area)}</td>
-   <td><span class="badge ${e.aplicaPQ?"vigente":"neutro"}">${e.aplicaPQ?"Sí":"No"}</span></td>
-   ${esAdmin?`<td><div class="acciones-tabla"><button class="btn-editar" onclick="editarEquipo(${i})">✎</button><button class="btn-eliminar" onclick="eliminarEquipo(${i})">🗑</button></div></td>`:""}
-  </tr>`;
+  let i=equipos.indexOf(e),estado=estadoGeneralEquipo(e.codigo);
+
+  if(esAdmin){
+   h+=`<tr>
+    <td><span class="enlace-equipo" onclick="verFichaEquipo(${i})">${esc(e.codigo)}</span></td>
+    <td>${esc(e.nombre)}</td>
+    <td>${esc(e.area)}</td>
+    <td>${esc(e.ubicacion)||"—"}</td>
+    <td><span class="badge ${e.aplicaPQ?"vigente":"neutro"}">${e.aplicaPQ?"Sí":"No"}</span></td>
+    <td><div class="acciones-tabla">
+     <button class="btn-editar" onclick="editarEquipo(${i})">✎</button>
+     <button class="btn-eliminar" onclick="eliminarEquipo(${i})">🗑</button>
+    </div></td>
+   </tr>`;
+  }else{
+   h+=`<tr>
+    <td><span class="enlace-equipo" onclick="verFichaEquipo(${i})">${esc(e.codigo)}</span></td>
+    <td>${esc(e.nombre)}</td>
+    <td>${esc(e.area)}</td>
+    <td>${esc(e.ubicacion)||"—"}</td>
+    <td>${puntoEstado(estado)}</td>
+   </tr>`;
+  }
  });
+
  h+="</tbody></table></div>";
  document.getElementById("tablaEquipos").innerHTML=h;
 }
@@ -342,10 +470,16 @@ function tablaEquipos(){
 /* ================= FICHA EQUIPO ================= */
 
 function verFichaEquipo(i){
- let e=equipos[i],docs=calificaciones.filter(c=>c.equipoCodigo===e.codigo),man=manuales.filter(m=>m.equipoCodigo===e.codigo);
+ let e=equipos[i];
+ let docs=calificaciones.filter(c=>c.equipoCodigo===e.codigo);
+ let man=manuales.filter(m=>m.equipoCodigo===e.codigo);
+
  document.getElementById("contenido").innerHTML=`
  <div class="topbar">
-  <div><h1 class="titulo-pagina">${esc(e.codigo)} — ${esc(e.nombre)}</h1><div class="subtitulo-pagina">Ficha individual del equipo</div></div>
+  <div>
+   <h1 class="titulo-pagina">${esc(e.codigo)} — ${esc(e.nombre)}</h1>
+   <div class="subtitulo-pagina">Ficha individual del equipo</div>
+  </div>
   <button class="btn-secundario" onclick="mostrarEquipos()">← Volver</button>
  </div>
 
@@ -356,6 +490,8 @@ function verFichaEquipo(i){
    <div class="ficha-dato"><div class="ficha-label">Código</div><div class="ficha-valor">${esc(e.codigo)}</div></div>
    <div class="ficha-dato"><div class="ficha-label">Nombre</div><div class="ficha-valor">${esc(e.nombre)}</div></div>
    <div class="ficha-dato"><div class="ficha-label">Área</div><div class="ficha-valor">${esc(e.area)}</div></div>
+   <div class="ficha-dato"><div class="ficha-label">Ubicación</div><div class="ficha-valor">${esc(e.ubicacion)||"—"}</div></div>
+   <div class="ficha-dato"><div class="ficha-label">Estado general</div><div class="ficha-valor">${puntoEstado(estadoGeneralEquipo(e.codigo))}</div></div>
   </div>
  </div>
 
@@ -364,6 +500,7 @@ function verFichaEquipo(i){
    <div><h2>Manual Operativo</h2></div>
    ${esAdmin?`<button class="btn-principal" onclick="nuevoManual('${escJS(e.codigo)}')">+ Manual</button>`:""}
   </div>
+
   ${esAdmin?`<div id="formManualFicha"></div>`:""}
   ${tablaManualesEquipo(man)}
  </div>
@@ -373,7 +510,9 @@ function verFichaEquipo(i){
    <div><h2>Calificaciones</h2></div>
    ${esAdmin?`<button class="btn-principal" onclick="nuevaCalificacion('${escJS(e.codigo)}')">+ Calificación</button>`:""}
   </div>
+
   ${esAdmin?`<div id="formCalFicha"></div>`:""}
+
   <div class="cal-grid">
    ${tarjetaCalificacion("IQ",docs)}
    ${tarjetaCalificacion("OQ",docs)}
@@ -384,57 +523,106 @@ function verFichaEquipo(i){
 
 function tarjetaCalificacion(tipo,docs){
  let d=docs.filter(x=>x.tipo===tipo);
- return `<div class="cal-card"><h3>${tipo}</h3>${d.length?d.map(x=>{
+
+ return `<div class="cal-card">
+ <h3>${tipo}</h3>
+ ${d.length?d.map(x=>{
   let s=estadoFecha(x.vencimiento);
+
   return `<div class="doc-linea">
    <div class="codigo">${esc(x.codigo)}</div>
    <div class="subdato">${esc(x.documento)} · Emisión ${fechaBonita(x.fecha)}</div>
    <div class="subdato">Vence ${fechaBonita(x.vencimiento)}</div>
-   <div style="margin-top:6px"><span class="badge ${s.clase}">${s.texto}</span></div>
+   <div style="margin-top:6px">${puntoEstado(s)}</div>
   </div>`;
- }).join(""):'<span class="subdato">Sin documentos registrados</span>'}</div>`;
+ }).join(""):'<span class="subdato">Sin documentos registrados</span>'}
+ </div>`;
 }
 
-/* ================= MANUALES ADMIN ================= */
+/* ================= MANUALES ================= */
 
 function mostrarManuales(){
  if(!esAdmin)return mostrarInicio();
+
  document.getElementById("contenido").innerHTML=`
- <div class="topbar"><div><h1 class="titulo-pagina">Manuales Operativos</h1><div class="subtitulo-pagina">Control de vigencia de manuales</div></div><button class="btn-rojo-principal" onclick="nuevoManual()">+ Nuevo manual</button></div>
+ <div class="topbar">
+  <div><h1 class="titulo-pagina">Manuales Operativos</h1><div class="subtitulo-pagina">Control de vigencia de manuales</div></div>
+  <button class="btn-rojo-principal" onclick="nuevoManual()">+ Nuevo manual</button>
+ </div>
+
  <div id="formManual"></div>
- <div class="tarjeta"><h2>Manuales registrados</h2><input id="buscarManual" placeholder="Buscar por equipo, código o nombre..." oninput="tablaManuales()"><div id="tablaManuales" style="margin-top:14px"></div></div>`;
+
+ <div class="tarjeta">
+  <h2>Manuales registrados</h2>
+  <input id="buscarManual" placeholder="Buscar por equipo, código o nombre..." oninput="tablaManuales()">
+  <div id="tablaManuales" style="margin-top:14px"></div>
+ </div>`;
+
  tablaManuales();
 }
 
 function nuevoManual(codigoEquipo=""){
  if(!esAdmin)return;
  if(!equipos.length)return alert("Primero registra un equipo.");
+
  manualEditando=null;
+
  let destino=document.getElementById("formManualFicha")||document.getElementById("formManual");
+
  destino.innerHTML=`
  <div style="margin-bottom:15px">
   <div class="form-grid">
-   <div class="completo"><label>Equipo *</label><select id="manEquipo">${equipos.map(e=>`<option value="${esc(e.codigo)}" ${e.codigo===codigoEquipo?"selected":""}>${esc(e.codigo)} - ${esc(e.nombre)}</option>`).join("")}</select></div>
+   <div class="completo">
+    <label>Equipo *</label>
+    <select id="manEquipo">
+     ${equipos.map(e=>`<option value="${esc(e.codigo)}" ${e.codigo===codigoEquipo?"selected":""}>${esc(e.codigo)} - ${esc(e.nombre)}</option>`).join("")}
+    </select>
+   </div>
+
    <div><label>Código Manual *</label><input id="manCodigo" placeholder="MO-XXX-AAA-CC"></div>
    <div><label>Nombre del Manual *</label><input id="manNombre"></div>
    <div><label>Fecha de vencimiento *</label><input type="date" id="manVencimiento"></div>
   </div>
-  <div class="acciones-form"><button class="btn-principal" onclick="guardarManual()">Guardar manual</button><button class="btn-secundario" onclick="cancelarFormularioActual(this)">Cancelar</button></div>
+
+  <div class="acciones-form">
+   <button class="btn-principal" onclick="guardarManual()">Guardar manual</button>
+   <button class="btn-secundario" onclick="limpiarFormManual()">Cancelar</button>
+  </div>
  </div>`;
 }
 
 function guardarManual(){
  if(!esAdmin)return;
- let equipoCodigo=valSelect("manEquipo"),e=equipos.find(x=>x.codigo===equipoCodigo);
- let m={equipoCodigo,equipoNombre:e?.nombre||"",codigo:val("manCodigo"),nombre:val("manNombre"),vencimiento:val("manVencimiento")};
+
+ let equipoCodigo=valSelect("manEquipo");
+ let e=equipos.find(x=>x.codigo===equipoCodigo);
+
+ let m={
+  equipoCodigo,
+  equipoNombre:e?.nombre||"",
+  codigo:val("manCodigo"),
+  nombre:val("manNombre"),
+  vencimiento:val("manVencimiento")
+ };
+
  if(!m.codigo||!m.nombre||!m.vencimiento)return alert("Completa todos los campos.");
- if(manualEditando===null)manuales.push(m);else manuales[manualEditando]=m;
- guardarDatos();mostrarManuales();
+
+ if(manualEditando===null)manuales.push(m);
+ else manuales[manualEditando]=m;
+
+ guardarDatos();
+ mostrarManuales();
 }
 
 function editarManual(i){
  if(!esAdmin)return;
- let m=manuales[i];mostrarManuales();nuevoManual(m.equipoCodigo);manualEditando=i;
+
+ let m=manuales[i];
+ mostrarManuales();
+ nuevoManual(m.equipoCodigo);
+
+ manualEditando=i;
+
  document.getElementById("manCodigo").value=m.codigo;
  document.getElementById("manNombre").value=m.nombre;
  document.getElementById("manVencimiento").value=m.vencimiento;
@@ -443,179 +631,410 @@ function editarManual(i){
 function eliminarManual(i){
  if(!esAdmin)return;
  if(!confirm("¿Eliminar "+manuales[i].codigo+"?"))return;
- manuales.splice(i,1);guardarDatos();tablaManuales();
+
+ manuales.splice(i,1);
+ guardarDatos();
+ tablaManuales();
+}
+
+function limpiarFormManual(){
+ let x=document.getElementById("formManualFicha")||document.getElementById("formManual");
+ if(x)x.innerHTML="";
+ manualEditando=null;
 }
 
 function tablaManuales(){
  let q=(document.getElementById("buscarManual")?.value||"").toLowerCase();
- let lista=manuales.filter(m=>[m.equipoCodigo,m.equipoNombre,m.codigo,m.nombre].some(x=>(x||"").toLowerCase().includes(q)));
- let h=`<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Código Manual</th><th>Nombre</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>`;
+
+ let lista=manuales.filter(m=>
+  [m.equipoCodigo,m.equipoNombre,m.codigo,m.nombre].some(x=>(x||"").toLowerCase().includes(q))
+ );
+
+ let h=`<div class="tabla-contenedor"><table>
+ <thead><tr><th>Equipo</th><th>Código Manual</th><th>Nombre</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>`;
+
  lista.forEach(m=>{
   let i=manuales.indexOf(m),s=estadoFecha(m.vencimiento);
-  h+=`<tr><td><span class="codigo">${esc(m.equipoCodigo)}</span><div class="subdato">${esc(m.equipoNombre)}</div></td><td class="codigo">${esc(m.codigo)}</td><td>${esc(m.nombre)}</td><td>${fechaBonita(m.vencimiento)}</td><td><span class="badge ${s.clase}">${s.texto}</span></td><td><div class="acciones-tabla"><button class="btn-editar" onclick="editarManual(${i})">✎</button><button class="btn-eliminar" onclick="eliminarManual(${i})">🗑</button></div></td></tr>`;
+
+  h+=`<tr>
+   <td><span class="codigo">${esc(m.equipoCodigo)}</span><div class="subdato">${esc(m.equipoNombre)}</div></td>
+   <td class="codigo">${esc(m.codigo)}</td>
+   <td>${esc(m.nombre)}</td>
+   <td>${fechaBonita(m.vencimiento)}</td>
+   <td>${puntoEstado(s)}</td>
+   <td><div class="acciones-tabla">
+    <button class="btn-editar" onclick="editarManual(${i})">✎</button>
+    <button class="btn-eliminar" onclick="eliminarManual(${i})">🗑</button>
+   </div></td>
+  </tr>`;
  });
- h+="</tbody></table></div>";document.getElementById("tablaManuales").innerHTML=h;
+
+ h+="</tbody></table></div>";
+ document.getElementById("tablaManuales").innerHTML=h;
 }
 
 function tablaManualesEquipo(lista){
  if(!lista.length)return`<div class="subdato">Sin manual operativo registrado.</div>`;
- return `<div class="tabla-contenedor"><table><thead><tr><th>Código</th><th>Nombre</th><th>Vencimiento</th><th>Estado</th></tr></thead><tbody>${lista.map(m=>{let s=estadoFecha(m.vencimiento);return`<tr><td class="codigo">${esc(m.codigo)}</td><td>${esc(m.nombre)}</td><td>${fechaBonita(m.vencimiento)}</td><td><span class="badge ${s.clase}">${s.texto}</span></td></tr>`}).join("")}</tbody></table></div>`;
+
+ return `<div class="tabla-contenedor"><table>
+ <thead><tr><th>Código</th><th>Nombre</th><th>Vencimiento</th><th>Estado</th></tr></thead>
+ <tbody>
+ ${lista.map(m=>{
+  let s=estadoFecha(m.vencimiento);
+  return `<tr>
+   <td class="codigo">${esc(m.codigo)}</td>
+   <td>${esc(m.nombre)}</td>
+   <td>${fechaBonita(m.vencimiento)}</td>
+   <td>${puntoEstado(s)}</td>
+  </tr>`;
+ }).join("")}
+ </tbody></table></div>`;
 }
 
-/* ================= CALIFICACIONES ADMIN ================= */
+/* ================= CALIFICACIONES ================= */
 
 function mostrarCalificaciones(){
  if(!esAdmin)return mostrarInicio();
+
  document.getElementById("contenido").innerHTML=`
- <div class="topbar"><div><h1 class="titulo-pagina">Calificaciones</h1><div class="subtitulo-pagina">Protocolos y reportes IQ, OQ y PQ</div></div><button class="btn-rojo-principal" onclick="nuevaCalificacion()">+ Nueva calificación</button></div>
+ <div class="topbar">
+  <div><h1 class="titulo-pagina">Calificaciones</h1><div class="subtitulo-pagina">Protocolos y reportes IQ, OQ y PQ</div></div>
+  <button class="btn-rojo-principal" onclick="nuevaCalificacion()">+ Nueva calificación</button>
+ </div>
+
  <div id="formCal"></div>
+
  <div class="tarjeta">
   <div class="filtros">
    <input id="buscarCal" placeholder="Buscar..." oninput="tablaCalificaciones()">
-   <select id="fEq" onchange="tablaCalificaciones()"><option value="">Todos los equipos</option>${equipos.map(e=>`<option>${esc(e.codigo)}</option>`).join("")}</select>
-   <select id="fTipo" onchange="tablaCalificaciones()"><option value="">Todos los tipos</option><option>IQ</option><option>OQ</option><option>PQ</option></select>
-   <select id="fDoc" onchange="tablaCalificaciones()"><option value="">Todos los documentos</option><option>Protocolo</option><option>Reporte</option></select>
+
+   <select id="fEq" onchange="tablaCalificaciones()">
+    <option value="">Todos los equipos</option>
+    ${equipos.map(e=>`<option>${esc(e.codigo)}</option>`).join("")}
+   </select>
+
+   <select id="fTipo" onchange="tablaCalificaciones()">
+    <option value="">Todos los tipos</option>
+    <option>IQ</option><option>OQ</option><option>PQ</option>
+   </select>
+
+   <select id="fDoc" onchange="tablaCalificaciones()">
+    <option value="">Todos los documentos</option>
+    <option>Protocolo</option><option>Reporte</option>
+   </select>
   </div>
+
   <div id="tablaCal"></div>
  </div>`;
+
  tablaCalificaciones();
 }
 
 function nuevaCalificacion(codigoEquipo=""){
  if(!esAdmin)return;
  if(!equipos.length)return alert("Primero registra un equipo.");
+
  calificacionEditando=null;
+
  let destino=document.getElementById("formCalFicha")||document.getElementById("formCal");
+
  destino.innerHTML=`
  <div class="tarjeta" style="${document.getElementById("formCalFicha")?"padding:0;border:0":""}">
   <div class="form-grid">
-   <div class="completo"><label>Equipo *</label><select id="calEquipo" onchange="actualizarTipos();generarCodigo()">${equipos.map(e=>`<option value="${esc(e.codigo)}" ${e.codigo===codigoEquipo?"selected":""}>${esc(e.codigo)} - ${esc(e.nombre)}</option>`).join("")}</select></div>
+
+   <div class="completo">
+    <label>Equipo *</label>
+    <select id="calEquipo" onchange="actualizarTipos();generarCodigo()">
+     ${equipos.map(e=>`<option value="${esc(e.codigo)}" ${e.codigo===codigoEquipo?"selected":""}>${esc(e.codigo)} - ${esc(e.nombre)}</option>`).join("")}
+    </select>
+   </div>
+
    <div><label>Tipo *</label><select id="calTipo" onchange="generarCodigo()"></select></div>
-   <div><label>Documento *</label><select id="calDocumento" onchange="generarCodigo()"><option>Protocolo</option><option>Reporte</option></select></div>
+
+   <div>
+    <label>Documento *</label>
+    <select id="calDocumento" onchange="generarCodigo()">
+     <option>Protocolo</option>
+     <option>Reporte</option>
+    </select>
+   </div>
+
    <div><label>Versión *</label><input id="calVersion" placeholder="Ej: 04" oninput="generarCodigo()"></div>
    <div><label>Fecha de emisión *</label><input type="date" id="calFecha" onchange="calcularVencimiento()"></div>
    <div><label>Fecha vencimiento</label><input type="date" id="calVencimiento" readonly></div>
    <div class="completo"><label>Código generado</label><input id="calCodigo" readonly></div>
   </div>
-  <div class="acciones-form"><button class="btn-principal" onclick="guardarCalificacion()">Guardar</button><button class="btn-secundario" onclick="limpiarFormCal()">Cancelar</button></div>
+
+  <div class="acciones-form">
+   <button class="btn-principal" onclick="guardarCalificacion()">Guardar</button>
+   <button class="btn-secundario" onclick="limpiarFormCal()">Cancelar</button>
+  </div>
  </div>`;
+
  actualizarTipos();
 }
 
 function actualizarTipos(){
- let cod=valSelect("calEquipo"),e=equipos.find(x=>x.codigo===cod),sel=document.getElementById("calTipo");
+ let cod=valSelect("calEquipo");
+ let e=equipos.find(x=>x.codigo===cod);
+ let sel=document.getElementById("calTipo");
+
  if(!sel)return;
- let actual=sel.value,tipos=["IQ","OQ"];if(e?.aplicaPQ)tipos.push("PQ");
+
+ let actual=sel.value,tipos=["IQ","OQ"];
+ if(e?.aplicaPQ)tipos.push("PQ");
+
  sel.innerHTML=tipos.map(t=>`<option ${t===actual?"selected":""}>${t}</option>`).join("");
  generarCodigo();
 }
 
 function generarCodigo(){
- let cod=valSelect("calEquipo"),tipo=valSelect("calTipo"),doc=valSelect("calDocumento"),v=val("calVersion"),campo=document.getElementById("calCodigo");
- if(!campo||!cod||!tipo||!doc||!v){if(campo)campo.value="";return}
- let p={IQ:{Protocolo:"PCI",Reporte:"RCI"},OQ:{Protocolo:"PCO",Reporte:"RCO"},PQ:{Protocolo:"PCD",Reporte:"RCD"}};
+ let cod=valSelect("calEquipo"),tipo=valSelect("calTipo"),doc=valSelect("calDocumento"),v=val("calVersion");
+ let campo=document.getElementById("calCodigo");
+
+ if(!campo||!cod||!tipo||!doc||!v){
+  if(campo)campo.value="";
+  return;
+ }
+
+ let p={
+  IQ:{Protocolo:"PCI",Reporte:"RCI"},
+  OQ:{Protocolo:"PCO",Reporte:"RCO"},
+  PQ:{Protocolo:"PCD",Reporte:"RCD"}
+ };
+
  campo.value=`${p[tipo][doc]}-${cod}-${v}`;
 }
 
 function calcularVencimiento(){
- let f=val("calFecha"),v=document.getElementById("calVencimiento");
- if(!f||!v){if(v)v.value="";return}
- let[a,m,d]=f.split("-");v.value=`${Number(a)+5}-${m}-${d}`;
+ let f=val("calFecha");
+ let v=document.getElementById("calVencimiento");
+
+ if(!f||!v){
+  if(v)v.value="";
+  return;
+ }
+
+ let[a,m,d]=f.split("-");
+ v.value=`${Number(a)+5}-${m}-${d}`;
 }
 
 function guardarCalificacion(){
  if(!esAdmin)return;
- let cod=valSelect("calEquipo"),e=equipos.find(x=>x.codigo===cod),tipo=valSelect("calTipo"),doc=valSelect("calDocumento"),version=val("calVersion"),fecha=val("calFecha");
+
+ let cod=valSelect("calEquipo"),e=equipos.find(x=>x.codigo===cod);
+ let tipo=valSelect("calTipo"),doc=valSelect("calDocumento"),version=val("calVersion"),fecha=val("calFecha");
+
  if(!cod||!tipo||!doc||!version||!fecha)return alert("Completa todos los campos.");
  if(tipo==="PQ"&&!e?.aplicaPQ)return alert("Este equipo no tiene PQ habilitada.");
- calcularVencimiento();generarCodigo();
- let r={equipoCodigo:cod,equipoNombre:e.nombre,tipo,documento:doc,version,codigo:val("calCodigo"),fecha,vencimiento:val("calVencimiento")};
- if(calificacionEditando===null)calificaciones.push(r);else calificaciones[calificacionEditando]=r;
- guardarDatos();mostrarCalificaciones();
+
+ calcularVencimiento();
+ generarCodigo();
+
+ let r={
+  equipoCodigo:cod,
+  equipoNombre:e.nombre,
+  tipo,
+  documento:doc,
+  version,
+  codigo:val("calCodigo"),
+  fecha,
+  vencimiento:val("calVencimiento")
+ };
+
+ if(calificacionEditando===null)calificaciones.push(r);
+ else calificaciones[calificacionEditando]=r;
+
+ guardarDatos();
+ mostrarCalificaciones();
 }
 
 function editarCalificacion(i){
  if(!esAdmin)return;
- let r=calificaciones[i];mostrarCalificaciones();nuevaCalificacion(r.equipoCodigo);calificacionEditando=i;
- document.getElementById("calEquipo").value=r.equipoCodigo;actualizarTipos();
+
+ let r=calificaciones[i];
+
+ mostrarCalificaciones();
+ nuevaCalificacion(r.equipoCodigo);
+
+ calificacionEditando=i;
+
+ document.getElementById("calEquipo").value=r.equipoCodigo;
+ actualizarTipos();
+
  document.getElementById("calTipo").value=r.tipo;
  document.getElementById("calDocumento").value=r.documento;
  document.getElementById("calVersion").value=r.version;
  document.getElementById("calFecha").value=r.fecha;
- calcularVencimiento();generarCodigo();
+
+ calcularVencimiento();
+ generarCodigo();
 }
 
 function eliminarCalificacion(i){
  if(!esAdmin)return;
  if(!confirm("¿Eliminar "+calificaciones[i].codigo+"?"))return;
- calificaciones.splice(i,1);guardarDatos();tablaCalificaciones();
+
+ calificaciones.splice(i,1);
+ guardarDatos();
+ tablaCalificaciones();
 }
 
 function limpiarFormCal(){
  let x=document.getElementById("formCalFicha")||document.getElementById("formCal");
- if(x)x.innerHTML="";calificacionEditando=null;
+ if(x)x.innerHTML="";
+ calificacionEditando=null;
 }
 
 function tablaCalificaciones(){
- let q=(document.getElementById("buscarCal")?.value||"").toLowerCase(),fe=valSelect("fEq"),ft=valSelect("fTipo"),fd=valSelect("fDoc");
- let lista=calificaciones.filter(c=>(!fe||c.equipoCodigo===fe)&&(!ft||c.tipo===ft)&&(!fd||c.documento===fd)&&[c.equipoCodigo,c.equipoNombre,c.codigo,c.tipo,c.documento].some(x=>(x||"").toLowerCase().includes(q)));
- let h=`<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Tipo</th><th>Documento</th><th>Código</th><th>Emisión</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>`;
+ let q=(document.getElementById("buscarCal")?.value||"").toLowerCase();
+ let fe=valSelect("fEq"),ft=valSelect("fTipo"),fd=valSelect("fDoc");
+
+ let lista=calificaciones.filter(c=>
+  (!fe||c.equipoCodigo===fe)&&
+  (!ft||c.tipo===ft)&&
+  (!fd||c.documento===fd)&&
+  [c.equipoCodigo,c.equipoNombre,c.codigo,c.tipo,c.documento]
+   .some(x=>(x||"").toLowerCase().includes(q))
+ );
+
+ let h=`<div class="tabla-contenedor"><table>
+ <thead><tr><th>Equipo</th><th>Tipo</th><th>Documento</th><th>Código</th><th>Emisión</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>`;
+
  lista.forEach(c=>{
   let i=calificaciones.indexOf(c),s=estadoFecha(c.vencimiento);
-  h+=`<tr><td><span class="codigo">${esc(c.equipoCodigo)}</span><div class="subdato">${esc(c.equipoNombre)}</div></td><td>${c.tipo}</td><td>${c.documento}</td><td class="codigo">${esc(c.codigo)}</td><td>${fechaBonita(c.fecha)}</td><td>${fechaBonita(c.vencimiento)}</td><td><span class="badge ${s.clase}">${s.texto}</span></td><td><div class="acciones-tabla"><button class="btn-editar" onclick="editarCalificacion(${i})">✎</button><button class="btn-eliminar" onclick="eliminarCalificacion(${i})">🗑</button></div></td></tr>`;
+
+  h+=`<tr>
+   <td><span class="codigo">${esc(c.equipoCodigo)}</span><div class="subdato">${esc(c.equipoNombre)}</div></td>
+   <td>${c.tipo}</td>
+   <td>${c.documento}</td>
+   <td class="codigo">${esc(c.codigo)}</td>
+   <td>${fechaBonita(c.fecha)}</td>
+   <td>${fechaBonita(c.vencimiento)}</td>
+   <td>${puntoEstado(s)}</td>
+   <td><div class="acciones-tabla">
+    <button class="btn-editar" onclick="editarCalificacion(${i})">✎</button>
+    <button class="btn-eliminar" onclick="eliminarCalificacion(${i})">🗑</button>
+   </div></td>
+  </tr>`;
  });
- h+="</tbody></table></div>";document.getElementById("tablaCal").innerHTML=h;
+
+ h+="</tbody></table></div>";
+ document.getElementById("tablaCal").innerHTML=h;
 }
 
 /* ================= EXCEL ================= */
 
 function descargarPlantilla(){
  if(!esAdmin)return;
- let ws=XLSX.utils.json_to_sheet([{"Código":"E780/EF","Nombre":"Envasadora de Gotas","Área":"Producción","Aplica PQ":"Sí"}]),wb=XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb,ws,"Equipos");XLSX.writeFile(wb,"Plantilla_Equipos.xlsx");
+
+ let ws=XLSX.utils.json_to_sheet([{
+  "Código":"E780/EF",
+  "Nombre":"Envasadora de Gotas",
+  "Área":"Producción",
+  "Ubicación":"Sala de Envasado",
+  "Aplica PQ":"Sí"
+ }]);
+
+ let wb=XLSX.utils.book_new();
+ XLSX.utils.book_append_sheet(wb,ws,"Equipos");
+ XLSX.writeFile(wb,"Plantilla_Equipos.xlsx");
 }
 
 function importarExcel(ev){
  if(!esAdmin)return;
- let f=ev.target.files[0];if(!f)return;let r=new FileReader();
+
+ let f=ev.target.files[0];
+ if(!f)return;
+
+ let r=new FileReader();
+
  r.onload=e=>{
   try{
-   let wb=XLSX.read(new Uint8Array(e.target.result),{type:"array"}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+   let wb=XLSX.read(new Uint8Array(e.target.result),{type:"array"});
+   let rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+
    rows.forEach(x=>{
-    let codigo=col(x,["Código","Codigo"]),nombre=col(x,["Nombre","Nombre del equipo"]),area=col(x,["Área","Area"]),pq=col(x,["Aplica PQ","PQ"]);
+    let codigo=col(x,["Código","Codigo"]);
+    let nombre=col(x,["Nombre","Nombre del equipo"]);
+    let area=col(x,["Área","Area"]);
+    let ubicacion=col(x,["Ubicación","Ubicacion"]);
+    let pq=col(x,["Aplica PQ","PQ"]);
+
     if(!codigo||!nombre||equipos.some(e=>e.codigo===codigo))return;
-    equipos.push({codigo,nombre,area,aplicaPQ:["si","sí","s","yes","1"].includes((pq||"").toLowerCase())});
+
+    equipos.push({
+     codigo,
+     nombre,
+     area,
+     ubicacion,
+     aplicaPQ:["si","sí","s","yes","1"].includes((pq||"").toLowerCase())
+    });
    });
-   guardarDatos();mostrarEquipos();
-  }catch(err){alert("No se pudo leer el archivo Excel.");}
+
+   guardarDatos();
+   mostrarEquipos();
+
+  }catch(err){
+   alert("No se pudo leer el archivo Excel.");
+  }
  };
- r.readAsArrayBuffer(f);ev.target.value="";
+
+ r.readAsArrayBuffer(f);
+ ev.target.value="";
 }
-function col(f,n){for(let x of n)if(f[x]!=null)return String(f[x]).trim();return""}
+
+function col(f,n){
+ for(let x of n)if(f[x]!=null)return String(f[x]).trim();
+ return"";
+}
 
 /* ================= BASE ================= */
 
 function mostrarBase(){
  if(!esAdmin)return mostrarInicio();
+
  document.getElementById("contenido").innerHTML=`
- <div class="topbar"><div><h1 class="titulo-pagina">Base de datos</h1><div class="subtitulo-pagina">Almacenamiento actual</div></div></div>
- <div class="tarjeta"><h2>Estado actual</h2><p>La aplicación utiliza <strong>localStorage</strong> en este navegador.</p><p class="subdato">Equipos: ${equipos.length} · Calificaciones: ${calificaciones.length} · Manuales: ${manuales.length}</p></div>`;
+ <div class="topbar">
+  <div><h1 class="titulo-pagina">Base de datos</h1><div class="subtitulo-pagina">Almacenamiento actual</div></div>
+ </div>
+
+ <div class="tarjeta">
+  <h2>Estado actual</h2>
+  <p>La aplicación utiliza <strong>localStorage</strong> en este navegador.</p>
+  <p class="subdato">Equipos: ${equipos.length} · Calificaciones: ${calificaciones.length} · Manuales: ${manuales.length}</p>
+ </div>`;
 }
 
 /* ================= AUXILIARES ================= */
 
-function cancelarFormularioActual(btn){
- let padre=btn.closest(".tarjeta")||btn.parentElement.parentElement;
- if(padre)padre.innerHTML="";
-}
 function val(id){return document.getElementById(id)?.value.trim()||""}
 function valSelect(id){return document.getElementById(id)?.value||""}
-function fechaBonita(f){if(!f)return"—";let p=f.split("-");return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:f}
-function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function escJS(v){return String(v??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'")}
+
+function fechaBonita(f){
+ if(!f)return"—";
+ let p=f.split("-");
+ return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:f;
+}
+
+function esc(v){
+ return String(v??"")
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+}
+
+function escJS(v){
+ return String(v??"")
+ .replace(/\\/g,"\\\\")
+ .replace(/'/g,"\\'");
+}
 
 cargarMenu();
 mostrarInicio();
 </script>
+
 </body>
 </html>
