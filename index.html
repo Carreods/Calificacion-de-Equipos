@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Gestión de Equipos Calificados</title>
+<title>Gestión SAC-M</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
@@ -11,35 +11,35 @@
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eef1f3;color:#182230}
 button,input,select{font-family:inherit}
 button{border:0;border-radius:8px;padding:9px 13px;cursor:pointer;font-weight:700}
-
-.sidebar{width:220px;height:100vh;background:#fff;border-right:1px solid #dfe3e8;position:fixed;top:0;left:0;padding:18px 12px;display:flex;flex-direction:column;z-index:10}
+.sidebar{width:235px;height:100vh;background:#fff;border-right:1px solid #dfe3e8;position:fixed;top:0;left:0;padding:18px 12px;display:flex;flex-direction:column;z-index:10}
 .logo-box{padding:5px 8px 14px;border-bottom:1px solid #e6e9ed}
 .logo-imagen{width:95px;height:auto;display:block;margin:0 0 8px}
 .logo-subtitulo{font-size:13px;font-weight:700;line-height:1.3}
 .logo-descripcion{margin-top:4px;font-size:10px;color:#66788a;letter-spacing:.5px}
-
 .menu{list-style:none;margin:16px 0 0;padding:0}
-.menu li{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:9px;margin-bottom:5px;cursor:pointer;color:#526273;font-size:14px}
+.menu li{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:9px;margin-bottom:4px;cursor:pointer;color:#526273;font-size:13px;line-height:1.25}
 .menu li:hover{background:#f7f8fa}
 .menu li.activo{color:#e30613;background:#fde8ea;font-weight:700}
-.menu-icono{width:18px;text-align:center}
-
+.menu-icono{width:18px;text-align:center;flex:none}
 .sidebar-bottom{margin-top:auto;border-top:1px solid #e6e9ed;padding-top:15px}
 .sidebar-label{font-size:10px;color:#657484;text-transform:uppercase;margin-bottom:6px}
 .usuario-box{padding:10px;background:#f7f8fa;border-radius:8px}
 .usuario-nombre{font-weight:700;font-size:13px}
 .usuario-area{color:#6d7985;font-size:11px;margin-top:3px}
-
 .btn-login{width:100%;margin-top:9px;background:#e30613;color:#fff}
 .btn-logout{width:100%;margin-top:9px;background:#edf1f4;color:#344454}
 
-.contenido{margin-left:220px;padding:28px;min-height:100vh}
+.contenido{margin-left:235px;padding:28px;min-height:100vh}
 .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:22px}
 .titulo-pagina{margin:0;font-size:26px}
 .subtitulo-pagina{margin-top:5px;color:#66788a;font-size:13px}
-
 .tarjeta{background:#fff;border:1px solid #e0e5e9;border-radius:14px;padding:20px;margin-bottom:18px}
 .tarjeta h2{margin-top:0}
+
+.submenu{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;padding:7px;background:#fff;border:1px solid #e0e5e9;border-radius:12px}
+.submenu button{background:transparent;color:#627181;padding:9px 14px}
+.submenu button:hover{background:#f4f6f7}
+.submenu button.activo{background:#fde8ea;color:#e30613}
 
 .btn-rojo-principal,.btn-principal{background:#e30613;color:#fff}
 .btn-rojo-principal{padding:11px 18px}
@@ -51,10 +51,7 @@ button{border:0;border-radius:8px;padding:9px 13px;cursor:pointer;font-weight:70
 .resumen{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:18px}
 .resumen-card{background:#fff;border:1px solid #e0e5e9;border-radius:13px;padding:17px;display:flex;gap:13px;align-items:center}
 .resumen-icono{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
-.verde-bg{background:#dcf8e8}
-.amarillo-bg{background:#fff3d8}
-.rojo-bg{background:#fde4e6}
-.azul-bg{background:#e7f1ff}
+.verde-bg{background:#dcf8e8}.amarillo-bg{background:#fff3d8}.rojo-bg{background:#fde4e6}.azul-bg{background:#e7f1ff}
 .resumen-titulo{font-size:12px;color:#66788a}
 .resumen-numero{font-size:24px;font-weight:800;margin-top:2px}
 .seccion-titulo{font-size:17px;font-weight:700;margin:5px 0 12px}
@@ -81,16 +78,11 @@ tr:hover td{background:#fafbfc}
 .proximo{background:#fff0cc;color:#c98200}
 .vencido{background:#fde0e2;color:#d91f2b}
 .neutro{background:#edf1f4;color:#66788a}
-
 .semaforo-punto{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:-1px}
-.punto-verde{background:#20a35b}
-.punto-amarillo{background:#e6a400}
-.punto-rojo{background:#dc303c}
-.punto-gris{background:#a8b1ba}
+.punto-verde{background:#20a35b}.punto-amarillo{background:#e6a400}.punto-rojo{background:#dc303c}.punto-gris{background:#a8b1ba}
 
 .filtros{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:9px;margin-bottom:14px}
 .dashboard-dos{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-
 .ficha-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .ficha-dato{background:#f7f8fa;border-radius:9px;padding:12px}
 .ficha-label{font-size:11px;color:#71808f}
@@ -101,15 +93,17 @@ tr:hover td{background:#fafbfc}
 .estado-ficha-titulo{font-size:11px;color:#71808f;font-weight:700;margin-bottom:9px;text-transform:uppercase}
 .estado-ficha-valor{font-size:13px;font-weight:700}
 .estado-general-card{border:2px solid #d9dee3}
-
 .calificacion-bloque{border:1px solid #e1e5e9;border-radius:12px;overflow:hidden}
 .calificacion-cabecera{padding:13px 15px;background:#f5f6f7;font-size:16px;font-weight:800;border-bottom:1px solid #e1e5e9}
 .no-aplica{padding:25px;text-align:center;color:#748291;font-size:13px;background:#fafbfc}
-
 .enlace-equipo{cursor:pointer;color:#d60916;font-weight:700}
 .enlace-equipo:hover{text-decoration:underline}
-
 .modo-consulta{background:#e7f1ff;color:#196cb8;padding:9px 12px;border-radius:8px;font-size:12px;margin-bottom:18px}
+
+.modulo-portada{min-height:380px;display:flex;align-items:center;justify-content:center;text-align:center}
+.modulo-icono{width:70px;height:70px;border-radius:18px;background:#f2f4f6;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 17px}
+.modulo-portada h2{font-size:24px;margin:0 0 8px}
+.modulo-portada p{color:#71808f;max-width:500px;margin:0 auto;line-height:1.5}
 
 .login-overlay{position:fixed;inset:0;background:rgba(20,30,40,.45);display:flex;align-items:center;justify-content:center;z-index:1000}
 .login-card{width:360px;max-width:calc(100% - 30px);background:#fff;border-radius:14px;padding:24px;box-shadow:0 15px 40px rgba(0,0,0,.18)}
@@ -125,8 +119,8 @@ tr:hover td{background:#fafbfc}
  .ficha-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:800px){
- .sidebar{width:180px}
- .contenido{margin-left:180px;padding:15px}
+ .sidebar{width:185px}
+ .contenido{margin-left:185px;padding:15px}
  .resumen,.form-grid,.ficha-grid,.filtros{grid-template-columns:1fr}
  .estado-ficha{grid-template-columns:1fr 1fr}
  .completo{grid-column:auto}
@@ -137,72 +131,63 @@ tr:hover td{background:#fafbfc}
 <body>
 
 <aside class="sidebar">
-<div class="logo-box">
-<img src="logo prater.png" alt="Logo PRATER" class="logo-imagen">
-<div class="logo-subtitulo">Sistemas de Apoyo Crítico y Metrología</div>
-<div class="logo-descripcion">LABORATORIOS PRATER</div>
-</div>
+ <div class="logo-box">
+  <img src="logo prater.png" alt="Logo PRATER" class="logo-imagen">
+  <div class="logo-subtitulo">Sistemas de Apoyo Crítico y Metrología</div>
+  <div class="logo-descripcion">LABORATORIOS PRATER</div>
+ </div>
 
-<ul class="menu" id="menuPrincipal"></ul>
+ <ul class="menu" id="menuPrincipal">
+  <li class="activo" data-modulo="calificacion" onclick="abrirModulo('calificacion',this)"><span class="menu-icono">▣</span>Calificación de Equipos</li>
+  <li data-modulo="calibracion" onclick="abrirModulo('calibracion',this)"><span class="menu-icono">◎</span>Calibración de Equipos</li>
+  <li data-modulo="agua" onclick="abrirModulo('agua',this)"><span class="menu-icono">◉</span>Agua Purificada</li>
+  <li data-modulo="hvac" onclick="abrirModulo('hvac',this)"><span class="menu-icono">≋</span>HVAC</li>
+  <li data-modulo="aire" onclick="abrirModulo('aire',this)"><span class="menu-icono">➜</span>Aire Comprimido</li>
+  <li data-modulo="mapeos" onclick="abrirModulo('mapeos',this)"><span class="menu-icono">⌁</span>Mapeos Térmicos</li>
+  <li data-modulo="documentacion" onclick="abrirModulo('documentacion',this)"><span class="menu-icono">▤</span>Documentación SAC-M</li>
+ </ul>
 
-<div class="sidebar-bottom">
-<div class="sidebar-label">Usuario</div>
-<div class="usuario-box">
-<div class="usuario-nombre" id="nombreUsuario">MODO CONSULTA</div>
-<div class="usuario-area" id="areaUsuario">Solo lectura</div>
-</div>
-
-<button class="btn-login" id="btnAcceso" onclick="abrirLogin()">🔐 Acceso administrador</button>
-<button class="btn-logout" id="btnSalir" onclick="cerrarSesion()" style="display:none">Cerrar sesión</button>
-</div>
+ <div class="sidebar-bottom">
+  <div class="sidebar-label">Usuario</div>
+  <div class="usuario-box">
+   <div class="usuario-nombre" id="nombreUsuario">MODO CONSULTA</div>
+   <div class="usuario-area" id="areaUsuario">Solo lectura</div>
+  </div>
+  <button class="btn-login" id="btnAcceso" onclick="abrirLogin()">🔐 Acceso administrador</button>
+  <button class="btn-logout" id="btnSalir" onclick="cerrarSesion()" style="display:none">Cerrar sesión</button>
+ </div>
 </aside>
 
 <main class="contenido" id="contenido"></main>
 
 <div id="loginModal" style="display:none">
-<div class="login-overlay">
-<div class="login-card">
-
-<h2>Acceso administrador</h2>
-<p>Ingresa tus credenciales para habilitar la edición.</p>
-
-<div class="login-error" id="loginError">Usuario o contraseña incorrectos.</div>
-
-<label>Usuario</label>
-<input id="loginUsuario" autocomplete="username">
-
-<label>Contraseña</label>
-<input type="password" id="loginClave" autocomplete="current-password" onkeydown="if(event.key==='Enter')iniciarSesion()">
-
-<div class="acciones-form">
-<button class="btn-principal" onclick="iniciarSesion()">Ingresar</button>
-<button class="btn-secundario" onclick="cerrarLogin()">Cancelar</button>
-</div>
-
-</div>
-</div>
+ <div class="login-overlay">
+  <div class="login-card">
+   <h2>Acceso administrador</h2>
+   <p>Ingresa tus credenciales para habilitar la edición.</p>
+   <div class="login-error" id="loginError">Usuario o contraseña incorrectos.</div>
+   <label>Usuario</label>
+   <input id="loginUsuario" autocomplete="username">
+   <label>Contraseña</label>
+   <input type="password" id="loginClave" autocomplete="current-password" onkeydown="if(event.key==='Enter')iniciarSesion()">
+   <div class="acciones-form">
+    <button class="btn-principal" onclick="iniciarSesion()">Ingresar</button>
+    <button class="btn-secundario" onclick="cerrarLogin()">Cancelar</button>
+   </div>
+  </div>
+ </div>
 </div>
 
 <script>
 const ADMIN_USUARIO="admin",ADMIN_CLAVE="SACM2026";
-
 let esAdmin=sessionStorage.getItem("adminSACM")==="true";
+let moduloActual="calificacion",paginaCalificacion="inicio";
 let equipos=JSON.parse(localStorage.getItem("equipos"))||[];
 let calificaciones=JSON.parse(localStorage.getItem("calificaciones"))||[];
 let manuales=JSON.parse(localStorage.getItem("manuales"))||[];
+let equipoEditando=null,calificacionEditando=null,manualEditando=null;
 
-let equipoEditando=null;
-let calificacionEditando=null;
-let manualEditando=null;
-
-equipos=equipos.map(e=>({
- codigo:e.codigo||"",
- nombre:e.nombre||"",
- area:e.area||"",
- ubicacion:e.ubicacion||"",
- aplicaPQ:e.aplicaPQ===false?false:true
-}));
-
+equipos=equipos.map(e=>({codigo:e.codigo||"",nombre:e.nombre||"",area:e.area||"",ubicacion:e.ubicacion||"",aplicaPQ:e.aplicaPQ===false?false:true}));
 guardarDatos();
 
 function guardarDatos(){
@@ -211,44 +196,13 @@ function guardarDatos(){
  localStorage.setItem("manuales",JSON.stringify(manuales));
 }
 
-/* ================= USUARIOS ================= */
+/* USUARIO */
 
-function cargarMenu(){
- let h=`
- <li class="activo" onclick="mostrarPagina('inicio',this)">
-  <span class="menu-icono">⌂</span>Inicio
- </li>
-
- <li onclick="mostrarPagina('equipos',this)">
-  <span class="menu-icono">⚙</span>Equipos
- </li>`;
-
- if(esAdmin)h+=`
- <li onclick="mostrarPagina('calificaciones',this)">
-  <span class="menu-icono">▣</span>Calificaciones
- </li>
-
- <li onclick="mostrarPagina('manuales',this)">
-  <span class="menu-icono">▤</span>Manuales
- </li>
-
- <li onclick="mostrarPagina('base',this)">
-  <span class="menu-icono">◉</span>Base de datos
- </li>`;
-
- document.getElementById("menuPrincipal").innerHTML=h;
-
- document.getElementById("nombreUsuario").textContent=
- esAdmin?"ADMINISTRADOR":"MODO CONSULTA";
-
- document.getElementById("areaUsuario").textContent=
- esAdmin?"SAC-M · Edición habilitada":"Solo lectura";
-
- document.getElementById("btnAcceso").style.display=
- esAdmin?"none":"block";
-
- document.getElementById("btnSalir").style.display=
- esAdmin?"block":"none";
+function actualizarUsuario(){
+ document.getElementById("nombreUsuario").textContent=esAdmin?"ADMINISTRADOR":"MODO CONSULTA";
+ document.getElementById("areaUsuario").textContent=esAdmin?"SAC-M · Edición habilitada":"Solo lectura";
+ document.getElementById("btnAcceso").style.display=esAdmin?"none":"block";
+ document.getElementById("btnSalir").style.display=esAdmin?"block":"none";
 }
 
 function abrirLogin(){
@@ -256,2781 +210,521 @@ function abrirLogin(){
  document.getElementById("loginUsuario").value="";
  document.getElementById("loginClave").value="";
  document.getElementById("loginError").style.display="none";
-
- setTimeout(()=>{
-  document.getElementById("loginUsuario").focus();
- },50);
+ setTimeout(()=>document.getElementById("loginUsuario").focus(),50);
 }
-
-function cerrarLogin(){
- document.getElementById("loginModal").style.display="none";
-}
+function cerrarLogin(){document.getElementById("loginModal").style.display="none"}
 
 function iniciarSesion(){
- let u=val("loginUsuario");
- let c=document.getElementById("loginClave").value;
-
+ let u=val("loginUsuario"),c=document.getElementById("loginClave").value;
  if(u===ADMIN_USUARIO&&c===ADMIN_CLAVE){
-  esAdmin=true;
-  sessionStorage.setItem("adminSACM","true");
-  cerrarLogin();
-  cargarMenu();
-  mostrarInicio();
- }else{
-  document.getElementById("loginError").style.display="block";
- }
+  esAdmin=true;sessionStorage.setItem("adminSACM","true");
+  cerrarLogin();actualizarUsuario();abrirModulo(moduloActual);
+ }else document.getElementById("loginError").style.display="block";
 }
 
 function cerrarSesion(){
  if(!confirm("¿Cerrar la sesión de administrador?"))return;
-
- esAdmin=false;
- sessionStorage.removeItem("adminSACM");
- cargarMenu();
- mostrarInicio();
+ esAdmin=false;sessionStorage.removeItem("adminSACM");
+ paginaCalificacion="inicio";actualizarUsuario();abrirModulo(moduloActual);
 }
 
-function mostrarPagina(p,el){
+/* MÓDULOS PRINCIPALES */
 
- if(["calificaciones","manuales","base"].includes(p)&&!esAdmin){
-  return mostrarInicio();
- }
+function abrirModulo(modulo,el){
+ moduloActual=modulo;
+ document.querySelectorAll("#menuPrincipal li").forEach(x=>x.classList.remove("activo"));
+ let item=el||document.querySelector(`[data-modulo="${modulo}"]`);
+ if(item)item.classList.add("activo");
 
- document.querySelectorAll(".menu li").forEach(x=>
-  x.classList.remove("activo")
- );
-
- if(el)el.classList.add("activo");
-
- if(p==="inicio")mostrarInicio();
- if(p==="equipos")mostrarEquipos();
- if(p==="calificaciones")mostrarCalificaciones();
- if(p==="manuales")mostrarManuales();
- if(p==="base")mostrarBase();
+ if(modulo==="calificacion"){mostrarInicio();return}
+ let datos={
+  calibracion:["Calibración de Equipos","◎","Gestión y control metrológico de equipos e instrumentos."],
+  agua:["Agua Purificada","◉","Gestión del sistema de Agua Purificada y sus controles asociados."],
+  hvac:["HVAC","≋","Gestión de sistemas HVAC, condiciones ambientales y documentación asociada."],
+  aire:["Aire Comprimido","➜","Gestión y seguimiento del sistema de Aire Comprimido."],
+  mapeos:["Mapeos Térmicos","⌁","Gestión de estudios y mapeos térmicos de áreas y equipos."],
+  documentacion:["Documentación SAC-M","▤","Gestión documental general de Sistemas de Apoyo Crítico y Metrología."]
+ };
+ mostrarModuloPendiente(...datos[modulo]);
 }
 
-/* ================= ESTADOS ================= */
+function mostrarModuloPendiente(titulo,icono,descripcion){
+ document.getElementById("contenido").innerHTML=`
+ <div class="topbar"><div><h1 class="titulo-pagina">${titulo}</h1><div class="subtitulo-pagina">Sistemas de Apoyo Crítico y Metrología</div></div></div>
+ <div class="tarjeta modulo-portada"><div>
+  <div class="modulo-icono">${icono}</div>
+  <h2>${titulo}</h2>
+  <p>${descripcion}<br>Este módulo está preparado para su próximo desarrollo.</p>
+ </div></div>`;
+}
+
+/* SUBMENÚ CALIFICACIÓN */
+
+function submenuCalificacion(activo){
+ return`<div class="submenu">
+ <button class="${activo==="inicio"?"activo":""}" onclick="mostrarInicio()">⌂ Inicio</button>
+ <button class="${activo==="equipos"?"activo":""}" onclick="mostrarEquipos()">⚙ Equipos</button>
+ ${esAdmin?`
+ <button class="${activo==="calificaciones"?"activo":""}" onclick="mostrarCalificaciones()">▣ Calificaciones</button>
+ <button class="${activo==="manuales"?"activo":""}" onclick="mostrarManuales()">▤ Manuales</button>
+ <button class="${activo==="base"?"activo":""}" onclick="mostrarBase()">◉ Base de datos</button>`:""}
+ </div>`;
+}
+
+/* ESTADOS */
 
 function estadoFecha(fecha){
-
- if(!fecha){
-  return{
-   texto:"Sin fecha",
-   clase:"neutro",
-   nivel:0
-  };
- }
-
- let hoy=new Date();
- hoy.setHours(0,0,0,0);
-
- let f=new Date(fecha+"T00:00:00");
- let dias=Math.ceil((f-hoy)/86400000);
-
- if(dias<0){
-  return{
-   texto:"Vencido",
-   clase:"vencido",
-   nivel:3
-  };
- }
-
- if(dias<=180){
-  return{
-   texto:"Próximo",
-   clase:"proximo",
-   nivel:2
-  };
- }
-
- return{
-  texto:"Vigente",
-  clase:"vigente",
-  nivel:1
- };
+ if(!fecha)return{texto:"Sin fecha",clase:"neutro",nivel:0};
+ let hoy=new Date();hoy.setHours(0,0,0,0);
+ let f=new Date(fecha+"T00:00:00"),dias=Math.ceil((f-hoy)/86400000);
+ if(dias<0)return{texto:"Vencido",clase:"vencido",nivel:3};
+ if(dias<=180)return{texto:"Próximo",clase:"proximo",nivel:2};
+ return{texto:"Vigente",clase:"vigente",nivel:1};
 }
-
 function estadoLista(lista){
-
- if(!lista.length){
-  return{
-   texto:"Sin registros",
-   clase:"neutro",
-   nivel:0
-  };
- }
-
- let peor={
-  texto:"Vigente",
-  clase:"vigente",
-  nivel:1
- };
-
- lista.forEach(x=>{
-  let s=estadoFecha(x.vencimiento);
-
-  if(s.nivel>peor.nivel){
-   peor=s;
-  }
- });
-
+ if(!lista.length)return{texto:"Sin registros",clase:"neutro",nivel:0};
+ let peor={texto:"Vigente",clase:"vigente",nivel:1};
+ lista.forEach(x=>{let s=estadoFecha(x.vencimiento);if(s.nivel>peor.nivel)peor=s});
  return peor;
 }
-
 function estadoGeneralEquipo(codigo){
-
- let c=calificaciones.filter(
-  x=>x.equipoCodigo===codigo
- );
-
- let m=manuales.filter(
-  x=>x.equipoCodigo===codigo
- );
-
- if(!c.length&&!m.length){
-  return{
-   texto:"Sin registros",
-   clase:"neutro",
-   nivel:0
-  };
- }
-
- let ec=estadoLista(c);
- let em=estadoLista(m);
-
- return ec.nivel>=em.nivel?ec:em;
+ let e=equipos.find(x=>x.codigo===codigo);
+ let estados=[
+  estadoLista(calificaciones.filter(x=>x.equipoCodigo===codigo&&x.tipo==="IQ")),
+  estadoLista(calificaciones.filter(x=>x.equipoCodigo===codigo&&x.tipo==="OQ")),
+  estadoLista(manuales.filter(x=>x.equipoCodigo===codigo))
+ ];
+ if(e?.aplicaPQ)estados.push(estadoLista(calificaciones.filter(x=>x.equipoCodigo===codigo&&x.tipo==="PQ")));
+ let peor={texto:"Sin registros",clase:"neutro",nivel:0};
+ estados.forEach(s=>{if(s.nivel>peor.nivel)peor=s});
+ return peor;
 }
-
 function puntoEstado(s){
-
- let p=
- s.clase==="vigente"?"punto-verde":
- s.clase==="proximo"?"punto-amarillo":
- s.clase==="vencido"?"punto-rojo":
- "punto-gris";
-
- return`
- <span class="semaforo-punto ${p}"></span>
- <span class="badge ${s.clase}">
-  ${s.texto}
- </span>`;
+ let p=s.clase==="vigente"?"punto-verde":s.clase==="proximo"?"punto-amarillo":s.clase==="vencido"?"punto-rojo":"punto-gris";
+ return`<span class="semaforo-punto ${p}"></span><span class="badge ${s.clase}">${s.texto}</span>`;
 }
-
 function contarEstados(lista){
-
- let r={
-  vigentes:0,
-  proximos:0,
-  vencidos:0
- };
-
- lista.forEach(x=>{
-
-  let s=estadoFecha(x.vencimiento);
-
-  if(s.texto==="Vigente")r.vigentes++;
-  if(s.texto==="Próximo")r.proximos++;
-  if(s.texto==="Vencido")r.vencidos++;
-
- });
-
+ let r={vigentes:0,proximos:0,vencidos:0};
+ lista.forEach(x=>{let s=estadoFecha(x.vencimiento);if(s.texto==="Vigente")r.vigentes++;if(s.texto==="Próximo")r.proximos++;if(s.texto==="Vencido")r.vencidos++});
  return r;
 }
 
-/* ================= INICIO ================= */
+/* INICIO CALIFICACIÓN */
 
 function mostrarInicio(){
-
- let c=contarEstados(calificaciones);
- let m=contarEstados(manuales);
-
+ moduloActual="calificacion";paginaCalificacion="inicio";
+ let c=contarEstados(calificaciones),m=contarEstados(manuales);
  document.getElementById("contenido").innerHTML=`
-
- <div class="topbar">
-  <div>
-   <h1 class="titulo-pagina">Panel de control</h1>
-   <div class="subtitulo-pagina">
-    Estado general de calificaciones y manuales operativos
-   </div>
-  </div>
- </div>
-
- ${!esAdmin?`
- <div class="modo-consulta">
-  👁 Estás en modo consulta. Puedes revisar equipos,
-  documentos y fechas, pero no modificar información.
- </div>`:""}
+ <div class="topbar"><div><h1 class="titulo-pagina">Calificación de Equipos</h1><div class="subtitulo-pagina">Gestión de IQ, OQ, PQ y Manuales Operativos</div></div></div>
+ ${submenuCalificacion("inicio")}
+ ${!esAdmin?`<div class="modo-consulta">👁 Estás en modo consulta. Puedes revisar equipos, documentos y fechas, pero no modificar información.</div>`:""}
 
  <div class="dashboard-dos">
+  <div><div class="seccion-titulo">Calificaciones</div><div class="resumen">
+   ${cardSemaforo("✓","Vigentes",c.vigentes,"verde-bg")}
+   ${cardSemaforo("◷","Próximas",c.proximos,"amarillo-bg")}
+   ${cardSemaforo("!","Vencidas",c.vencidos,"rojo-bg")}
+  </div></div>
 
-  <div>
-
-   <div class="seccion-titulo">
-    Calificaciones
-   </div>
-
-   <div class="resumen">
-
-    ${cardSemaforo(
-     "✓",
-     "Vigentes",
-     c.vigentes,
-     "verde-bg"
-    )}
-
-    ${cardSemaforo(
-     "◷",
-     "Próximas",
-     c.proximos,
-     "amarillo-bg"
-    )}
-
-    ${cardSemaforo(
-     "!",
-     "Vencidas",
-     c.vencidos,
-     "rojo-bg"
-    )}
-
-   </div>
-
-  </div>
-
-  <div>
-
-   <div class="seccion-titulo">
-    Manuales Operativos
-   </div>
-
-   <div class="resumen">
-
-    ${cardSemaforo(
-     "✓",
-     "Vigentes",
-     m.vigentes,
-     "verde-bg"
-    )}
-
-    ${cardSemaforo(
-     "◷",
-     "Próximos",
-     m.proximos,
-     "amarillo-bg"
-    )}
-
-    ${cardSemaforo(
-     "!",
-     "Vencidos",
-     m.vencidos,
-     "rojo-bg"
-    )}
-
-   </div>
-
-  </div>
-
+  <div><div class="seccion-titulo">Manuales Operativos</div><div class="resumen">
+   ${cardSemaforo("✓","Vigentes",m.vigentes,"verde-bg")}
+   ${cardSemaforo("◷","Próximos",m.proximos,"amarillo-bg")}
+   ${cardSemaforo("!","Vencidos",m.vencidos,"rojo-bg")}
+  </div></div>
  </div>
 
  <div class="tarjeta">
-
   <h2>Estado por equipo</h2>
-
-  <div class="subdato" style="margin-bottom:14px">
-   Estado individual de IQ, OQ, PQ y Manual Operativo.
-  </div>
-
+  <div class="subdato" style="margin-bottom:14px">Estado individual de IQ, OQ, PQ y Manual Operativo.</div>
   ${tablaSemaforoEquipos()}
-
  </div>`;
 }
 
 function cardSemaforo(icono,titulo,numero,clase){
-
- return`
- <div class="resumen-card">
-
-  <div class="resumen-icono ${clase}">
-   ${icono}
-  </div>
-
-  <div>
-   <div class="resumen-titulo">
-    ${titulo}
-   </div>
-
-   <div class="resumen-numero">
-    ${numero}
-   </div>
-  </div>
-
- </div>`;
+ return`<div class="resumen-card"><div class="resumen-icono ${clase}">${icono}</div><div><div class="resumen-titulo">${titulo}</div><div class="resumen-numero">${numero}</div></div></div>`;
 }
 
 function tablaSemaforoEquipos(){
-
- if(!equipos.length){
-  return`
-  <div class="subdato">
-   No hay equipos registrados.
-  </div>`;
- }
-
- let h=`
- <div class="tabla-contenedor">
- <table>
-
- <thead>
- <tr>
-  <th>Equipo</th>
-  <th>Nombre</th>
-  <th>Área</th>
-  <th>Ubicación</th>
-  <th>IQ</th>
-  <th>OQ</th>
-  <th>PQ</th>
-  <th>Manual</th>
-  <th>Estado general</th>
- </tr>
- </thead>
-
- <tbody>`;
+ if(!equipos.length)return`<div class="subdato">No hay equipos registrados.</div>`;
+ let h=`<div class="tabla-contenedor"><table><thead><tr>
+ <th>Equipo</th><th>Nombre</th><th>Área</th><th>Ubicación</th><th>IQ</th><th>OQ</th><th>PQ</th><th>Manual</th><th>Estado general</th>
+ </tr></thead><tbody>`;
 
  equipos.forEach((e,i)=>{
+  let iq=estadoLista(calificaciones.filter(x=>x.equipoCodigo===e.codigo&&x.tipo==="IQ"));
+  let oq=estadoLista(calificaciones.filter(x=>x.equipoCodigo===e.codigo&&x.tipo==="OQ"));
+  let pq=e.aplicaPQ?estadoLista(calificaciones.filter(x=>x.equipoCodigo===e.codigo&&x.tipo==="PQ")):null;
+  let mo=estadoLista(manuales.filter(x=>x.equipoCodigo===e.codigo));
+  let eg=estadoGeneralEquipo(e.codigo);
 
-  let iq=estadoLista(
-   calificaciones.filter(
-    x=>x.equipoCodigo===e.codigo&&x.tipo==="IQ"
-   )
-  );
-
-  let oq=estadoLista(
-   calificaciones.filter(
-    x=>x.equipoCodigo===e.codigo&&x.tipo==="OQ"
-   )
-  );
-
-  let pq=e.aplicaPQ
-   ?estadoLista(
-    calificaciones.filter(
-     x=>x.equipoCodigo===e.codigo&&x.tipo==="PQ"
-    )
-   )
-   :null;
-
-  let em=estadoLista(
-   manuales.filter(
-    x=>x.equipoCodigo===e.codigo
-   )
-  );
-
-  let estados=[iq,oq,em];
-
-  if(e.aplicaPQ&&pq){
-   estados.push(pq);
-  }
-
-  let eg={
-   texto:"Sin registros",
-   clase:"neutro",
-   nivel:0
-  };
-
-  estados.forEach(s=>{
-   if(s.nivel>eg.nivel){
-    eg=s;
-   }
-  });
-
-  h+=`
-  <tr>
-
-   <td>
-    <span
-     class="enlace-equipo"
-     onclick="verFichaEquipo(${i})">
-     ${esc(e.codigo)}
-    </span>
-   </td>
-
-   <td>
-    ${esc(e.nombre)}
-   </td>
-
-   <td>
-    ${esc(e.area)}
-   </td>
-
-   <td>
-    ${esc(e.ubicacion)||"—"}
-   </td>
-
-   <td>
-    ${puntoEstado(iq)}
-   </td>
-
-   <td>
-    ${puntoEstado(oq)}
-   </td>
-
-   <td>
-    ${
-     e.aplicaPQ
-     ?puntoEstado(pq)
-     :`<span class="badge neutro">No aplica</span>`
-    }
-   </td>
-
-   <td>
-    ${puntoEstado(em)}
-   </td>
-
-   <td>
-    ${puntoEstado(eg)}
-   </td>
-
+  h+=`<tr>
+   <td><span class="enlace-equipo" onclick="verFichaEquipo(${i})">${esc(e.codigo)}</span></td>
+   <td>${esc(e.nombre)}</td><td>${esc(e.area)}</td><td>${esc(e.ubicacion)||"—"}</td>
+   <td>${puntoEstado(iq)}</td><td>${puntoEstado(oq)}</td>
+   <td>${e.aplicaPQ?puntoEstado(pq):`<span class="badge neutro">No aplica</span>`}</td>
+   <td>${puntoEstado(mo)}</td><td>${puntoEstado(eg)}</td>
   </tr>`;
  });
-
  return h+"</tbody></table></div>";
 }
 
-/* ================= EQUIPOS ================= */
+/* EQUIPOS */
 
 function mostrarEquipos(){
-
+ moduloActual="calificacion";paginaCalificacion="equipos";
  document.getElementById("contenido").innerHTML=`
-
  <div class="topbar">
-
-  <div>
-
-   <h1 class="titulo-pagina">
-    Equipos
-   </h1>
-
-   <div class="subtitulo-pagina">
-    ${
-     esAdmin
-     ?"Registro maestro de equipos"
-     :"Consulta de equipos y documentación"
-    }
-   </div>
-
-  </div>
-
-  ${
-   esAdmin
-   ?`
-   <button
-    class="btn-rojo-principal"
-    onclick="nuevoEquipo()">
-    + Nuevo equipo
-   </button>`
-   :""
-  }
-
+  <div><h1 class="titulo-pagina">Equipos</h1><div class="subtitulo-pagina">${esAdmin?"Registro maestro de equipos":"Consulta de equipos y documentación"}</div></div>
+  ${esAdmin?`<button class="btn-rojo-principal" onclick="nuevoEquipo()">+ Nuevo equipo</button>`:""}
  </div>
-
- ${
-  !esAdmin
-  ?`
-  <div class="modo-consulta">
-   Selecciona el código del equipo para revisar
-   Manual Operativo, IQ, OQ y PQ cuando corresponda.
-  </div>`
-  :""
- }
-
- ${
-  esAdmin
-  ?`
-  <div class="tarjeta">
-
-   <div class="botones">
-
-    <button
-     class="btn-verde"
-     onclick="document.getElementById('excel').click()">
-     Importar Excel
-    </button>
-
-    <button
-     class="btn-gris"
-     onclick="descargarPlantilla()">
-     Descargar plantilla
-    </button>
-
-   </div>
-
-   <input
-    id="excel"
-    type="file"
-    accept=".xlsx,.xls"
-    style="display:none"
-    onchange="importarExcel(event)">
-
-  </div>`
-  :""
- }
-
+ ${submenuCalificacion("equipos")}
+ ${!esAdmin?`<div class="modo-consulta">Selecciona el código del equipo para revisar Manual Operativo, IQ, OQ y PQ cuando corresponda.</div>`:""}
+ ${esAdmin?`<div class="tarjeta"><div class="botones">
+  <button class="btn-verde" onclick="document.getElementById('excel').click()">Importar Excel</button>
+  <button class="btn-gris" onclick="descargarPlantilla()">Descargar plantilla</button>
+ </div><input id="excel" type="file" accept=".xlsx,.xls" style="display:none" onchange="importarExcel(event)"></div>`:""}
  <div id="formEquipo"></div>
-
- <div class="tarjeta">
-
-  <h2>
-   Equipos registrados
-  </h2>
-
-  <input
-   id="buscarEquipo"
-   placeholder="Buscar por código, nombre, área o ubicación..."
-   oninput="tablaEquipos()">
-
-  <div
-   id="tablaEquipos"
-   style="margin-top:14px">
-  </div>
-
+ <div class="tarjeta"><h2>Equipos registrados</h2>
+  <input id="buscarEquipo" placeholder="Buscar por código, nombre, área o ubicación..." oninput="tablaEquipos()">
+  <div id="tablaEquipos" style="margin-top:14px"></div>
  </div>`;
-
  tablaEquipos();
 }
 
 function nuevoEquipo(){
-
- if(!esAdmin)return;
-
- equipoEditando=null;
-
+ if(!esAdmin)return;equipoEditando=null;
  document.getElementById("formEquipo").innerHTML=`
-
- <div class="tarjeta">
-
-  <h2>
-   Nuevo equipo
-  </h2>
-
-  <div class="form-grid">
-
-   <div>
-    <label>Código *</label>
-    <input
-     id="eqCodigo"
-     placeholder="Ej: E780/EF">
-   </div>
-
-   <div>
-    <label>Nombre *</label>
-    <input id="eqNombre">
-   </div>
-
-   <div>
-    <label>Área *</label>
-    <input id="eqArea">
-   </div>
-
-   <div>
-    <label>Ubicación</label>
-    <input
-     id="eqUbicacion"
-     placeholder="Ej: Sala de Envasado">
-   </div>
-
-   <div>
-    <label>¿Aplica PQ?</label>
-    <select id="eqPQ">
-     <option value="si">Sí</option>
-     <option value="no">No</option>
-    </select>
-   </div>
-
-  </div>
-
-  <div class="acciones-form">
-
-   <button
-    class="btn-principal"
-    onclick="guardarEquipo()">
-    Guardar
-   </button>
-
-   <button
-    class="btn-secundario"
-    onclick="document.getElementById('formEquipo').innerHTML=''">
-    Cancelar
-   </button>
-
-  </div>
-
- </div>`;
+ <div class="tarjeta"><h2>Nuevo equipo</h2><div class="form-grid">
+  <div><label>Código *</label><input id="eqCodigo" placeholder="Ej: E780/EF"></div>
+  <div><label>Nombre *</label><input id="eqNombre"></div>
+  <div><label>Área *</label><input id="eqArea"></div>
+  <div><label>Ubicación</label><input id="eqUbicacion" placeholder="Ej: Sala de Envasado"></div>
+  <div><label>¿Aplica PQ?</label><select id="eqPQ"><option value="si">Sí</option><option value="no">No</option></select></div>
+ </div><div class="acciones-form">
+  <button class="btn-principal" onclick="guardarEquipo()">Guardar</button>
+  <button class="btn-secundario" onclick="document.getElementById('formEquipo').innerHTML=''">Cancelar</button>
+ </div></div>`;
 }
 
 function guardarEquipo(){
-
  if(!esAdmin)return;
-
- let e={
-
-  codigo:val("eqCodigo"),
-
-  nombre:val("eqNombre"),
-
-  area:val("eqArea"),
-
-  ubicacion:val("eqUbicacion"),
-
-  aplicaPQ:
-  document.getElementById("eqPQ").value==="si"
-
- };
-
- if(!e.codigo||!e.nombre||!e.area){
-  return alert(
-   "Completa código, nombre y área."
-  );
- }
-
- if(equipoEditando===null){
-  equipos.push(e);
- }else{
-  equipos[equipoEditando]=e;
- }
-
- guardarDatos();
- mostrarEquipos();
+ let e={codigo:val("eqCodigo"),nombre:val("eqNombre"),area:val("eqArea"),ubicacion:val("eqUbicacion"),aplicaPQ:document.getElementById("eqPQ").value==="si"};
+ if(!e.codigo||!e.nombre||!e.area)return alert("Completa código, nombre y área.");
+ if(equipoEditando===null)equipos.push(e);else equipos[equipoEditando]=e;
+ guardarDatos();mostrarEquipos();
 }
 
 function editarEquipo(i){
-
- if(!esAdmin)return;
-
- let e=equipos[i];
-
- nuevoEquipo();
-
- equipoEditando=i;
-
- document.getElementById("eqCodigo").value=
- e.codigo;
-
- document.getElementById("eqNombre").value=
- e.nombre;
-
- document.getElementById("eqArea").value=
- e.area;
-
- document.getElementById("eqUbicacion").value=
- e.ubicacion||"";
-
- document.getElementById("eqPQ").value=
- e.aplicaPQ?"si":"no";
+ if(!esAdmin)return;let e=equipos[i];nuevoEquipo();equipoEditando=i;
+ document.getElementById("eqCodigo").value=e.codigo;
+ document.getElementById("eqNombre").value=e.nombre;
+ document.getElementById("eqArea").value=e.area;
+ document.getElementById("eqUbicacion").value=e.ubicacion||"";
+ document.getElementById("eqPQ").value=e.aplicaPQ?"si":"no";
 }
 
 function eliminarEquipo(i){
-
  if(!esAdmin)return;
-
- if(!confirm(
-  "¿Eliminar "+equipos[i].codigo+"?"
- ))return;
-
- equipos.splice(i,1);
-
- guardarDatos();
-
- tablaEquipos();
+ if(!confirm("¿Eliminar "+equipos[i].codigo+"?"))return;
+ equipos.splice(i,1);guardarDatos();tablaEquipos();
 }
 
 function tablaEquipos(){
+ let q=(document.getElementById("buscarEquipo")?.value||"").toLowerCase();
+ let lista=equipos.filter(e=>[e.codigo,e.nombre,e.area,e.ubicacion].some(x=>(x||"").toLowerCase().includes(q)));
 
- let q=
- (document.getElementById("buscarEquipo")?.value||"")
- .toLowerCase();
-
- let lista=equipos.filter(e=>
-  [
-   e.codigo,
-   e.nombre,
-   e.area,
-   e.ubicacion
-  ]
-  .some(x=>
-   (x||"")
-   .toLowerCase()
-   .includes(q)
-  )
- );
-
- let h="";
-
- if(esAdmin){
-
-  h=`
-  <div class="tabla-contenedor">
-  <table>
-
-  <thead>
-  <tr>
-   <th>Código</th>
-   <th>Nombre</th>
-   <th>Área</th>
-   <th>Ubicación</th>
-   <th>Aplica PQ</th>
-   <th>Acciones</th>
-  </tr>
-  </thead>
-
-  <tbody>`;
-
- }else{
-
-  h=`
-  <div class="tabla-contenedor">
-  <table>
-
-  <thead>
-  <tr>
-   <th>Código</th>
-   <th>Nombre</th>
-   <th>Área</th>
-   <th>Ubicación</th>
-   <th>Estado</th>
-  </tr>
-  </thead>
-
-  <tbody>`;
- }
+ let h=esAdmin?
+ `<div class="tabla-contenedor"><table><thead><tr><th>Código</th><th>Nombre</th><th>Área</th><th>Ubicación</th><th>Aplica PQ</th><th>Acciones</th></tr></thead><tbody>`:
+ `<div class="tabla-contenedor"><table><thead><tr><th>Código</th><th>Nombre</th><th>Área</th><th>Ubicación</th><th>Estado</th></tr></thead><tbody>`;
 
  lista.forEach(e=>{
-
-  let i=equipos.indexOf(e);
-
-  let estado=
-  estadoGeneralEquipo(e.codigo);
-
-  if(esAdmin){
-
-   h+=`
-   <tr>
-
-    <td>
-     <span
-      class="enlace-equipo"
-      onclick="verFichaEquipo(${i})">
-      ${esc(e.codigo)}
-     </span>
-    </td>
-
-    <td>
-     ${esc(e.nombre)}
-    </td>
-
-    <td>
-     ${esc(e.area)}
-    </td>
-
-    <td>
-     ${esc(e.ubicacion)||"—"}
-    </td>
-
-    <td>
-     <span class="badge ${
-      e.aplicaPQ?"vigente":"neutro"
-     }">
-      ${e.aplicaPQ?"Sí":"No"}
-     </span>
-    </td>
-
-    <td>
-
-     <div class="acciones-tabla">
-
-      <button
-       class="btn-editar"
-       onclick="editarEquipo(${i})">
-       ✎
-      </button>
-
-      <button
-       class="btn-eliminar"
-       onclick="eliminarEquipo(${i})">
-       🗑
-      </button>
-
-     </div>
-
-    </td>
-
-   </tr>`;
-
-  }else{
-
-   h+=`
-   <tr>
-
-    <td>
-     <span
-      class="enlace-equipo"
-      onclick="verFichaEquipo(${i})">
-      ${esc(e.codigo)}
-     </span>
-    </td>
-
-    <td>
-     ${esc(e.nombre)}
-    </td>
-
-    <td>
-     ${esc(e.area)}
-    </td>
-
-    <td>
-     ${esc(e.ubicacion)||"—"}
-    </td>
-
-    <td>
-     ${puntoEstado(estado)}
-    </td>
-
-   </tr>`;
-  }
+  let i=equipos.indexOf(e),s=estadoGeneralEquipo(e.codigo);
+  h+=esAdmin?`<tr>
+   <td><span class="enlace-equipo" onclick="verFichaEquipo(${i})">${esc(e.codigo)}</span></td>
+   <td>${esc(e.nombre)}</td><td>${esc(e.area)}</td><td>${esc(e.ubicacion)||"—"}</td>
+   <td><span class="badge ${e.aplicaPQ?"vigente":"neutro"}">${e.aplicaPQ?"Sí":"No"}</span></td>
+   <td><div class="acciones-tabla"><button class="btn-editar" onclick="editarEquipo(${i})">✎</button><button class="btn-eliminar" onclick="eliminarEquipo(${i})">🗑</button></div></td>
+  </tr>`:`<tr>
+   <td><span class="enlace-equipo" onclick="verFichaEquipo(${i})">${esc(e.codigo)}</span></td>
+   <td>${esc(e.nombre)}</td><td>${esc(e.area)}</td><td>${esc(e.ubicacion)||"—"}</td><td>${puntoEstado(s)}</td>
+  </tr>`;
  });
-
  h+="</tbody></table></div>";
-
- document.getElementById(
-  "tablaEquipos"
- ).innerHTML=h;
+ document.getElementById("tablaEquipos").innerHTML=h;
 }
 
-/* ================= FICHA EQUIPO ================= */
+/* FICHA EQUIPO */
 
 function verFichaEquipo(i){
+ let e=equipos[i],docs=calificaciones.filter(c=>c.equipoCodigo===e.codigo),man=manuales.filter(m=>m.equipoCodigo===e.codigo);
+ let iq=estadoLista(docs.filter(x=>x.tipo==="IQ")),oq=estadoLista(docs.filter(x=>x.tipo==="OQ"));
+ let pq=e.aplicaPQ?estadoLista(docs.filter(x=>x.tipo==="PQ")):null,mo=estadoLista(man),eg=estadoGeneralEquipo(e.codigo);
 
- let e=equipos[i];
-
- let docs=
- calificaciones.filter(
-  c=>c.equipoCodigo===e.codigo
- );
-
- let man=
- manuales.filter(
-  m=>m.equipoCodigo===e.codigo
- );
-
- let iq=
- estadoLista(
-  docs.filter(
-   x=>x.tipo==="IQ"
-  )
- );
-
- let oq=
- estadoLista(
-  docs.filter(
-   x=>x.tipo==="OQ"
-  )
- );
-
- let pq=
- e.aplicaPQ
- ?estadoLista(
-  docs.filter(
-   x=>x.tipo==="PQ"
-  )
- )
- :null;
-
- let em=
- estadoLista(man);
-
- let eg=
- estadoGeneralEquipo(e.codigo);
-
- document.getElementById(
-  "contenido"
- ).innerHTML=`
-
- <div class="topbar">
-
-  <div>
-
-   <h1 class="titulo-pagina">
-    ${esc(e.codigo)} — ${esc(e.nombre)}
-   </h1>
-
-   <div class="subtitulo-pagina">
-    Ficha individual del equipo
-   </div>
-
-  </div>
-
-  <button
-   class="btn-secundario"
-   onclick="mostrarEquipos()">
-   ← Volver
-  </button>
-
- </div>
-
- ${
-  !esAdmin
-  ?`
-  <div class="modo-consulta">
-   👁 Ficha en modo solo lectura.
-  </div>`
-  :""
- }
+ document.getElementById("contenido").innerHTML=`
+ <div class="topbar"><div><h1 class="titulo-pagina">${esc(e.codigo)} — ${esc(e.nombre)}</h1><div class="subtitulo-pagina">Ficha individual del equipo</div></div><button class="btn-secundario" onclick="mostrarEquipos()">← Volver</button></div>
+ ${submenuCalificacion("equipos")}
+ ${!esAdmin?`<div class="modo-consulta">👁 Ficha en modo solo lectura.</div>`:""}
 
  <div class="estado-ficha">
-
-  <div class="estado-ficha-card">
-
-   <div class="estado-ficha-titulo">
-    IQ
-   </div>
-
-   <div class="estado-ficha-valor">
-    ${puntoEstado(iq)}
-   </div>
-
-  </div>
-
-  <div class="estado-ficha-card">
-
-   <div class="estado-ficha-titulo">
-    OQ
-   </div>
-
-   <div class="estado-ficha-valor">
-    ${puntoEstado(oq)}
-   </div>
-
-  </div>
-
-  <div class="estado-ficha-card">
-
-   <div class="estado-ficha-titulo">
-    PQ
-   </div>
-
-   <div class="estado-ficha-valor">
-
-    ${
-     e.aplicaPQ
-     ?puntoEstado(pq)
-     :`
-     <span class="badge neutro">
-      No aplica
-     </span>`
-    }
-
-   </div>
-
-  </div>
-
-  <div class="estado-ficha-card">
-
-   <div class="estado-ficha-titulo">
-    Manual Operativo
-   </div>
-
-   <div class="estado-ficha-valor">
-    ${puntoEstado(em)}
-   </div>
-
-  </div>
-
-  <div class="estado-ficha-card estado-general-card">
-
-   <div class="estado-ficha-titulo">
-    Estado general
-   </div>
-
-   <div class="estado-ficha-valor">
-    ${puntoEstado(eg)}
-   </div>
-
-  </div>
-
+  ${estadoFicha("IQ",puntoEstado(iq))}
+  ${estadoFicha("OQ",puntoEstado(oq))}
+  ${estadoFicha("PQ",e.aplicaPQ?puntoEstado(pq):`<span class="badge neutro">No aplica</span>`)}
+  ${estadoFicha("Manual Operativo",puntoEstado(mo))}
+  ${estadoFicha("Estado general",puntoEstado(eg),true)}
  </div>
 
- <div class="tarjeta">
-
-  <h2>
-   Información del equipo
-  </h2>
-
-  <div class="ficha-grid">
-
-   <div class="ficha-dato">
-
-    <div class="ficha-label">
-     Código
-    </div>
-
-    <div class="ficha-valor">
-     ${esc(e.codigo)}
-    </div>
-
-   </div>
-
-   <div class="ficha-dato">
-
-    <div class="ficha-label">
-     Nombre
-    </div>
-
-    <div class="ficha-valor">
-     ${esc(e.nombre)}
-    </div>
-
-   </div>
-
-   <div class="ficha-dato">
-
-    <div class="ficha-label">
-     Área
-    </div>
-
-    <div class="ficha-valor">
-     ${esc(e.area)}
-    </div>
-
-   </div>
-
-   <div class="ficha-dato">
-
-    <div class="ficha-label">
-     Ubicación
-    </div>
-
-    <div class="ficha-valor">
-     ${esc(e.ubicacion)||"—"}
-    </div>
-
-   </div>
-
-  </div>
-
- </div>
+ <div class="tarjeta"><h2>Información del equipo</h2><div class="ficha-grid">
+  <div class="ficha-dato"><div class="ficha-label">Código</div><div class="ficha-valor">${esc(e.codigo)}</div></div>
+  <div class="ficha-dato"><div class="ficha-label">Nombre</div><div class="ficha-valor">${esc(e.nombre)}</div></div>
+  <div class="ficha-dato"><div class="ficha-label">Área</div><div class="ficha-valor">${esc(e.area)}</div></div>
+  <div class="ficha-dato"><div class="ficha-label">Ubicación</div><div class="ficha-valor">${esc(e.ubicacion)||"—"}</div></div>
+ </div></div>
 
  <div class="tarjeta">
-
-  <div
-   class="topbar"
-   style="margin-bottom:12px">
-
-   <div>
-
-    <h2>
-     Manual Operativo
-    </h2>
-
-    <div class="subtitulo-pagina">
-     Información del manual asociado al equipo
-    </div>
-
-   </div>
-
-   ${
-    esAdmin
-    ?`
-    <button
-     class="btn-principal"
-     onclick="nuevoManual('${escJS(e.codigo)}')">
-     + Manual
-    </button>`
-    :""
-   }
-
-  </div>
-
-  ${
-   esAdmin
-   ?`<div id="formManualFicha"></div>`
-   :""
-  }
-
+  <div class="topbar" style="margin-bottom:12px"><div><h2>Manual Operativo</h2><div class="subtitulo-pagina">Información del manual asociado al equipo</div></div>
+  ${esAdmin?`<button class="btn-principal" onclick="nuevoManual('${escJS(e.codigo)}')">+ Manual</button>`:""}</div>
+  ${esAdmin?`<div id="formManualFicha"></div>`:""}
   ${tablaManualesEquipo(man)}
-
  </div>
 
  <div class="tarjeta">
-
-  <div
-   class="topbar"
-   style="margin-bottom:15px">
-
-   <div>
-
-    <h2>
-     Calificaciones
-    </h2>
-
-    <div class="subtitulo-pagina">
-     Protocolos y reportes asociados al equipo
-    </div>
-
-   </div>
-
-   ${
-    esAdmin
-    ?`
-    <button
-     class="btn-principal"
-     onclick="nuevaCalificacion('${escJS(e.codigo)}')">
-     + Calificación
-    </button>`
-    :""
-   }
-
-  </div>
-
-  ${
-   esAdmin
-   ?`<div id="formCalFicha"></div>`
-   :""
-  }
-
+  <div class="topbar" style="margin-bottom:15px"><div><h2>Calificaciones</h2><div class="subtitulo-pagina">Protocolos y reportes asociados al equipo</div></div>
+  ${esAdmin?`<button class="btn-principal" onclick="nuevaCalificacion('${escJS(e.codigo)}')">+ Calificación</button>`:""}</div>
+  ${esAdmin?`<div id="formCalFicha"></div>`:""}
   <div style="display:grid;gap:16px">
-
-   ${tablaCalificacionFicha(
-    "IQ",
-    docs
-   )}
-
-   ${tablaCalificacionFicha(
-    "OQ",
-    docs
-   )}
-
-   ${
-    e.aplicaPQ
-    ?tablaCalificacionFicha(
-     "PQ",
-     docs
-    )
-    :`
-    <div class="calificacion-bloque">
-
-     <div class="calificacion-cabecera">
-      PQ
-     </div>
-
-     <div class="no-aplica">
-      La Calificación de Desempeño (PQ)
-      no aplica para este equipo.
-     </div>
-
-    </div>`
-   }
-
+   ${tablaCalificacionFicha("IQ",docs)}
+   ${tablaCalificacionFicha("OQ",docs)}
+   ${e.aplicaPQ?tablaCalificacionFicha("PQ",docs):`<div class="calificacion-bloque"><div class="calificacion-cabecera">PQ</div><div class="no-aplica">La Calificación de Desempeño (PQ) no aplica para este equipo.</div></div>`}
   </div>
-
  </div>`;
+}
+
+function estadoFicha(titulo,valor,general=false){
+ return`<div class="estado-ficha-card ${general?"estado-general-card":""}"><div class="estado-ficha-titulo">${titulo}</div><div class="estado-ficha-valor">${valor}</div></div>`;
 }
 
 function tablaCalificacionFicha(tipo,docs){
-
- let lista=
- docs.filter(
-  x=>x.tipo===tipo
- );
-
- if(!lista.length){
-
-  return`
-  <div class="calificacion-bloque">
-
-   <div class="calificacion-cabecera">
-    ${tipo}
-   </div>
-
-   <div class="no-aplica">
-    Sin documentos registrados.
-   </div>
-
-  </div>`;
- }
-
- let h=`
-
- <div class="calificacion-bloque">
-
-  <div class="calificacion-cabecera">
-   ${tipo}
-  </div>
-
-  <div class="tabla-contenedor">
-
-   <table>
-
-    <thead>
-
-     <tr>
-      <th>Documento</th>
-      <th>Código</th>
-      <th>Versión</th>
-      <th>Fecha emisión</th>
-      <th>Fecha vencimiento</th>
-      <th>Estado</th>
-     </tr>
-
-    </thead>
-
-    <tbody>`;
-
- lista.forEach(d=>{
-
-  let s=
-  estadoFecha(
-   d.vencimiento
-  );
-
-  h+=`
-
-  <tr>
-
-   <td>
-    ${esc(d.documento)}
-   </td>
-
-   <td class="codigo">
-    ${esc(d.codigo)}
-   </td>
-
-   <td>
-    ${esc(d.version)}
-   </td>
-
-   <td>
-    ${fechaBonita(d.fecha)}
-   </td>
-
-   <td>
-    ${fechaBonita(d.vencimiento)}
-   </td>
-
-   <td>
-    ${puntoEstado(s)}
-   </td>
-
-  </tr>`;
- });
-
- h+=`
-
-    </tbody>
-
-   </table>
-
-  </div>
-
- </div>`;
-
- return h;
+ let lista=docs.filter(x=>x.tipo===tipo);
+ if(!lista.length)return`<div class="calificacion-bloque"><div class="calificacion-cabecera">${tipo}</div><div class="no-aplica">Sin documentos registrados.</div></div>`;
+ let h=`<div class="calificacion-bloque"><div class="calificacion-cabecera">${tipo}</div><div class="tabla-contenedor"><table>
+ <thead><tr><th>Documento</th><th>Código</th><th>Versión</th><th>Fecha emisión</th><th>Fecha vencimiento</th><th>Estado</th></tr></thead><tbody>`;
+ lista.forEach(d=>{let s=estadoFecha(d.vencimiento);h+=`<tr><td>${esc(d.documento)}</td><td class="codigo">${esc(d.codigo)}</td><td>${esc(d.version)}</td><td>${fechaBonita(d.fecha)}</td><td>${fechaBonita(d.vencimiento)}</td><td>${puntoEstado(s)}</td></tr>`});
+ return h+"</tbody></table></div></div>";
 }
 
-/* ================= MANUALES ================= */
+/* MANUALES */
 
 function mostrarManuales(){
-
- if(!esAdmin){
-  return mostrarInicio();
- }
-
- document.getElementById(
-  "contenido"
- ).innerHTML=`
-
- <div class="topbar">
-
-  <div>
-
-   <h1 class="titulo-pagina">
-    Manuales Operativos
-   </h1>
-
-   <div class="subtitulo-pagina">
-    Control de vigencia de manuales
-   </div>
-
-  </div>
-
-  <button
-   class="btn-rojo-principal"
-   onclick="nuevoManual()">
-   + Nuevo manual
-  </button>
-
- </div>
-
+ if(!esAdmin)return mostrarInicio();
+ paginaCalificacion="manuales";
+ document.getElementById("contenido").innerHTML=`
+ <div class="topbar"><div><h1 class="titulo-pagina">Manuales Operativos</h1><div class="subtitulo-pagina">Control de vigencia de manuales</div></div><button class="btn-rojo-principal" onclick="nuevoManual()">+ Nuevo manual</button></div>
+ ${submenuCalificacion("manuales")}
  <div id="formManual"></div>
-
- <div class="tarjeta">
-
-  <h2>
-   Manuales registrados
-  </h2>
-
-  <input
-   id="buscarManual"
-   placeholder="Buscar por equipo, código o nombre..."
-   oninput="tablaManuales()">
-
-  <div
-   id="tablaManuales"
-   style="margin-top:14px">
-  </div>
-
- </div>`;
-
+ <div class="tarjeta"><h2>Manuales registrados</h2><input id="buscarManual" placeholder="Buscar por equipo, código o nombre..." oninput="tablaManuales()"><div id="tablaManuales" style="margin-top:14px"></div></div>`;
  tablaManuales();
 }
 
 function nuevoManual(codigoEquipo=""){
-
- if(!esAdmin)return;
-
- if(!equipos.length){
-  return alert(
-   "Primero registra un equipo."
-  );
- }
-
+ if(!esAdmin)return;if(!equipos.length)return alert("Primero registra un equipo.");
  manualEditando=null;
-
- let destino=
- document.getElementById(
-  "formManualFicha"
- )||
- document.getElementById(
-  "formManual"
- );
-
- destino.innerHTML=`
-
- <div style="margin-bottom:15px">
-
-  <div class="form-grid">
-
-   <div class="completo">
-
-    <label>
-     Equipo *
-    </label>
-
-    <select id="manEquipo">
-
-     ${equipos.map(e=>`
-      <option
-       value="${esc(e.codigo)}"
-       ${
-        e.codigo===codigoEquipo
-        ?"selected"
-        :""
-       }>
-       ${esc(e.codigo)} - ${esc(e.nombre)}
-      </option>
-     `).join("")}
-
-    </select>
-
-   </div>
-
-   <div>
-
-    <label>
-     Código Manual *
-    </label>
-
-    <input
-     id="manCodigo"
-     placeholder="MO-XXX-AAA-CC">
-
-   </div>
-
-   <div>
-
-    <label>
-     Nombre del Manual *
-    </label>
-
-    <input id="manNombre">
-
-   </div>
-
-   <div>
-
-    <label>
-     Fecha de vencimiento *
-    </label>
-
-    <input
-     type="date"
-     id="manVencimiento">
-
-   </div>
-
-  </div>
-
-  <div class="acciones-form">
-
-   <button
-    class="btn-principal"
-    onclick="guardarManual()">
-    Guardar manual
-   </button>
-
-   <button
-    class="btn-secundario"
-    onclick="limpiarFormManual()">
-    Cancelar
-   </button>
-
-  </div>
-
- </div>`;
+ let destino=document.getElementById("formManualFicha")||document.getElementById("formManual");
+ destino.innerHTML=`<div style="margin-bottom:15px"><div class="form-grid">
+ <div class="completo"><label>Equipo *</label><select id="manEquipo">${equipos.map(e=>`<option value="${esc(e.codigo)}" ${e.codigo===codigoEquipo?"selected":""}>${esc(e.codigo)} - ${esc(e.nombre)}</option>`).join("")}</select></div>
+ <div><label>Código Manual *</label><input id="manCodigo" placeholder="MO-XXX-AAA-CC"></div>
+ <div><label>Nombre del Manual *</label><input id="manNombre"></div>
+ <div><label>Fecha de vencimiento *</label><input type="date" id="manVencimiento"></div>
+ </div><div class="acciones-form"><button class="btn-principal" onclick="guardarManual()">Guardar manual</button><button class="btn-secundario" onclick="limpiarFormManual()">Cancelar</button></div></div>`;
 }
 
 function guardarManual(){
-
  if(!esAdmin)return;
-
- let equipoCodigo=
- valSelect(
-  "manEquipo"
- );
-
- let e=
- equipos.find(
-  x=>x.codigo===equipoCodigo
- );
-
- let m={
-
-  equipoCodigo,
-
-  equipoNombre:
-  e?.nombre||"",
-
-  codigo:
-  val("manCodigo"),
-
-  nombre:
-  val("manNombre"),
-
-  vencimiento:
-  val("manVencimiento")
-
- };
-
- if(
-  !m.codigo||
-  !m.nombre||
-  !m.vencimiento
- ){
-  return alert(
-   "Completa todos los campos."
-  );
- }
-
- if(manualEditando===null){
-  manuales.push(m);
- }else{
-  manuales[manualEditando]=m;
- }
-
- guardarDatos();
-
- mostrarManuales();
+ let equipoCodigo=valSelect("manEquipo"),e=equipos.find(x=>x.codigo===equipoCodigo);
+ let m={equipoCodigo,equipoNombre:e?.nombre||"",codigo:val("manCodigo"),nombre:val("manNombre"),vencimiento:val("manVencimiento")};
+ if(!m.codigo||!m.nombre||!m.vencimiento)return alert("Completa todos los campos.");
+ if(manualEditando===null)manuales.push(m);else manuales[manualEditando]=m;
+ guardarDatos();mostrarManuales();
 }
 
 function editarManual(i){
-
- if(!esAdmin)return;
-
- let m=
- manuales[i];
-
- mostrarManuales();
-
- nuevoManual(
-  m.equipoCodigo
- );
-
- manualEditando=i;
-
- document.getElementById(
-  "manCodigo"
- ).value=m.codigo;
-
- document.getElementById(
-  "manNombre"
- ).value=m.nombre;
-
- document.getElementById(
-  "manVencimiento"
- ).value=m.vencimiento;
+ if(!esAdmin)return;let m=manuales[i];mostrarManuales();nuevoManual(m.equipoCodigo);manualEditando=i;
+ document.getElementById("manCodigo").value=m.codigo;
+ document.getElementById("manNombre").value=m.nombre;
+ document.getElementById("manVencimiento").value=m.vencimiento;
 }
-
 function eliminarManual(i){
-
- if(!esAdmin)return;
-
- if(!confirm(
-  "¿Eliminar "+manuales[i].codigo+"?"
- ))return;
-
- manuales.splice(
-  i,
-  1
- );
-
- guardarDatos();
-
- tablaManuales();
+ if(!esAdmin)return;if(!confirm("¿Eliminar "+manuales[i].codigo+"?"))return;
+ manuales.splice(i,1);guardarDatos();tablaManuales();
 }
-
 function limpiarFormManual(){
-
- let x=
- document.getElementById(
-  "formManualFicha"
- )||
- document.getElementById(
-  "formManual"
- );
-
- if(x){
-  x.innerHTML="";
- }
-
- manualEditando=null;
+ let x=document.getElementById("formManualFicha")||document.getElementById("formManual");
+ if(x)x.innerHTML="";manualEditando=null;
 }
 
 function tablaManuales(){
-
- let q=
- (document.getElementById(
-  "buscarManual"
- )?.value||"")
- .toLowerCase();
-
- let lista=
- manuales.filter(m=>
-
-  [
-   m.equipoCodigo,
-   m.equipoNombre,
-   m.codigo,
-   m.nombre
-  ]
-
-  .some(x=>
-   (x||"")
-   .toLowerCase()
-   .includes(q)
-  )
-
- );
-
- let h=`
-
- <div class="tabla-contenedor">
-
- <table>
-
- <thead>
-
- <tr>
-  <th>Equipo</th>
-  <th>Código Manual</th>
-  <th>Nombre</th>
-  <th>Vencimiento</th>
-  <th>Estado</th>
-  <th>Acciones</th>
- </tr>
-
- </thead>
-
- <tbody>`;
-
- lista.forEach(m=>{
-
-  let i=
-  manuales.indexOf(m);
-
-  let s=
-  estadoFecha(
-   m.vencimiento
-  );
-
-  h+=`
-
-  <tr>
-
-   <td>
-
-    <span class="codigo">
-     ${esc(m.equipoCodigo)}
-    </span>
-
-    <div class="subdato">
-     ${esc(m.equipoNombre)}
-    </div>
-
-   </td>
-
-   <td class="codigo">
-    ${esc(m.codigo)}
-   </td>
-
-   <td>
-    ${esc(m.nombre)}
-   </td>
-
-   <td>
-    ${fechaBonita(m.vencimiento)}
-   </td>
-
-   <td>
-    ${puntoEstado(s)}
-   </td>
-
-   <td>
-
-    <div class="acciones-tabla">
-
-     <button
-      class="btn-editar"
-      onclick="editarManual(${i})">
-      ✎
-     </button>
-
-     <button
-      class="btn-eliminar"
-      onclick="eliminarManual(${i})">
-      🗑
-     </button>
-
-    </div>
-
-   </td>
-
-  </tr>`;
- });
-
- h+="</tbody></table></div>";
-
- document.getElementById(
-  "tablaManuales"
- ).innerHTML=h;
+ let q=(document.getElementById("buscarManual")?.value||"").toLowerCase();
+ let lista=manuales.filter(m=>[m.equipoCodigo,m.equipoNombre,m.codigo,m.nombre].some(x=>(x||"").toLowerCase().includes(q)));
+ let h=`<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Código Manual</th><th>Nombre</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>`;
+ lista.forEach(m=>{let i=manuales.indexOf(m),s=estadoFecha(m.vencimiento);h+=`<tr>
+ <td><span class="codigo">${esc(m.equipoCodigo)}</span><div class="subdato">${esc(m.equipoNombre)}</div></td>
+ <td class="codigo">${esc(m.codigo)}</td><td>${esc(m.nombre)}</td><td>${fechaBonita(m.vencimiento)}</td><td>${puntoEstado(s)}</td>
+ <td><div class="acciones-tabla"><button class="btn-editar" onclick="editarManual(${i})">✎</button><button class="btn-eliminar" onclick="eliminarManual(${i})">🗑</button></div></td></tr>`});
+ h+="</tbody></table></div>";document.getElementById("tablaManuales").innerHTML=h;
 }
 
 function tablaManualesEquipo(lista){
-
- if(!lista.length){
-
-  return`
-  <div class="subdato">
-   Sin manual operativo registrado.
-  </div>`;
- }
-
- return`
-
- <div class="tabla-contenedor">
-
- <table>
-
- <thead>
-
- <tr>
-  <th>Código</th>
-  <th>Nombre</th>
-  <th>Vencimiento</th>
-  <th>Estado</th>
- </tr>
-
- </thead>
-
- <tbody>
-
- ${lista.map(m=>{
-
-  let s=
-  estadoFecha(
-   m.vencimiento
-  );
-
-  return`
-
-  <tr>
-
-   <td class="codigo">
-    ${esc(m.codigo)}
-   </td>
-
-   <td>
-    ${esc(m.nombre)}
-   </td>
-
-   <td>
-    ${fechaBonita(m.vencimiento)}
-   </td>
-
-   <td>
-    ${puntoEstado(s)}
-   </td>
-
-  </tr>`;
-
- }).join("")}
-
- </tbody>
-
- </table>
-
- </div>`;
+ if(!lista.length)return`<div class="subdato">Sin manual operativo registrado.</div>`;
+ return`<div class="tabla-contenedor"><table><thead><tr><th>Código</th><th>Nombre</th><th>Vencimiento</th><th>Estado</th></tr></thead><tbody>
+ ${lista.map(m=>{let s=estadoFecha(m.vencimiento);return`<tr><td class="codigo">${esc(m.codigo)}</td><td>${esc(m.nombre)}</td><td>${fechaBonita(m.vencimiento)}</td><td>${puntoEstado(s)}</td></tr>`}).join("")}
+ </tbody></table></div>`;
 }
 
-/* ================= CALIFICACIONES ================= */
+/* CALIFICACIONES */
 
 function mostrarCalificaciones(){
-
- if(!esAdmin){
-  return mostrarInicio();
- }
-
- document.getElementById(
-  "contenido"
- ).innerHTML=`
-
- <div class="topbar">
-
-  <div>
-
-   <h1 class="titulo-pagina">
-    Calificaciones
-   </h1>
-
-   <div class="subtitulo-pagina">
-    Protocolos y reportes IQ, OQ y PQ
-   </div>
-
-  </div>
-
-  <button
-   class="btn-rojo-principal"
-   onclick="nuevaCalificacion()">
-   + Nueva calificación
-  </button>
-
- </div>
-
+ if(!esAdmin)return mostrarInicio();
+ paginaCalificacion="calificaciones";
+ document.getElementById("contenido").innerHTML=`
+ <div class="topbar"><div><h1 class="titulo-pagina">Calificaciones</h1><div class="subtitulo-pagina">Protocolos y reportes IQ, OQ y PQ</div></div><button class="btn-rojo-principal" onclick="nuevaCalificacion()">+ Nueva calificación</button></div>
+ ${submenuCalificacion("calificaciones")}
  <div id="formCal"></div>
-
- <div class="tarjeta">
-
-  <div class="filtros">
-
-   <input
-    id="buscarCal"
-    placeholder="Buscar..."
-    oninput="tablaCalificaciones()">
-
-   <select
-    id="fEq"
-    onchange="tablaCalificaciones()">
-
-    <option value="">
-     Todos los equipos
-    </option>
-
-    ${equipos.map(e=>`
-     <option>
-      ${esc(e.codigo)}
-     </option>
-    `).join("")}
-
-   </select>
-
-   <select
-    id="fTipo"
-    onchange="tablaCalificaciones()">
-
-    <option value="">
-     Todos los tipos
-    </option>
-
-    <option>IQ</option>
-    <option>OQ</option>
-    <option>PQ</option>
-
-   </select>
-
-   <select
-    id="fDoc"
-    onchange="tablaCalificaciones()">
-
-    <option value="">
-     Todos los documentos
-    </option>
-
-    <option>Protocolo</option>
-    <option>Reporte</option>
-
-   </select>
-
-  </div>
-
-  <div id="tablaCal"></div>
-
- </div>`;
-
+ <div class="tarjeta"><div class="filtros">
+  <input id="buscarCal" placeholder="Buscar..." oninput="tablaCalificaciones()">
+  <select id="fEq" onchange="tablaCalificaciones()"><option value="">Todos los equipos</option>${equipos.map(e=>`<option>${esc(e.codigo)}</option>`).join("")}</select>
+  <select id="fTipo" onchange="tablaCalificaciones()"><option value="">Todos los tipos</option><option>IQ</option><option>OQ</option><option>PQ</option></select>
+  <select id="fDoc" onchange="tablaCalificaciones()"><option value="">Todos los documentos</option><option>Protocolo</option><option>Reporte</option></select>
+ </div><div id="tablaCal"></div></div>`;
  tablaCalificaciones();
 }
 
 function nuevaCalificacion(codigoEquipo=""){
-
- if(!esAdmin)return;
-
- if(!equipos.length){
-  return alert(
-   "Primero registra un equipo."
-  );
- }
-
+ if(!esAdmin)return;if(!equipos.length)return alert("Primero registra un equipo.");
  calificacionEditando=null;
-
- let destino=
- document.getElementById(
-  "formCalFicha"
- )||
- document.getElementById(
-  "formCal"
- );
-
- destino.innerHTML=`
-
- <div
-  class="tarjeta"
-  style="${
-   document.getElementById(
-    "formCalFicha"
-   )
-   ?"padding:0;border:0"
-   :""
-  }">
-
-  <div class="form-grid">
-
-   <div class="completo">
-
-    <label>
-     Equipo *
-    </label>
-
-    <select
-     id="calEquipo"
-     onchange="actualizarTipos();generarCodigo()">
-
-     ${equipos.map(e=>`
-
-      <option
-       value="${esc(e.codigo)}"
-       ${
-        e.codigo===codigoEquipo
-        ?"selected"
-        :""
-       }>
-
-       ${esc(e.codigo)} - ${esc(e.nombre)}
-
-      </option>
-
-     `).join("")}
-
-    </select>
-
-   </div>
-
-   <div>
-
-    <label>
-     Tipo *
-    </label>
-
-    <select
-     id="calTipo"
-     onchange="generarCodigo()">
-    </select>
-
-   </div>
-
-   <div>
-
-    <label>
-     Documento *
-    </label>
-
-    <select
-     id="calDocumento"
-     onchange="generarCodigo()">
-
-     <option>
-      Protocolo
-     </option>
-
-     <option>
-      Reporte
-     </option>
-
-    </select>
-
-   </div>
-
-   <div>
-
-    <label>
-     Versión *
-    </label>
-
-    <input
-     id="calVersion"
-     placeholder="Ej: 04"
-     oninput="generarCodigo()">
-
-   </div>
-
-   <div>
-
-    <label>
-     Fecha de emisión *
-    </label>
-
-    <input
-     type="date"
-     id="calFecha"
-     onchange="calcularVencimiento()">
-
-   </div>
-
-   <div>
-
-    <label>
-     Fecha vencimiento
-    </label>
-
-    <input
-     type="date"
-     id="calVencimiento"
-     readonly>
-
-   </div>
-
-   <div class="completo">
-
-    <label>
-     Código generado
-    </label>
-
-    <input
-     id="calCodigo"
-     readonly>
-
-   </div>
-
-  </div>
-
-  <div class="acciones-form">
-
-   <button
-    class="btn-principal"
-    onclick="guardarCalificacion()">
-    Guardar
-   </button>
-
-   <button
-    class="btn-secundario"
-    onclick="limpiarFormCal()">
-    Cancelar
-   </button>
-
-  </div>
-
- </div>`;
-
+ let destino=document.getElementById("formCalFicha")||document.getElementById("formCal");
+ destino.innerHTML=`<div class="tarjeta" style="${document.getElementById("formCalFicha")?"padding:0;border:0":""}">
+ <div class="form-grid">
+ <div class="completo"><label>Equipo *</label><select id="calEquipo" onchange="actualizarTipos();generarCodigo()">${equipos.map(e=>`<option value="${esc(e.codigo)}" ${e.codigo===codigoEquipo?"selected":""}>${esc(e.codigo)} - ${esc(e.nombre)}</option>`).join("")}</select></div>
+ <div><label>Tipo *</label><select id="calTipo" onchange="generarCodigo()"></select></div>
+ <div><label>Documento *</label><select id="calDocumento" onchange="generarCodigo()"><option>Protocolo</option><option>Reporte</option></select></div>
+ <div><label>Versión *</label><input id="calVersion" placeholder="Ej: 04" oninput="generarCodigo()"></div>
+ <div><label>Fecha de emisión *</label><input type="date" id="calFecha" onchange="calcularVencimiento()"></div>
+ <div><label>Fecha vencimiento</label><input type="date" id="calVencimiento" readonly></div>
+ <div class="completo"><label>Código generado</label><input id="calCodigo" readonly></div>
+ </div><div class="acciones-form"><button class="btn-principal" onclick="guardarCalificacion()">Guardar</button><button class="btn-secundario" onclick="limpiarFormCal()">Cancelar</button></div></div>`;
  actualizarTipos();
 }
 
 function actualizarTipos(){
-
- let cod=
- valSelect(
-  "calEquipo"
- );
-
- let e=
- equipos.find(
-  x=>x.codigo===cod
- );
-
- let sel=
- document.getElementById(
-  "calTipo"
- );
-
- if(!sel)return;
-
- let actual=
- sel.value;
-
- let tipos=[
-  "IQ",
-  "OQ"
- ];
-
- if(e?.aplicaPQ){
-  tipos.push("PQ");
- }
-
- sel.innerHTML=
- tipos.map(t=>`
-  <option ${
-   t===actual
-   ?"selected"
-   :""
-  }>
-   ${t}
-  </option>
- `).join("");
-
- generarCodigo();
+ let cod=valSelect("calEquipo"),e=equipos.find(x=>x.codigo===cod),sel=document.getElementById("calTipo");
+ if(!sel)return;let actual=sel.value,tipos=["IQ","OQ"];if(e?.aplicaPQ)tipos.push("PQ");
+ sel.innerHTML=tipos.map(t=>`<option ${t===actual?"selected":""}>${t}</option>`).join("");generarCodigo();
 }
 
 function generarCodigo(){
-
- let cod=
- valSelect(
-  "calEquipo"
- );
-
- let tipo=
- valSelect(
-  "calTipo"
- );
-
- let doc=
- valSelect(
-  "calDocumento"
- );
-
- let v=
- val(
-  "calVersion"
- );
-
- let campo=
- document.getElementById(
-  "calCodigo"
- );
-
- if(
-  !campo||
-  !cod||
-  !tipo||
-  !doc||
-  !v
- ){
-
-  if(campo){
-   campo.value="";
-  }
-
-  return;
- }
-
- let p={
-
-  IQ:{
-   Protocolo:"PCI",
-   Reporte:"RCI"
-  },
-
-  OQ:{
-   Protocolo:"PCO",
-   Reporte:"RCO"
-  },
-
-  PQ:{
-   Protocolo:"PCD",
-   Reporte:"RCD"
-  }
-
- };
-
- campo.value=
- `${p[tipo][doc]}-${cod}-${v}`;
+ let cod=valSelect("calEquipo"),tipo=valSelect("calTipo"),doc=valSelect("calDocumento"),v=val("calVersion"),campo=document.getElementById("calCodigo");
+ if(!campo||!cod||!tipo||!doc||!v){if(campo)campo.value="";return}
+ let p={IQ:{Protocolo:"PCI",Reporte:"RCI"},OQ:{Protocolo:"PCO",Reporte:"RCO"},PQ:{Protocolo:"PCD",Reporte:"RCD"}};
+ campo.value=`${p[tipo][doc]}-${cod}-${v}`;
 }
 
 function calcularVencimiento(){
-
- let f=
- val(
-  "calFecha"
- );
-
- let v=
- document.getElementById(
-  "calVencimiento"
- );
-
- if(!f||!v){
-
-  if(v){
-   v.value="";
-  }
-
-  return;
- }
-
- let[a,m,d]=
- f.split("-");
-
- v.value=
- `${Number(a)+5}-${m}-${d}`;
+ let f=val("calFecha"),v=document.getElementById("calVencimiento");
+ if(!f||!v){if(v)v.value="";return}
+ let[a,m,d]=f.split("-");v.value=`${Number(a)+5}-${m}-${d}`;
 }
 
 function guardarCalificacion(){
-
  if(!esAdmin)return;
-
- let cod=
- valSelect(
-  "calEquipo"
- );
-
- let e=
- equipos.find(
-  x=>x.codigo===cod
- );
-
- let tipo=
- valSelect(
-  "calTipo"
- );
-
- let doc=
- valSelect(
-  "calDocumento"
- );
-
- let version=
- val(
-  "calVersion"
- );
-
- let fecha=
- val(
-  "calFecha"
- );
-
- if(
-  !cod||
-  !tipo||
-  !doc||
-  !version||
-  !fecha
- ){
-  return alert(
-   "Completa todos los campos."
-  );
- }
-
- if(
-  tipo==="PQ"&&
-  !e?.aplicaPQ
- ){
-  return alert(
-   "Este equipo no tiene PQ habilitada."
-  );
- }
-
- calcularVencimiento();
- generarCodigo();
-
- let r={
-
-  equipoCodigo:
-  cod,
-
-  equipoNombre:
-  e.nombre,
-
-  tipo,
-
-  documento:
-  doc,
-
-  version,
-
-  codigo:
-  val("calCodigo"),
-
-  fecha,
-
-  vencimiento:
-  val("calVencimiento")
-
- };
-
- if(calificacionEditando===null){
-  calificaciones.push(r);
- }else{
-  calificaciones[
-   calificacionEditando
-  ]=r;
- }
-
- guardarDatos();
-
- mostrarCalificaciones();
+ let cod=valSelect("calEquipo"),e=equipos.find(x=>x.codigo===cod),tipo=valSelect("calTipo"),doc=valSelect("calDocumento"),version=val("calVersion"),fecha=val("calFecha");
+ if(!cod||!tipo||!doc||!version||!fecha)return alert("Completa todos los campos.");
+ if(tipo==="PQ"&&!e?.aplicaPQ)return alert("Este equipo no tiene PQ habilitada.");
+ calcularVencimiento();generarCodigo();
+ let r={equipoCodigo:cod,equipoNombre:e.nombre,tipo,documento:doc,version,codigo:val("calCodigo"),fecha,vencimiento:val("calVencimiento")};
+ if(calificacionEditando===null)calificaciones.push(r);else calificaciones[calificacionEditando]=r;
+ guardarDatos();mostrarCalificaciones();
 }
 
 function editarCalificacion(i){
-
- if(!esAdmin)return;
-
- let r=
- calificaciones[i];
-
- mostrarCalificaciones();
-
- nuevaCalificacion(
-  r.equipoCodigo
- );
-
- calificacionEditando=i;
-
- document.getElementById(
-  "calEquipo"
- ).value=
- r.equipoCodigo;
-
- actualizarTipos();
-
- document.getElementById(
-  "calTipo"
- ).value=
- r.tipo;
-
- document.getElementById(
-  "calDocumento"
- ).value=
- r.documento;
-
- document.getElementById(
-  "calVersion"
- ).value=
- r.version;
-
- document.getElementById(
-  "calFecha"
- ).value=
- r.fecha;
-
- calcularVencimiento();
-
- generarCodigo();
+ if(!esAdmin)return;let r=calificaciones[i];mostrarCalificaciones();nuevaCalificacion(r.equipoCodigo);calificacionEditando=i;
+ document.getElementById("calEquipo").value=r.equipoCodigo;actualizarTipos();
+ document.getElementById("calTipo").value=r.tipo;
+ document.getElementById("calDocumento").value=r.documento;
+ document.getElementById("calVersion").value=r.version;
+ document.getElementById("calFecha").value=r.fecha;
+ calcularVencimiento();generarCodigo();
 }
-
 function eliminarCalificacion(i){
-
- if(!esAdmin)return;
-
- if(!confirm(
-  "¿Eliminar "+
-  calificaciones[i].codigo+
-  "?"
- ))return;
-
- calificaciones.splice(
-  i,
-  1
- );
-
- guardarDatos();
-
- tablaCalificaciones();
+ if(!esAdmin)return;if(!confirm("¿Eliminar "+calificaciones[i].codigo+"?"))return;
+ calificaciones.splice(i,1);guardarDatos();tablaCalificaciones();
 }
-
 function limpiarFormCal(){
-
- let x=
- document.getElementById(
-  "formCalFicha"
- )||
- document.getElementById(
-  "formCal"
- );
-
- if(x){
-  x.innerHTML="";
- }
-
- calificacionEditando=null;
+ let x=document.getElementById("formCalFicha")||document.getElementById("formCal");
+ if(x)x.innerHTML="";calificacionEditando=null;
 }
 
 function tablaCalificaciones(){
-
- let q=
- (document.getElementById(
-  "buscarCal"
- )?.value||"")
- .toLowerCase();
-
- let fe=
- valSelect(
-  "fEq"
- );
-
- let ft=
- valSelect(
-  "fTipo"
- );
-
- let fd=
- valSelect(
-  "fDoc"
- );
-
- let lista=
- calificaciones.filter(c=>
-
-  (!fe||
-   c.equipoCodigo===fe
-  )&&
-
-  (!ft||
-   c.tipo===ft
-  )&&
-
-  (!fd||
-   c.documento===fd
-  )&&
-
-  [
-   c.equipoCodigo,
-   c.equipoNombre,
-   c.codigo,
-   c.tipo,
-   c.documento
-  ]
-
-  .some(x=>
-   (x||"")
-   .toLowerCase()
-   .includes(q)
-  )
-
- );
-
- let h=`
-
- <div class="tabla-contenedor">
-
- <table>
-
- <thead>
-
- <tr>
-  <th>Equipo</th>
-  <th>Tipo</th>
-  <th>Documento</th>
-  <th>Código</th>
-  <th>Emisión</th>
-  <th>Vencimiento</th>
-  <th>Estado</th>
-  <th>Acciones</th>
- </tr>
-
- </thead>
-
- <tbody>`;
-
- lista.forEach(c=>{
-
-  let i=
-  calificaciones.indexOf(c);
-
-  let s=
-  estadoFecha(
-   c.vencimiento
-  );
-
-  h+=`
-
-  <tr>
-
-   <td>
-
-    <span class="codigo">
-     ${esc(c.equipoCodigo)}
-    </span>
-
-    <div class="subdato">
-     ${esc(c.equipoNombre)}
-    </div>
-
-   </td>
-
-   <td>
-    ${c.tipo}
-   </td>
-
-   <td>
-    ${c.documento}
-   </td>
-
-   <td class="codigo">
-    ${esc(c.codigo)}
-   </td>
-
-   <td>
-    ${fechaBonita(c.fecha)}
-   </td>
-
-   <td>
-    ${fechaBonita(c.vencimiento)}
-   </td>
-
-   <td>
-    ${puntoEstado(s)}
-   </td>
-
-   <td>
-
-    <div class="acciones-tabla">
-
-     <button
-      class="btn-editar"
-      onclick="editarCalificacion(${i})">
-      ✎
-     </button>
-
-     <button
-      class="btn-eliminar"
-      onclick="eliminarCalificacion(${i})">
-      🗑
-     </button>
-
-    </div>
-
-   </td>
-
-  </tr>`;
- });
-
- h+="</tbody></table></div>";
-
- document.getElementById(
-  "tablaCal"
- ).innerHTML=h;
+ let q=(document.getElementById("buscarCal")?.value||"").toLowerCase(),fe=valSelect("fEq"),ft=valSelect("fTipo"),fd=valSelect("fDoc");
+ let lista=calificaciones.filter(c=>(!fe||c.equipoCodigo===fe)&&(!ft||c.tipo===ft)&&(!fd||c.documento===fd)&&[c.equipoCodigo,c.equipoNombre,c.codigo,c.tipo,c.documento].some(x=>(x||"").toLowerCase().includes(q)));
+ let h=`<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Tipo</th><th>Documento</th><th>Código</th><th>Emisión</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>`;
+ lista.forEach(c=>{let i=calificaciones.indexOf(c),s=estadoFecha(c.vencimiento);h+=`<tr>
+ <td><span class="codigo">${esc(c.equipoCodigo)}</span><div class="subdato">${esc(c.equipoNombre)}</div></td>
+ <td>${c.tipo}</td><td>${c.documento}</td><td class="codigo">${esc(c.codigo)}</td>
+ <td>${fechaBonita(c.fecha)}</td><td>${fechaBonita(c.vencimiento)}</td><td>${puntoEstado(s)}</td>
+ <td><div class="acciones-tabla"><button class="btn-editar" onclick="editarCalificacion(${i})">✎</button><button class="btn-eliminar" onclick="eliminarCalificacion(${i})">🗑</button></div></td>
+ </tr>`});
+ h+="</tbody></table></div>";document.getElementById("tablaCal").innerHTML=h;
 }
 
-/* ================= EXCEL ================= */
+/* EXCEL */
 
 function descargarPlantilla(){
-
  if(!esAdmin)return;
-
- let ws=
- XLSX.utils.json_to_sheet([{
-
-  "Código":"E780/EF",
-
-  "Nombre":
-  "Envasadora de Gotas",
-
-  "Área":
-  "Producción",
-
-  "Ubicación":
-  "Sala de Envasado",
-
-  "Aplica PQ":
-  "Sí"
-
- }]);
-
- let wb=
- XLSX.utils.book_new();
-
- XLSX.utils.book_append_sheet(
-  wb,
-  ws,
-  "Equipos"
- );
-
- XLSX.writeFile(
-  wb,
-  "Plantilla_Equipos.xlsx"
- );
+ let ws=XLSX.utils.json_to_sheet([{"Código":"E780/EF","Nombre":"Envasadora de Gotas","Área":"Producción","Ubicación":"Sala de Envasado","Aplica PQ":"Sí"}]),wb=XLSX.utils.book_new();
+ XLSX.utils.book_append_sheet(wb,ws,"Equipos");XLSX.writeFile(wb,"Plantilla_Equipos.xlsx");
 }
 
 function importarExcel(ev){
-
- if(!esAdmin)return;
-
- let f=
- ev.target.files[0];
-
- if(!f)return;
-
- let r=
- new FileReader();
-
+ if(!esAdmin)return;let f=ev.target.files[0];if(!f)return;let r=new FileReader();
  r.onload=e=>{
-
   try{
-
-   let wb=
-   XLSX.read(
-    new Uint8Array(
-     e.target.result
-    ),
-    {
-     type:"array"
-    }
-   );
-
-   let rows=
-   XLSX.utils.sheet_to_json(
-    wb.Sheets[
-     wb.SheetNames[0]
-    ]
-   );
-
+   let wb=XLSX.read(new Uint8Array(e.target.result),{type:"array"}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
    rows.forEach(x=>{
-
-    let codigo=
-    col(
-     x,
-     [
-      "Código",
-      "Codigo"
-     ]
-    );
-
-    let nombre=
-    col(
-     x,
-     [
-      "Nombre",
-      "Nombre del equipo"
-     ]
-    );
-
-    let area=
-    col(
-     x,
-     [
-      "Área",
-      "Area"
-     ]
-    );
-
-    let ubicacion=
-    col(
-     x,
-     [
-      "Ubicación",
-      "Ubicacion"
-     ]
-    );
-
-    let pq=
-    col(
-     x,
-     [
-      "Aplica PQ",
-      "PQ"
-     ]
-    );
-
-    if(
-     !codigo||
-     !nombre||
-     equipos.some(
-      e=>e.codigo===codigo
-     )
-    )return;
-
-    equipos.push({
-
-     codigo,
-
-     nombre,
-
-     area,
-
-     ubicacion,
-
-     aplicaPQ:
-     [
-      "si",
-      "sí",
-      "s",
-      "yes",
-      "1"
-     ].includes(
-      (pq||"")
-      .toLowerCase()
-     )
-
-    });
+    let codigo=col(x,["Código","Codigo"]),nombre=col(x,["Nombre","Nombre del equipo"]),area=col(x,["Área","Area"]),ubicacion=col(x,["Ubicación","Ubicacion"]),pq=col(x,["Aplica PQ","PQ"]);
+    if(!codigo||!nombre||equipos.some(e=>e.codigo===codigo))return;
+    equipos.push({codigo,nombre,area,ubicacion,aplicaPQ:["si","sí","s","yes","1"].includes((pq||"").toLowerCase())});
    });
-
-   guardarDatos();
-
-   mostrarEquipos();
-
-  }catch(err){
-
-   alert(
-    "No se pudo leer el archivo Excel."
-   );
-  }
+   guardarDatos();mostrarEquipos();
+  }catch(err){alert("No se pudo leer el archivo Excel.")}
  };
-
- r.readAsArrayBuffer(f);
-
- ev.target.value="";
+ r.readAsArrayBuffer(f);ev.target.value="";
 }
 
-function col(f,n){
+function col(f,n){for(let x of n)if(f[x]!=null)return String(f[x]).trim();return""}
 
- for(let x of n){
-
-  if(f[x]!=null){
-   return String(
-    f[x]
-   ).trim();
-  }
-
- }
-
- return"";
-}
-
-/* ================= BASE ================= */
+/* BASE DE DATOS */
 
 function mostrarBase(){
-
- if(!esAdmin){
-  return mostrarInicio();
- }
-
- document.getElementById(
-  "contenido"
- ).innerHTML=`
-
- <div class="topbar">
-
-  <div>
-
-   <h1 class="titulo-pagina">
-    Base de datos
-   </h1>
-
-   <div class="subtitulo-pagina">
-    Almacenamiento actual
-   </div>
-
-  </div>
-
- </div>
-
- <div class="tarjeta">
-
-  <h2>
-   Estado actual
-  </h2>
-
-  <p>
-   La aplicación utiliza
-   <strong>localStorage</strong>
-   en este navegador.
-  </p>
-
-  <p class="subdato">
-
-   Equipos:
-   ${equipos.length}
-
-   · Calificaciones:
-   ${calificaciones.length}
-
-   · Manuales:
-   ${manuales.length}
-
-  </p>
-
+ if(!esAdmin)return mostrarInicio();
+ paginaCalificacion="base";
+ document.getElementById("contenido").innerHTML=`
+ <div class="topbar"><div><h1 class="titulo-pagina">Base de datos</h1><div class="subtitulo-pagina">Almacenamiento temporal de Calificación de Equipos</div></div></div>
+ ${submenuCalificacion("base")}
+ <div class="tarjeta"><h2>Estado actual</h2>
+ <p>La aplicación utiliza actualmente <strong>localStorage</strong> en este navegador.</p>
+ <p class="subdato">Equipos: ${equipos.length} · Calificaciones: ${calificaciones.length} · Manuales: ${manuales.length}</p>
  </div>`;
 }
 
-/* ================= AUXILIARES ================= */
+/* AUXILIARES */
 
-function val(id){
- return document.getElementById(id)?.value.trim()||"";
-}
+function val(id){return document.getElementById(id)?.value.trim()||""}
+function valSelect(id){return document.getElementById(id)?.value||""}
+function fechaBonita(f){if(!f)return"—";let p=f.split("-");return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:f}
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function escJS(v){return String(v??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'")}
 
-function valSelect(id){
- return document.getElementById(id)?.value||"";
-}
-
-function fechaBonita(f){
-
- if(!f)return"—";
-
- let p=
- f.split("-");
-
- return p.length===3
- ?`${p[2]}/${p[1]}/${p[0]}`
- :f;
-}
-
-function esc(v){
-
- return String(v??"")
-
- .replace(/&/g,"&amp;")
-
- .replace(/</g,"&lt;")
-
- .replace(/>/g,"&gt;")
-
- .replace(/"/g,"&quot;")
-
- .replace(/'/g,"&#039;");
-}
-
-function escJS(v){
-
- return String(v??"")
-
- .replace(/\\/g,"\\\\")
-
- .replace(/'/g,"\\'");
-}
-
-cargarMenu();
-mostrarInicio();
+actualizarUsuario();
+abrirModulo("calificacion");
 </script>
 
 </body>
