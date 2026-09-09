@@ -299,21 +299,110 @@ function tablaSemaforoEquipos(){
  if(!equipos.length)return`<div class="subdato">No hay equipos registrados.</div>`;
 
  let h=`<div class="tabla-contenedor"><table>
- <thead><tr><th>Equipo</th><th>Nombre</th><th>Área</th><th>Ubicación</th><th>Calificaciones</th><th>Manual</th><th>Estado general</th></tr></thead><tbody>`;
+ <thead>
+  <tr>
+   <th>Equipo</th>
+   <th>Nombre</th>
+   <th>Área</th>
+   <th>Ubicación</th>
+   <th>IQ</th>
+   <th>OQ</th>
+   <th>PQ</th>
+   <th>Manual</th>
+   <th>Estado general</th>
+  </tr>
+ </thead>
+ <tbody>`;
 
  equipos.forEach((e,i)=>{
-  let ec=estadoLista(calificaciones.filter(x=>x.equipoCodigo===e.codigo));
-  let em=estadoLista(manuales.filter(x=>x.equipoCodigo===e.codigo));
-  let eg=estadoGeneralEquipo(e.codigo);
+
+  let iq=estadoLista(
+   calificaciones.filter(
+    x=>x.equipoCodigo===e.codigo && x.tipo==="IQ"
+   )
+  );
+
+  let oq=estadoLista(
+   calificaciones.filter(
+    x=>x.equipoCodigo===e.codigo && x.tipo==="OQ"
+   )
+  );
+
+  let pq=e.aplicaPQ
+   ? estadoLista(
+      calificaciones.filter(
+       x=>x.equipoCodigo===e.codigo && x.tipo==="PQ"
+      )
+     )
+   : null;
+
+  let em=estadoLista(
+   manuales.filter(
+    x=>x.equipoCodigo===e.codigo
+   )
+  );
+
+  let estados=[iq,oq,em];
+
+  if(e.aplicaPQ && pq){
+   estados.push(pq);
+  }
+
+  let eg={texto:"Sin registros",clase:"neutro",nivel:0};
+
+  estados.forEach(s=>{
+   if(s.nivel>eg.nivel){
+    eg=s;
+   }
+  });
 
   h+=`<tr>
-   <td><span class="enlace-equipo" onclick="verFichaEquipo(${i})">${esc(e.codigo)}</span></td>
-   <td>${esc(e.nombre)}</td>
-   <td>${esc(e.area)}</td>
-   <td>${esc(e.ubicacion)||"—"}</td>
-   <td>${puntoEstado(ec)}</td>
-   <td>${puntoEstado(em)}</td>
-   <td>${puntoEstado(eg)}</td>
+
+   <td>
+    <span
+     class="enlace-equipo"
+     onclick="verFichaEquipo(${i})"
+    >
+     ${esc(e.codigo)}
+    </span>
+   </td>
+
+   <td>
+    ${esc(e.nombre)}
+   </td>
+
+   <td>
+    ${esc(e.area)}
+   </td>
+
+   <td>
+    ${esc(e.ubicacion)||"—"}
+   </td>
+
+   <td>
+    ${puntoEstado(iq)}
+   </td>
+
+   <td>
+    ${puntoEstado(oq)}
+   </td>
+
+   <td>
+    ${
+     e.aplicaPQ
+      ? puntoEstado(pq)
+      : `<span class="badge neutro">No aplica</span>`
+    }
+   </td>
+
+   <td>
+    ${puntoEstado(em)}
+   </td>
+
+   <td>
+    ${puntoEstado(eg)}
+   </td>
+
   </tr>`;
  });
 
