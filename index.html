@@ -329,6 +329,15 @@
             color: #17753b;
         }
 
+        .btn-eliminar-definitivo {
+            background: #b0000b;
+            color: #ffffff;
+        }
+
+        .btn-eliminar-definitivo:hover {
+            background: #8f0009;
+        }
+
         .btn-login,
         .btn-logout {
             width: 100%;
@@ -615,11 +624,6 @@
             margin-bottom: 5px;
         }
 
-        .ficha-nombre {
-            margin: 0;
-            font-size: 25px;
-        }
-
         .ficha-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -722,6 +726,32 @@
         }
 
         /* =========================================================
+           ZONA DE PELIGRO
+        ========================================================= */
+
+        .zona-peligro {
+            border: 1px solid #efb5ba;
+            background: #fff8f8;
+        }
+
+        .zona-peligro h2 {
+            color: #b0000b;
+        }
+
+        .advertencia-peligro {
+            padding: 12px 14px;
+            margin-bottom: 14px;
+
+            background: #fde8ea;
+            color: #99131c;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* =========================================================
            EXCEL
         ========================================================= */
 
@@ -811,7 +841,7 @@
         }
 
         /* =========================================================
-           PLACEHOLDERS OTROS MÓDULOS
+           OTROS MÓDULOS
         ========================================================= */
 
         .modulo-grid {
@@ -937,58 +967,37 @@
 
     <ul class="menu" id="menuPrincipal">
 
-        <li
-            data-modulo="calificacion"
-            onclick="abrirModulo('calificacion')"
-        >
+        <li data-modulo="calificacion" onclick="abrirModulo('calificacion')">
             <span class="menu-icono">▣</span>
             Calificación de Equipos
         </li>
 
-        <li
-            data-modulo="calibracion"
-            onclick="abrirModulo('calibracion')"
-        >
+        <li data-modulo="calibracion" onclick="abrirModulo('calibracion')">
             <span class="menu-icono">◎</span>
             Calibración de Equipos
         </li>
 
-        <li
-            data-modulo="agua"
-            onclick="abrirModulo('agua')"
-        >
+        <li data-modulo="agua" onclick="abrirModulo('agua')">
             <span class="menu-icono">◉</span>
             Agua Purificada
         </li>
 
-        <li
-            data-modulo="hvac"
-            onclick="abrirModulo('hvac')"
-        >
+        <li data-modulo="hvac" onclick="abrirModulo('hvac')">
             <span class="menu-icono">≋</span>
             HVAC
         </li>
 
-        <li
-            data-modulo="aire"
-            onclick="abrirModulo('aire')"
-        >
+        <li data-modulo="aire" onclick="abrirModulo('aire')">
             <span class="menu-icono">➜</span>
             Aire Comprimido
         </li>
 
-        <li
-            data-modulo="mapeos"
-            onclick="abrirModulo('mapeos')"
-        >
+        <li data-modulo="mapeos" onclick="abrirModulo('mapeos')">
             <span class="menu-icono">⌁</span>
             Mapeos Térmicos
         </li>
 
-        <li
-            data-modulo="documentacion"
-            onclick="abrirModulo('documentacion')"
-        >
+        <li data-modulo="documentacion" onclick="abrirModulo('documentacion')">
             <span class="menu-icono">▤</span>
             Documentación SAC-M
         </li>
@@ -1157,20 +1166,12 @@ function leerDatos(clave) {
     }
 }
 
-/*
-    CALIFICACIÓN
-
-    Ya no se utiliza la colección "manuales".
-*/
 let equipos =
     leerDatos("equipos");
 
 let calificaciones =
     leerDatos("calificaciones");
 
-/*
-    OTROS MÓDULOS
-*/
 let equiposCalibracion =
     leerDatos("equiposCalibracion");
 
@@ -1182,62 +1183,6 @@ let documentosSACM =
 
 let registrosDocumentales =
     leerDatos("registrosDocumentales");
-
-/* =========================================================
-   MIGRACIÓN AUTOMÁTICA DE EQUIPOS ANTIGUOS
-========================================================= */
-
-function migrarEquiposAntiguos() {
-
-    let huboCambios = false;
-
-    equipos.forEach(equipo => {
-
-        if (!("marca" in equipo)) {
-            equipo.marca = "";
-            huboCambios = true;
-        }
-
-        if (!("modelo" in equipo)) {
-            equipo.modelo = "";
-            huboCambios = true;
-        }
-
-        if (!("serie" in equipo)) {
-            equipo.serie = "";
-            huboCambios = true;
-        }
-
-        if (!("estado" in equipo)) {
-            equipo.estado = "Operativo";
-            huboCambios = true;
-        }
-
-        if (!("fechaBaja" in equipo)) {
-            equipo.fechaBaja = "";
-            huboCambios = true;
-        }
-
-        if (!("motivoBaja" in equipo)) {
-            equipo.motivoBaja = "";
-            huboCambios = true;
-        }
-
-        if (!Array.isArray(equipo.historialEstado)) {
-            equipo.historialEstado = [];
-            huboCambios = true;
-        }
-
-        if (!("aplicaPQ" in equipo)) {
-            equipo.aplicaPQ = true;
-            huboCambios = true;
-        }
-    });
-
-    if (huboCambios) {
-        guardarTodo();
-    }
-}
 
 /* =========================================================
    GUARDAR
@@ -1274,6 +1219,62 @@ function guardarTodo() {
         "registrosDocumentales",
         JSON.stringify(registrosDocumentales)
     );
+}
+
+/* =========================================================
+   MIGRACIÓN DE EQUIPOS ANTIGUOS
+========================================================= */
+
+function migrarEquiposAntiguos() {
+
+    let cambios = false;
+
+    equipos.forEach(equipo => {
+
+        if (!("marca" in equipo)) {
+            equipo.marca = "";
+            cambios = true;
+        }
+
+        if (!("modelo" in equipo)) {
+            equipo.modelo = "";
+            cambios = true;
+        }
+
+        if (!("serie" in equipo)) {
+            equipo.serie = "";
+            cambios = true;
+        }
+
+        if (!("estado" in equipo)) {
+            equipo.estado = "Operativo";
+            cambios = true;
+        }
+
+        if (!("fechaBaja" in equipo)) {
+            equipo.fechaBaja = "";
+            cambios = true;
+        }
+
+        if (!("motivoBaja" in equipo)) {
+            equipo.motivoBaja = "";
+            cambios = true;
+        }
+
+        if (!Array.isArray(equipo.historialEstado)) {
+            equipo.historialEstado = [];
+            cambios = true;
+        }
+
+        if (!("aplicaPQ" in equipo)) {
+            equipo.aplicaPQ = true;
+            cambios = true;
+        }
+    });
+
+    if (cambios) {
+        guardarTodo();
+    }
 }
 
 /* =========================================================
@@ -1426,9 +1427,7 @@ function normalizarFechaExcel(valor) {
     const texto =
         String(valor).trim();
 
-    if (
-        /^\d{4}-\d{2}-\d{2}$/.test(texto)
-    ) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(texto)) {
         return texto;
     }
 
@@ -1468,7 +1467,7 @@ function columnaExcel(fila,nombres) {
 }
 
 /* =========================================================
-   ESTADO DE VIGENCIA
+   ESTADOS
 ========================================================= */
 
 function estadoFecha(fecha) {
@@ -1543,12 +1542,7 @@ function puntoEstado(estado) {
     `;
 }
 
-function tarjetaResumen(
-    icono,
-    titulo,
-    valor,
-    clase
-) {
+function tarjetaResumen(icono,titulo,valor,clase) {
 
     return `
         <div class="resumen-card">
@@ -1669,12 +1663,8 @@ function iniciarSesion() {
         );
 
         cerrarLogin();
-
         actualizarUsuario();
-
-        abrirModulo(
-            moduloActual
-        );
+        abrirModulo(moduloActual);
 
         return;
     }
@@ -1704,16 +1694,9 @@ function cerrarSesion() {
     actualizarUsuario();
 
     if (moduloActual === "kpi") {
-
-        abrirModulo(
-            "calificacion"
-        );
-
+        abrirModulo("calificacion");
     } else {
-
-        abrirModulo(
-            moduloActual
-        );
+        abrirModulo(moduloActual);
     }
 }
 
@@ -1724,9 +1707,7 @@ function cerrarSesion() {
 function marcarMenuActivo(modulo) {
 
     document
-        .querySelectorAll(
-            "#menuPrincipal li"
-        )
+        .querySelectorAll("#menuPrincipal li")
         .forEach(
             elemento =>
                 elemento.classList.remove(
@@ -1740,9 +1721,7 @@ function marcarMenuActivo(modulo) {
         );
 
     if (elemento) {
-        elemento.classList.add(
-            "activo"
-        );
+        elemento.classList.add("activo");
     }
 }
 
@@ -1755,26 +1734,16 @@ function abrirModulo(modulo) {
         return;
     }
 
-    moduloActual =
-        modulo;
+    moduloActual = modulo;
 
-    marcarMenuActivo(
-        modulo
-    );
+    marcarMenuActivo(modulo);
 
-    if (
-        modulo ===
-        "calificacion"
-    ) {
-
+    if (modulo === "calificacion") {
         mostrarInicioCalificacion();
         return;
     }
 
-    if (
-        modulo ===
-        "calibracion"
-    ) {
+    if (modulo === "calibracion") {
 
         mostrarModuloSimple(
             "Calibración de Equipos",
@@ -1784,10 +1753,7 @@ function abrirModulo(modulo) {
         return;
     }
 
-    if (
-        modulo ===
-        "agua"
-    ) {
+    if (modulo === "agua") {
 
         mostrarModuloDocumental(
             "Agua Purificada",
@@ -1804,10 +1770,7 @@ function abrirModulo(modulo) {
         return;
     }
 
-    if (
-        modulo ===
-        "hvac"
-    ) {
+    if (modulo === "hvac") {
 
         mostrarModuloDocumental(
             "HVAC",
@@ -1824,10 +1787,7 @@ function abrirModulo(modulo) {
         return;
     }
 
-    if (
-        modulo ===
-        "aire"
-    ) {
+    if (modulo === "aire") {
 
         mostrarModuloDocumental(
             "Aire Comprimido",
@@ -1843,10 +1803,7 @@ function abrirModulo(modulo) {
         return;
     }
 
-    if (
-        modulo ===
-        "mapeos"
-    ) {
+    if (modulo === "mapeos") {
 
         mostrarModuloDocumental(
             "Mapeos Térmicos",
@@ -1863,10 +1820,7 @@ function abrirModulo(modulo) {
         return;
     }
 
-    if (
-        modulo ===
-        "documentacion"
-    ) {
+    if (modulo === "documentacion") {
 
         mostrarModuloSimple(
             "Documentación SAC-M",
@@ -1876,17 +1830,13 @@ function abrirModulo(modulo) {
         return;
     }
 
-    if (
-        modulo ===
-        "kpi"
-    ) {
-
+    if (modulo === "kpi") {
         mostrarKPI();
     }
 }
 
 /* =========================================================
-   CALIFICACIÓN - SUBMENÚ
+   SUBMENÚ CALIFICACIÓN
 ========================================================= */
 
 function submenuCalificacion(activo) {
@@ -1967,10 +1917,7 @@ function ultimoDocumento(
         )[0] || null;
 }
 
-function estadoEtapa(
-    equipo,
-    tipo
-) {
+function estadoEtapa(equipo,tipo) {
 
     if (
         tipo === "PQ" &&
@@ -1997,11 +1944,6 @@ function estadoEtapa(
             "Reporte"
         );
 
-    /*
-        Para considerar una etapa vigente,
-        deben existir AMBOS:
-        Protocolo + Reporte.
-    */
     if (
         !protocolo ||
         !reporte
@@ -2051,9 +1993,7 @@ function estadoEtapa(
     };
 }
 
-function equipoCompletamenteCalificado(
-    equipo
-) {
+function equipoCompletamenteCalificado(equipo) {
 
     const iq =
         estadoEtapa(
@@ -2084,9 +2024,7 @@ function equipoCompletamenteCalificado(
                 "PQ"
             );
 
-        if (
-            pq.clase === "vencido"
-        ) {
+        if (pq.clase === "vencido") {
             return false;
         }
     }
@@ -2100,12 +2038,9 @@ function equipoCompletamenteCalificado(
 
 function mostrarInicioCalificacion() {
 
-    moduloActual =
-        "calificacion";
+    moduloActual = "calificacion";
 
-    marcarMenuActivo(
-        "calificacion"
-    );
+    marcarMenuActivo("calificacion");
 
     const operativos =
         equipos.filter(
@@ -2199,9 +2134,7 @@ function mostrarInicioCalificacion() {
                 Estado de calificación
             </h2>
 
-            ${tablaEstadoCalificacion(
-                operativos
-            )}
+            ${tablaEstadoCalificacion(operativos)}
 
         </div>
 
@@ -2215,12 +2148,10 @@ function mostrarInicioCalificacion() {
                         </h2>
 
                         <div class="subdato" style="margin-bottom:12px">
-                            Se conservan en el sistema junto con toda su documentación histórica.
+                            Permanecen almacenados con toda su documentación histórica.
                         </div>
 
-                        ${tablaEquiposBaja(
-                            deBaja
-                        )}
+                        ${tablaEquiposBaja(deBaja)}
 
                     </div>
                 `
@@ -2400,13 +2331,12 @@ function tablaEquiposBaja(lista) {
 }
 
 /* =========================================================
-   LISTADO DE EQUIPOS
+   EQUIPOS
 ========================================================= */
 
 function mostrarEquiposCalificacion() {
 
-    indiceEdicionEquipo =
-        null;
+    indiceEdicionEquipo = null;
 
     document.getElementById(
         "contenido"
@@ -2513,8 +2443,7 @@ function formEquipo(indice=null) {
         return;
     }
 
-    indiceEdicionEquipo =
-        indice;
+    indiceEdicionEquipo = indice;
 
     const equipo =
         indice !== null
@@ -2743,9 +2672,7 @@ function guardarEquipo() {
                     indiceEdicionEquipo
         );
 
-    if (
-        duplicado !== -1
-    ) {
+    if (duplicado !== -1) {
 
         alert(
             "Ya existe otro equipo con ese código."
@@ -2812,14 +2739,9 @@ function guardarEquipo() {
         const codigoAnterior =
             anterior.codigo;
 
-        anterior.codigo =
-            codigo;
-
-        anterior.nombre =
-            nombre;
-
-        anterior.area =
-            area;
+        anterior.codigo = codigo;
+        anterior.nombre = nombre;
+        anterior.area = area;
 
         anterior.marca =
             obtenerValor(
@@ -2846,48 +2768,22 @@ function guardarEquipo() {
                 "eqPQ"
             ) === "si";
 
-        /*
-            Si cambia el código del equipo,
-            también cambia la relación documental.
-        */
-        if (
-            codigoAnterior !==
-            codigo
-        ) {
+        calificaciones.forEach(
+            documento => {
 
-            calificaciones.forEach(
-                documento => {
+                if (
+                    documento.equipoCodigo ===
+                    codigoAnterior
+                ) {
 
-                    if (
-                        documento.equipoCodigo ===
-                        codigoAnterior
-                    ) {
+                    documento.equipoCodigo =
+                        codigo;
 
-                        documento.equipoCodigo =
-                            codigo;
-
-                        documento.equipoNombre =
-                            nombre;
-                    }
+                    documento.equipoNombre =
+                        nombre;
                 }
-            );
-
-        } else {
-
-            calificaciones.forEach(
-                documento => {
-
-                    if (
-                        documento.equipoCodigo ===
-                        codigo
-                    ) {
-
-                        documento.equipoNombre =
-                            nombre;
-                    }
-                }
-            );
-        }
+            }
+        );
     }
 
     guardarTodo();
@@ -3272,7 +3168,7 @@ function mostrarFichaEquipo(codigo) {
                     </h2>
 
                     <div class="subdato">
-                        Últimos Protocolos y Reportes vigentes registrados.
+                        Últimos Protocolos y Reportes registrados.
                     </div>
 
                 </div>
@@ -3326,8 +3222,8 @@ function mostrarFichaEquipo(codigo) {
                             equipo.estado === "De baja"
                                 ? `
                                     <p>
-                                        Este equipo se encuentra de baja y está excluido de los KPI de calificación.
-                                        Su documentación permanece disponible para consulta.
+                                        Este equipo se encuentra de baja y está excluido de los KPI.
+                                        Toda su documentación permanece disponible.
                                     </p>
 
                                     <button
@@ -3340,7 +3236,7 @@ function mostrarFichaEquipo(codigo) {
                                 : `
                                     <p>
                                         Dar de baja no elimina el equipo ni su documentación.
-                                        El equipo solamente dejará de participar en los KPI.
+                                        Solo lo excluye de los KPI.
                                     </p>
 
                                     <button
@@ -3356,6 +3252,41 @@ function mostrarFichaEquipo(codigo) {
                                     ></div>
                                 `
                         }
+
+                    </div>
+
+                    <div class="tarjeta zona-peligro">
+
+                        <h2>
+                            Zona de peligro
+                        </h2>
+
+                        <div class="advertencia-peligro">
+
+                            <strong>
+                                Eliminar definitivamente
+                            </strong>
+
+                            <br><br>
+
+                            Esta acción elimina permanentemente el equipo
+                            <strong>${escaparHTML(equipo.codigo)}</strong>
+                            y todos sus Protocolos y Reportes IQ / OQ / PQ asociados.
+
+                            <br><br>
+
+                            Utiliza esta opción solamente cuando el registro fue creado por error.
+                            Para retirar un equipo real del servicio, utiliza
+                            <strong>Dar de baja</strong>.
+
+                        </div>
+
+                        <button
+                            class="btn-eliminar-definitivo"
+                            onclick="eliminarEquipoDefinitivamente('${escaparJS(equipo.codigo)}')"
+                        >
+                            🗑 Eliminar definitivamente
+                        </button>
 
                     </div>
                 `
@@ -3430,6 +3361,10 @@ function datoFicha(etiqueta,valor) {
         </div>
     `;
 }
+
+/* =========================================================
+   TARJETAS IQ / OQ / PQ
+========================================================= */
 
 function tarjetaEtapa(equipo,tipo) {
 
@@ -3572,6 +3507,10 @@ function tarjetaDocumentoFicha(
         </div>
     `;
 }
+
+/* =========================================================
+   HISTORIAL DOCUMENTAL DEL EQUIPO
+========================================================= */
 
 function tablaHistorialEquipo(codigo) {
 
@@ -3728,7 +3667,7 @@ function editarEquipoDesdeFicha(indice) {
 }
 
 /* =========================================================
-   DAR DE BAJA / REACTIVAR
+   DAR DE BAJA
 ========================================================= */
 
 function mostrarFormularioBaja(codigo) {
@@ -3868,6 +3807,10 @@ function confirmarBajaEquipo(codigo) {
     );
 }
 
+/* =========================================================
+   REACTIVAR
+========================================================= */
+
 function reactivarEquipo(codigo) {
 
     const equipo =
@@ -3922,6 +3865,117 @@ function reactivarEquipo(codigo) {
 }
 
 /* =========================================================
+   ELIMINAR DEFINITIVAMENTE
+========================================================= */
+
+function eliminarEquipoDefinitivamente(codigo) {
+
+    if (!esAdmin) {
+        return;
+    }
+
+    const equipo =
+        equipos.find(
+            item =>
+                item.codigo ===
+                codigo
+        );
+
+    if (!equipo) {
+
+        alert(
+            "El equipo ya no existe."
+        );
+
+        return;
+    }
+
+    const documentosRelacionados =
+        calificaciones.filter(
+            documento =>
+                documento.equipoCodigo ===
+                codigo
+        ).length;
+
+    const confirmacionInicial =
+        confirm(
+            `ELIMINACIÓN DEFINITIVA\n\n` +
+            `Equipo: ${equipo.codigo} - ${equipo.nombre}\n` +
+            `Documentos IQ/OQ/PQ asociados: ${documentosRelacionados}\n\n` +
+            `Esta acción eliminará el equipo y toda su documentación de calificación.\n\n` +
+            `No utilices esta opción para equipos retirados del servicio; para eso existe "Dar de baja".\n\n` +
+            `¿Deseas continuar?`
+        );
+
+    if (!confirmacionInicial) {
+        return;
+    }
+
+    const codigoIngresado =
+        prompt(
+            `Para confirmar la eliminación definitiva, escribe exactamente el código del equipo:\n\n${equipo.codigo}`
+        );
+
+    if (codigoIngresado === null) {
+        return;
+    }
+
+    if (
+        codigoIngresado.trim() !==
+        equipo.codigo
+    ) {
+
+        alert(
+            "El código ingresado no coincide.\n\nEl equipo NO fue eliminado."
+        );
+
+        return;
+    }
+
+    const confirmacionFinal =
+        confirm(
+            `Última confirmación:\n\n` +
+            `Se eliminará definitivamente:\n\n` +
+            `• ${equipo.codigo} - ${equipo.nombre}\n` +
+            `• ${documentosRelacionados} documento(s) de calificación asociados\n\n` +
+            `¿Eliminar ahora?`
+        );
+
+    if (!confirmacionFinal) {
+        return;
+    }
+
+    /*
+        Primero se elimina toda la documentación
+        perteneciente al equipo.
+    */
+    calificaciones =
+        calificaciones.filter(
+            documento =>
+                documento.equipoCodigo !==
+                codigo
+        );
+
+    /*
+        Luego se elimina el equipo.
+    */
+    equipos =
+        equipos.filter(
+            item =>
+                item.codigo !==
+                codigo
+        );
+
+    guardarTodo();
+
+    alert(
+        `El equipo ${codigo} y su documentación asociada fueron eliminados definitivamente.`
+    );
+
+    mostrarEquiposCalificacion();
+}
+
+/* =========================================================
    GESTIÓN DOCUMENTAL
 ========================================================= */
 
@@ -3931,8 +3985,7 @@ function mostrarGestionDocumentos() {
         return;
     }
 
-    indiceEdicionDocumento =
-        null;
+    indiceEdicionDocumento = null;
 
     document.getElementById(
         "contenido"
@@ -3984,17 +4037,9 @@ function mostrarGestionDocumentos() {
                         IQ / OQ / PQ
                     </option>
 
-                    <option value="IQ">
-                        IQ
-                    </option>
-
-                    <option value="OQ">
-                        OQ
-                    </option>
-
-                    <option value="PQ">
-                        PQ
-                    </option>
+                    <option value="IQ">IQ</option>
+                    <option value="OQ">OQ</option>
+                    <option value="PQ">PQ</option>
 
                 </select>
 
@@ -4045,8 +4090,7 @@ function formDocumentoCalificacion(
         return;
     }
 
-    indiceEdicionDocumento =
-        indice;
+    indiceEdicionDocumento = indice;
 
     const registro =
         indice !== null
@@ -4056,28 +4100,12 @@ function formDocumentoCalificacion(
                     codigoEquipoPreseleccionado ||
                     equipos[0].codigo,
 
-                tipo:
-                    "IQ",
-
-                documento:
-                    "Protocolo",
-
-                codigo:
-                    "",
-
-                version:
-                    "",
-
-                fecha:
-                    ""
+                tipo:"IQ",
+                documento:"Protocolo",
+                codigo:"",
+                version:"",
+                fecha:""
             };
-
-    const equipo =
-        equipos.find(
-            item =>
-                item.codigo ===
-                registro.equipoCodigo
-        );
 
     document.getElementById(
         "formulario"
@@ -4246,9 +4274,7 @@ function formDocumentoCalificacion(
     actualizarVencimientoDocumento();
 }
 
-function actualizarOpcionesPQ(
-    seleccionado=""
-) {
+function actualizarOpcionesPQ(seleccionado="") {
 
     const codigo =
         obtenerSelect(
@@ -4603,7 +4629,7 @@ function eliminarDocumentoCalificacion(indice) {
 }
 
 /* =========================================================
-   DOCUMENTO DESDE FICHA
+   DOCUMENTOS DESDE FICHA
 ========================================================= */
 
 function nuevoDocumentoDesdeFicha(codigo) {
@@ -4673,8 +4699,7 @@ function mostrarExcelCalificacion() {
         return;
     }
 
-    excelTemporal =
-        null;
+    excelTemporal = null;
 
     document.getElementById(
         "contenido"
@@ -4755,10 +4780,6 @@ function mostrarExcelCalificacion() {
     `;
 }
 
-/* =========================================================
-   PLANTILLA EXCEL
-========================================================= */
-
 function descargarPlantillaCalificacion() {
 
     const datos = [
@@ -4794,32 +4815,6 @@ function descargarPlantillaCalificacion() {
             datos
         );
 
-    hoja["!cols"] = [
-        {wch:16},
-        {wch:30},
-        {wch:20},
-        {wch:18},
-        {wch:18},
-        {wch:18},
-        {wch:22},
-        {wch:12},
-
-        {wch:22},
-        {wch:20},
-        {wch:22},
-        {wch:20},
-
-        {wch:22},
-        {wch:20},
-        {wch:22},
-        {wch:20},
-
-        {wch:22},
-        {wch:20},
-        {wch:22},
-        {wch:20}
-    ];
-
     const libro =
         XLSX.utils.book_new();
 
@@ -4834,10 +4829,6 @@ function descargarPlantillaCalificacion() {
         "Plantilla_Calificacion_Equipos.xlsx"
     );
 }
-
-/* =========================================================
-   LEER EXCEL
-========================================================= */
 
 function leerExcelCalificacion(evento) {
 
@@ -4902,10 +4893,6 @@ function leerExcelCalificacion(evento) {
 
     evento.target.value = "";
 }
-
-/* =========================================================
-   PROCESAR EXCEL
-========================================================= */
 
 function procesarExcelCalificacion(
     filas,
@@ -5012,9 +4999,7 @@ function procesarExcelCalificacion(
                     String(
                         columnaExcel(
                             fila,
-                            [
-                                "Marca"
-                            ]
+                            ["Marca"]
                         )
                     ).trim(),
 
@@ -5022,9 +5007,7 @@ function procesarExcelCalificacion(
                     String(
                         columnaExcel(
                             fila,
-                            [
-                                "Modelo"
-                            ]
+                            ["Modelo"]
                         )
                     ).trim(),
 
@@ -5196,9 +5179,7 @@ function agregarDocumentoDesdeExcel(
         String(
             columnaExcel(
                 fila,
-                [
-                    columnaCodigo
-                ]
+                [columnaCodigo]
             )
         ).trim();
 
@@ -5206,15 +5187,10 @@ function agregarDocumentoDesdeExcel(
         normalizarFechaExcel(
             columnaExcel(
                 fila,
-                [
-                    columnaFecha
-                ]
+                [columnaFecha]
             )
         );
 
-    /*
-        Si ambos están vacíos no hay documento.
-    */
     if (
         !codigo &&
         !fecha
@@ -5222,10 +5198,6 @@ function agregarDocumentoDesdeExcel(
         return;
     }
 
-    /*
-        Si viene uno solo de los dos,
-        el documento no se importa.
-    */
     if (
         !codigo ||
         !fecha
@@ -5272,10 +5244,7 @@ function extraerVersionDocumento(codigo) {
         String(codigo)
         .split("-");
 
-    if (
-        partes.length <
-        2
-    ) {
+    if (partes.length < 2) {
         return "";
     }
 
@@ -5283,10 +5252,6 @@ function extraerVersionDocumento(codigo) {
         partes.length - 1
     ];
 }
-
-/* =========================================================
-   PREVIEW EXCEL
-========================================================= */
 
 function renderPreviewExcelCalificacion() {
 
@@ -5469,8 +5434,7 @@ function renderPreviewExcelCalificacion() {
 
 function cancelarExcel() {
 
-    excelTemporal =
-        null;
+    excelTemporal = null;
 
     const contenedor =
         document.getElementById(
@@ -5481,10 +5445,6 @@ function cancelarExcel() {
         contenedor.innerHTML = "";
     }
 }
-
-/* =========================================================
-   CONFIRMAR EXCEL
-========================================================= */
 
 function confirmarImportacionCalificacion() {
 
@@ -5525,12 +5485,7 @@ function confirmarImportacionCalificacion() {
                         .toLowerCase()
                 );
 
-            /*
-                EQUIPO NUEVO
-            */
-            if (
-                indice === -1
-            ) {
+            if (indice === -1) {
 
                 equipos.push(
                     data.equipo
@@ -5538,7 +5493,6 @@ function confirmarImportacionCalificacion() {
 
                 data.documentos.forEach(
                     documento => {
-
                         agregarDocumentoSiNoExiste(
                             documento
                         );
@@ -5550,12 +5504,7 @@ function confirmarImportacionCalificacion() {
                 return;
             }
 
-            /*
-                EQUIPO EXISTENTE
-            */
-            if (
-                modo === "omitir"
-            ) {
+            if (modo === "omitir") {
 
                 omitidos++;
                 return;
@@ -5564,9 +5513,6 @@ function confirmarImportacionCalificacion() {
             const anterior =
                 equipos[indice];
 
-            /*
-                Preservamos estado administrativo.
-            */
             equipos[indice] = {
 
                 ...anterior,
@@ -5618,15 +5564,12 @@ function confirmarImportacionCalificacion() {
         `Omitidos: ${omitidos}`
     );
 
-    excelTemporal =
-        null;
+    excelTemporal = null;
 
     mostrarInicioCalificacion();
 }
 
-function agregarDocumentoSiNoExiste(
-    documento
-) {
+function agregarDocumentoSiNoExiste(documento) {
 
     const existe =
         calificaciones.some(
@@ -5652,7 +5595,7 @@ function agregarDocumentoSiNoExiste(
 }
 
 /* =========================================================
-   EXPORTAR EXCEL
+   EXPORTAR CALIFICACIÓN
 ========================================================= */
 
 function exportarCalificacionExcel() {
@@ -5817,7 +5760,7 @@ function exportarCalificacionExcel() {
 }
 
 /* =========================================================
-   KPI CALIFICACIÓN
+   KPI
 ========================================================= */
 
 function contarKPIEtapa(tipo) {
@@ -5856,10 +5799,6 @@ function contarKPIEtapa(tipo) {
                     tipo
                 );
 
-            /*
-                Próximo todavía cuenta como vigente
-                para KPI.
-            */
             if (
                 estado.clase === "vigente" ||
                 estado.clase === "proximo"
@@ -5889,27 +5828,18 @@ function mostrarKPI() {
         return;
     }
 
-    moduloActual =
-        "kpi";
+    moduloActual = "kpi";
 
-    marcarMenuActivo(
-        "kpi"
-    );
+    marcarMenuActivo("kpi");
 
     const iq =
-        contarKPIEtapa(
-            "IQ"
-        );
+        contarKPIEtapa("IQ");
 
     const oq =
-        contarKPIEtapa(
-            "OQ"
-        );
+        contarKPIEtapa("OQ");
 
     const pq =
-        contarKPIEtapa(
-            "PQ"
-        );
+        contarKPIEtapa("PQ");
 
     const operativos =
         equipos.filter(
@@ -6124,7 +6054,7 @@ function mostrarModuloSimple(
 
             <p>
                 Esta sección se mantiene preparada para continuar su desarrollo
-                sin afectar la nueva estructura de Calificación de Equipos.
+                sin afectar la estructura de Calificación de Equipos.
             </p>
 
         </div>
@@ -6179,7 +6109,7 @@ function mostrarModuloDocumental(
 }
 
 /* =========================================================
-   ACTUALIZACIÓN ENTRE PESTAÑAS
+   SINCRONIZACIÓN ENTRE PESTAÑAS
 ========================================================= */
 
 window.addEventListener(
