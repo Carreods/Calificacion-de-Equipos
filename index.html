@@ -10,20 +10,18 @@
 
     <title>Gestión SAC-M</title>
 
-    <!-- ICONO DE PESTAÑA -->
     <link
         rel="icon"
         type="image/png"
         href="PPPP.png"
     >
 
-    <!-- EXCEL -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <style>
 
         /* =========================================================
-           VARIABLES GENERALES
+           VARIABLES
         ========================================================= */
 
         * {
@@ -32,7 +30,7 @@
 
         :root {
             --prater: #e30613;
-            --prater-dark: #bc0010;
+            --prater-dark: #bd0010;
             --prater-soft: #fde8ea;
 
             --bg: #eef1f3;
@@ -62,7 +60,7 @@
             --gray-bg: #edf1f4;
 
             --shadow:
-                0 5px 20px rgba(30, 45, 60, .06);
+                0 5px 20px rgba(30,45,60,.06);
         }
 
         body {
@@ -114,7 +112,6 @@
         select,
         textarea {
             width: 100%;
-
             min-height: 40px;
 
             padding: 10px 11px;
@@ -158,6 +155,7 @@
             font-size: 12px;
             font-weight: 700;
         }
+
 
         /* =========================================================
            SIDEBAR
@@ -270,45 +268,6 @@
             text-align: center;
         }
 
-        .sidebar-bottom {
-            margin-top: auto;
-
-            padding-top: 15px;
-
-            border-top:
-                1px solid #e6e9ed;
-        }
-
-        .sidebar-label {
-            margin-bottom: 6px;
-
-            color: #687887;
-
-            font-size: 10px;
-
-            text-transform: uppercase;
-        }
-
-        .usuario-box {
-            padding: 10px;
-
-            background: #f7f8fa;
-
-            border-radius: 9px;
-        }
-
-        .usuario-nombre {
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .usuario-area {
-            margin-top: 3px;
-
-            color: #75818c;
-
-            font-size: 11px;
-        }
 
         /* =========================================================
            CONTENIDO
@@ -373,8 +332,64 @@
             font-size: 13px;
         }
 
+
         /* =========================================================
-           TARJETAS GENERALES
+           USUARIO SUPERIOR
+        ========================================================= */
+
+        .usuario-superior {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            min-height: 42px;
+
+            padding: 6px 11px;
+
+            background: #ffffff;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .usuario-superior-icono {
+            width: 29px;
+            height: 29px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            flex: none;
+
+            background: #f2f4f6;
+
+            border-radius: 50%;
+
+            font-size: 14px;
+        }
+
+        .usuario-superior-info {
+            line-height: 1.2;
+        }
+
+        .usuario-superior-nombre {
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .usuario-superior-rol {
+            margin-top: 2px;
+
+            color: #748291;
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================================
+           TARJETAS
         ========================================================= */
 
         .tarjeta {
@@ -420,12 +435,12 @@
             margin: 0;
         }
 
+
         /* =========================================================
            BOTONES
         ========================================================= */
 
-        .btn-principal,
-        .btn-login {
+        .btn-principal {
             background: var(--prater);
             color: #ffffff;
         }
@@ -436,8 +451,7 @@
 
         .btn-secundario,
         .btn-gris,
-        .btn-editar,
-        .btn-logout {
+        .btn-editar {
             background: #edf1f4;
             color: #344454;
         }
@@ -482,10 +496,20 @@
             color: #ffffff;
         }
 
-        .btn-login,
-        .btn-logout {
-            width: 100%;
-            margin-top: 9px;
+        .btn-sesion {
+            min-height: 42px;
+
+            padding: 9px 14px;
+
+            background: #ffffff;
+            color: #445465;
+
+            border:
+                1px solid var(--border);
+        }
+
+        .btn-sesion-admin {
+            color: var(--red);
         }
 
         .btn-icono {
@@ -507,8 +531,9 @@
             gap: 8px;
         }
 
+
         /* =========================================================
-           CAMPANA / NOTIFICACIONES
+           NOTIFICACIONES
         ========================================================= */
 
         .btn-campana {
@@ -569,7 +594,6 @@
             right: 0;
 
             width: 410px;
-
             max-height: 540px;
 
             overflow-y: auto;
@@ -633,8 +657,9 @@
             line-height: 1.5;
         }
 
+
         /* =========================================================
-           SUBMENÚ
+           SUBMENU
         ========================================================= */
 
         .submenu {
@@ -672,8 +697,9 @@
             color: var(--prater);
         }
 
+
         /* =========================================================
-           RESUMEN / DASHBOARD
+           DASHBOARD
         ========================================================= */
 
         .resumen {
@@ -706,17 +732,6 @@
             border-radius: 13px;
 
             box-shadow: var(--shadow);
-
-            transition:
-                transform .15s ease,
-                box-shadow .15s ease;
-        }
-
-        .resumen-card:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 8px 25px rgba(30,45,60,.09);
         }
 
         .resumen-icono {
@@ -774,10 +789,6 @@
             font-weight: 800;
         }
 
-        /* =========================================================
-           HERO DASHBOARD
-        ========================================================= */
-
         .dashboard-hero {
             display: grid;
 
@@ -817,8 +828,6 @@
 
             font-size: 37px;
             font-weight: 800;
-
-            letter-spacing: -1px;
         }
 
         .hero-descripcion {
@@ -847,8 +856,6 @@
             background: #25a45d;
 
             border-radius: 20px;
-
-            transition: width .25s ease;
         }
 
         .accion-principal {
@@ -879,8 +886,9 @@
             line-height: 1.5;
         }
 
+
         /* =========================================================
-           IQ / OQ / PQ RESUMEN
+           ETAPAS
         ========================================================= */
 
         .panel-etapas {
@@ -944,6 +952,7 @@
             font-size: 19px;
             font-weight: 800;
         }
+
 
         /* =========================================================
            ESTADOS
@@ -1031,6 +1040,7 @@
             background: #a7b0b8;
         }
 
+
         /* =========================================================
            TABLAS
         ========================================================= */
@@ -1083,6 +1093,7 @@
             gap: 5px;
         }
 
+
         /* =========================================================
            FORMULARIOS
         ========================================================= */
@@ -1118,10 +1129,6 @@
             margin-top: 15px;
         }
 
-        /* =========================================================
-           FILTROS
-        ========================================================= */
-
         .filtros {
             display: grid;
 
@@ -1133,8 +1140,9 @@
             margin-bottom: 15px;
         }
 
+
         /* =========================================================
-           FICHA HERO
+           FICHA
         ========================================================= */
 
         .ficha-hero {
@@ -1179,13 +1187,10 @@
             margin: 0;
 
             font-size: 27px;
-
-            letter-spacing: -.4px;
         }
 
         .ficha-estado-area {
             display: flex;
-
             flex-wrap: wrap;
 
             justify-content: flex-end;
@@ -1265,8 +1270,9 @@
             font-weight: 700;
         }
 
+
         /* =========================================================
-           TARJETAS IQ/OQ/PQ
+           IQ OQ PQ
         ========================================================= */
 
         .calificacion-grid {
@@ -1292,37 +1298,22 @@
                 5px solid #a8b1ba;
 
             border-radius: 12px;
-
-            transition:
-                transform .15s ease,
-                box-shadow .15s ease;
-        }
-
-        .etapa-card:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 8px 25px rgba(30,45,60,.08);
         }
 
         .etapa-card.estado-vigente {
-            border-left-color:
-                var(--green);
+            border-left-color: var(--green);
         }
 
         .etapa-card.estado-proximo {
-            border-left-color:
-                #e1a000;
+            border-left-color: #e1a000;
         }
 
         .etapa-card.estado-vencido {
-            border-left-color:
-                var(--red);
+            border-left-color: var(--red);
         }
 
         .etapa-card.estado-neutro {
-            border-left-color:
-                #a8b1ba;
+            border-left-color: #a8b1ba;
         }
 
         .etapa-header {
@@ -1382,6 +1373,7 @@
             line-height: 1.5;
         }
 
+
         /* =========================================================
            PROGRAMA
         ========================================================= */
@@ -1436,6 +1428,7 @@
 
             font-size: 20px;
         }
+
 
         /* =========================================================
            EXCEL
@@ -1499,8 +1492,9 @@
                 #fff1f2 !important;
         }
 
+
         /* =========================================================
-           ZONA DE PELIGRO
+           PELIGRO
         ========================================================= */
 
         .zona-peligro {
@@ -1525,6 +1519,7 @@
 
             line-height: 1.55;
         }
+
 
         /* =========================================================
            LOGIN
@@ -1570,8 +1565,9 @@
             font-size: 12px;
         }
 
+
         /* =========================================================
-           OTROS MÓDULOS
+           OTROS MODULOS
         ========================================================= */
 
         .modulo-grid {
@@ -1595,6 +1591,7 @@
 
             box-shadow: var(--shadow);
         }
+
 
         /* =========================================================
            RESPONSIVE
@@ -1722,6 +1719,10 @@
         id="menuPrincipal"
     >
 
+        <!--
+            ESTE ES EL ÚNICO MÓDULO VISIBLE
+            EN MODO CONSULTA.
+        -->
         <li
             data-modulo="calificacion"
             onclick="abrirModulo('calificacion')"
@@ -1731,6 +1732,7 @@
         </li>
 
         <li
+            class="menu-admin"
             data-modulo="calibracion"
             onclick="abrirModulo('calibracion')"
         >
@@ -1739,6 +1741,7 @@
         </li>
 
         <li
+            class="menu-admin"
             data-modulo="agua"
             onclick="abrirModulo('agua')"
         >
@@ -1747,6 +1750,7 @@
         </li>
 
         <li
+            class="menu-admin"
             data-modulo="hvac"
             onclick="abrirModulo('hvac')"
         >
@@ -1755,6 +1759,7 @@
         </li>
 
         <li
+            class="menu-admin"
             data-modulo="aire"
             onclick="abrirModulo('aire')"
         >
@@ -1763,6 +1768,7 @@
         </li>
 
         <li
+            class="menu-admin"
             data-modulo="mapeos"
             onclick="abrirModulo('mapeos')"
         >
@@ -1771,6 +1777,7 @@
         </li>
 
         <li
+            class="menu-admin"
             data-modulo="documentacion"
             onclick="abrirModulo('documentacion')"
         >
@@ -1778,11 +1785,10 @@
             Documentación SAC-M
         </li>
 
-        <!-- KPI SIEMPRE AL FINAL -->
         <li
+            class="menu-admin"
             id="menuKPI"
             data-modulo="kpi"
-            style="display:none"
             onclick="abrirModulo('kpi')"
         >
             <span class="menu-icono">◫</span>
@@ -1791,46 +1797,8 @@
 
     </ul>
 
-    <div class="sidebar-bottom">
-
-        <div class="sidebar-label">
-            Usuario
-        </div>
-
-        <div class="usuario-box">
-
-            <div
-                class="usuario-nombre"
-                id="nombreUsuario"
-            ></div>
-
-            <div
-                class="usuario-area"
-                id="areaUsuario"
-            ></div>
-
-        </div>
-
-        <button
-            class="btn-login"
-            id="btnAcceso"
-            onclick="abrirLogin()"
-        >
-            🔐 Acceso administrador
-        </button>
-
-        <button
-            class="btn-logout"
-            id="btnSalir"
-            onclick="cerrarSesion()"
-            style="display:none"
-        >
-            Cerrar sesión
-        </button>
-
-    </div>
-
 </aside>
+
 
 <!-- =========================================================
      CONTENIDO
@@ -1840,6 +1808,7 @@
     class="contenido"
     id="contenido"
 ></main>
+
 
 <!-- =========================================================
      LOGIN
@@ -1908,6 +1877,7 @@
     </div>
 
 </div>
+
 
 <script>
 
@@ -2221,9 +2191,6 @@ function sumarAnios(
             dia
         );
 
-    /*
-        Ajuste de 29 de febrero.
-    */
     if (
         nuevaFecha.getMonth() !==
         mes - 1
@@ -2293,12 +2260,8 @@ function normalizarFechaExcel(valor) {
 
         return [
             fecha.y,
-            String(
-                fecha.m
-            ).padStart(2,"0"),
-            String(
-                fecha.d
-            ).padStart(2,"0")
+            String(fecha.m).padStart(2,"0"),
+            String(fecha.d).padStart(2,"0")
         ].join("-");
 
     }
@@ -2311,7 +2274,6 @@ function normalizarFechaExcel(valor) {
         /^\d{4}-\d{2}-\d{2}$/
         .test(texto)
     ) {
-
         return texto;
     }
 
@@ -2405,13 +2367,10 @@ function obtenerMes(fecha) {
         return "";
     }
 
-    const partes =
-        String(fecha)
-        .split("-");
-
     return MESES[
         Number(
-            partes[1] || 0
+            String(fecha)
+            .split("-")[1] || 0
         )
     ] || "";
 
@@ -2447,7 +2406,7 @@ function obtenerAnioFecha(fecha) {
 
 
 /* =========================================================
-   MIGRACIÓN DE DATOS ANTIGUOS
+   MIGRACIÓN
 ========================================================= */
 
 function migrarDatosAntiguos() {
@@ -2461,57 +2420,45 @@ function migrarDatosAntiguos() {
             if (
                 !("marca" in equipo)
             ) {
-
                 equipo.marca = "";
                 cambios = true;
-
             }
 
             if (
                 !("modelo" in equipo)
             ) {
-
                 equipo.modelo = "";
                 cambios = true;
-
             }
 
             if (
                 !("serie" in equipo)
             ) {
-
                 equipo.serie = "";
                 cambios = true;
-
             }
 
             if (
                 !("estado" in equipo)
             ) {
-
                 equipo.estado =
                     "Operativo";
 
                 cambios = true;
-
             }
 
             if (
                 !("fechaBaja" in equipo)
             ) {
-
                 equipo.fechaBaja = "";
                 cambios = true;
-
             }
 
             if (
                 !("motivoBaja" in equipo)
             ) {
-
                 equipo.motivoBaja = "";
                 cambios = true;
-
             }
 
             if (
@@ -2519,23 +2466,19 @@ function migrarDatosAntiguos() {
                     equipo.historialEstado
                 )
             ) {
-
                 equipo.historialEstado =
                     [];
 
                 cambios = true;
-
             }
 
             if (
                 !("aplicaPQ" in equipo)
             ) {
-
                 equipo.aplicaPQ =
                     true;
 
                 cambios = true;
-
             }
 
         }
@@ -2593,7 +2536,44 @@ function migrarDatosAntiguos() {
 
 
 /* =========================================================
-   ESTADO DE DOCUMENTOS
+   PERMISOS
+========================================================= */
+
+function actualizarPermisosUI() {
+
+    document
+        .querySelectorAll(
+            ".menu-admin"
+        )
+        .forEach(
+            elemento => {
+
+                elemento.style.display =
+                    esAdmin
+                        ? "flex"
+                        : "none";
+
+            }
+        );
+
+}
+
+
+function requiereAdmin() {
+
+    if (esAdmin) {
+        return true;
+    }
+
+    mostrarEquiposCalificacion();
+
+    return false;
+
+}
+
+
+/* =========================================================
+   ESTADOS
 ========================================================= */
 
 function estadoFecha(fecha) {
@@ -2601,11 +2581,8 @@ function estadoFecha(fecha) {
     if (!fecha) {
 
         return {
-            texto:
-                "Sin registro",
-
-            clase:
-                "neutro"
+            texto:"Sin registro",
+            clase:"neutro"
         };
 
     }
@@ -2633,11 +2610,8 @@ function estadoFecha(fecha) {
     ) {
 
         return {
-            texto:
-                "Fecha inválida",
-
-            clase:
-                "neutro"
+            texto:"Fecha inválida",
+            clase:"neutro"
         };
 
     }
@@ -2656,11 +2630,8 @@ function estadoFecha(fecha) {
     ) {
 
         return {
-            texto:
-                "Vencido",
-
-            clase:
-                "vencido"
+            texto:"Vencido",
+            clase:"vencido"
         };
 
     }
@@ -2671,21 +2642,15 @@ function estadoFecha(fecha) {
     ) {
 
         return {
-            texto:
-                "Próximo",
-
-            clase:
-                "proximo"
+            texto:"Próximo",
+            clase:"proximo"
         };
 
     }
 
     return {
-        texto:
-            "Vigente",
-
-        clase:
-            "vigente"
+        texto:"Vigente",
+        clase:"vigente"
     };
 
 }
@@ -2702,30 +2667,24 @@ function puntoEstado(
         estado.clase ===
         "vigente"
     ) {
-
         punto =
             "punto-verde";
-
     }
 
     if (
         estado.clase ===
         "proximo"
     ) {
-
         punto =
             "punto-amarillo";
-
     }
 
     if (
         estado.clase ===
         "vencido"
     ) {
-
         punto =
             "punto-rojo";
-
     }
 
     return `
@@ -2750,7 +2709,7 @@ function puntoEstado(
 
 
 /* =========================================================
-   DOCUMENTOS DE CALIFICACIÓN
+   DOCUMENTOS
 ========================================================= */
 
 function fechaDocumento(
@@ -2859,11 +2818,8 @@ function estadoEtapa(
     ) {
 
         return {
-            texto:
-                "No aplica",
-
-            clase:
-                "neutro"
+            texto:"No aplica",
+            clase:"neutro"
         };
 
     }
@@ -2888,11 +2844,8 @@ function estadoEtapa(
     ) {
 
         return {
-            texto:
-                "Incompleto",
-
-            clase:
-                "vencido"
+            texto:"Incompleto",
+            clase:"vencido"
         };
 
     }
@@ -2915,11 +2868,8 @@ function estadoEtapa(
     ) {
 
         return {
-            texto:
-                "Vencido",
-
-            clase:
-                "vencido"
+            texto:"Vencido",
+            clase:"vencido"
         };
 
     }
@@ -2932,21 +2882,15 @@ function estadoEtapa(
     ) {
 
         return {
-            texto:
-                "Próximo",
-
-            clase:
-                "proximo"
+            texto:"Próximo",
+            clase:"proximo"
         };
 
     }
 
     return {
-        texto:
-            "Vigente",
-
-        clase:
-            "vigente"
+        texto:"Vigente",
+        clase:"vigente"
     };
 
 }
@@ -2966,14 +2910,9 @@ function estadoGlobalEquipo(
     ) {
 
         return {
-            texto:
-                "De baja",
-
-            clase:
-                "neutro",
-
-            icono:
-                "⊘"
+            texto:"De baja",
+            clase:"neutro",
+            icono:"⊘"
         };
 
     }
@@ -3010,14 +2949,9 @@ function estadoGlobalEquipo(
     ) {
 
         return {
-            texto:
-                "Vencida / incompleta",
-
-            clase:
-                "vencido",
-
-            icono:
-                "!"
+            texto:"Vencida / incompleta",
+            clase:"vencido",
+            icono:"!"
         };
 
     }
@@ -3031,27 +2965,17 @@ function estadoGlobalEquipo(
     ) {
 
         return {
-            texto:
-                "Próxima a recalificar",
-
-            clase:
-                "proximo",
-
-            icono:
-                "◷"
+            texto:"Próxima a recalificar",
+            clase:"proximo",
+            icono:"◷"
         };
 
     }
 
     return {
-        texto:
-            "Calificación vigente",
-
-        clase:
-            "vigente",
-
-        icono:
-            "✓"
+        texto:"Calificación vigente",
+        clase:"vigente",
+        icono:"✓"
     };
 
 }
@@ -3077,7 +3001,7 @@ function equipoCompletamenteCalificado(
 
 
 /* =========================================================
-   PROGRAMA - HELPERS
+   PROGRAMA HELPERS
 ========================================================= */
 
 function obtenerPrograma(
@@ -3126,7 +3050,7 @@ function documentoReferenciaPrograma(
 
 
 /* =========================================================
-   PRÓXIMA ACCIÓN AUTOMÁTICA
+   PRÓXIMA ACCIÓN
 ========================================================= */
 
 function proximaAccionEquipo(
@@ -3151,9 +3075,6 @@ function proximaAccionEquipo(
 
     }
 
-    /*
-        1. Revisamos documentación faltante.
-    */
     const etapas =
         ["IQ","OQ"];
 
@@ -3186,7 +3107,7 @@ function proximaAccionEquipo(
                     `Completar Protocolo ${tipo}`,
 
                 detalle:
-                    "No existe un protocolo registrado para esta etapa.",
+                    "No existe protocolo registrado para esta etapa.",
 
                 prioridad:
                     1
@@ -3208,7 +3129,7 @@ function proximaAccionEquipo(
                     `Completar Reporte ${tipo}`,
 
                 detalle:
-                    "Existe protocolo, pero aún no se encuentra registrado el reporte.",
+                    "Existe protocolo, pero no reporte registrado.",
 
                 prioridad:
                     1
@@ -3218,15 +3139,14 @@ function proximaAccionEquipo(
 
     }
 
-    /*
-        2. Revisamos documentación vencida.
-    */
+
     const vencidos =
         [];
 
     documentosRequeridosEquipo(
         equipo
-    ).forEach(
+    )
+    .forEach(
         requerido => {
 
             const documento =
@@ -3283,74 +3203,14 @@ function proximaAccionEquipo(
 
     }
 
-    /*
-        3. Revisamos programa actual.
-    */
-    const programasOrdenados =
-        [...programasCalificacion]
-        .sort(
-            (a,b) =>
-                Number(a.anio) -
-                Number(b.anio)
-        );
 
-    for (
-        const programa of programasOrdenados
-    ) {
-
-        if (
-            Number(programa.anio) <
-            anioActual()
-        ) {
-            continue;
-        }
-
-        const item =
-            programa.equipos
-            ?.find(
-                fila =>
-                    fila.equipoCodigo ===
-                    equipo.codigo
-            );
-
-        if (!item) {
-            continue;
-        }
-
-        const pendiente =
-            item.documentos
-            ?.find(
-                documento =>
-                    documento.estado !==
-                    "Cumplido"
-            );
-
-        if (pendiente) {
-
-            return {
-                texto:
-                    `${pendiente.tipo} ${pendiente.documento} programado`,
-
-                detalle:
-                    `Programa ${programa.anio} · Mes límite ${item.mes}.`,
-
-                prioridad:
-                    3
-            };
-
-        }
-
-    }
-
-    /*
-        4. Próxima documentación por vencer.
-    */
     const proximos =
         [];
 
     documentosRequeridosEquipo(
         equipo
-    ).forEach(
+    )
+    .forEach(
         requerido => {
 
             const documento =
@@ -3408,62 +3268,17 @@ function proximaAccionEquipo(
     }
 
     return {
-        texto:
-            "Sin acciones pendientes",
-
-        detalle:
-            "La documentación requerida se encuentra vigente.",
-
-        prioridad:
-            50
+        texto:"Sin acciones pendientes",
+        detalle:"La documentación requerida se encuentra vigente.",
+        prioridad:50
     };
 
 }
 
 
 /* =========================================================
-   LOGIN
+   LOGIN / SESIÓN
 ========================================================= */
-
-function actualizarUsuario() {
-
-    document.getElementById(
-        "nombreUsuario"
-    ).textContent =
-        esAdmin
-            ? "ADMINISTRADOR"
-            : "MODO CONSULTA";
-
-    document.getElementById(
-        "areaUsuario"
-    ).textContent =
-        esAdmin
-            ? "SAC-M · Edición habilitada"
-            : "Solo lectura";
-
-    document.getElementById(
-        "btnAcceso"
-    ).style.display =
-        esAdmin
-            ? "none"
-            : "block";
-
-    document.getElementById(
-        "btnSalir"
-    ).style.display =
-        esAdmin
-            ? "block"
-            : "none";
-
-    document.getElementById(
-        "menuKPI"
-    ).style.display =
-        esAdmin
-            ? "flex"
-            : "none";
-
-}
-
 
 function abrirLogin() {
 
@@ -3529,11 +3344,9 @@ function iniciarSesion() {
 
         cerrarLogin();
 
-        actualizarUsuario();
+        actualizarPermisosUI();
 
-        abrirModulo(
-            moduloActual
-        );
+        mostrarInicioCalificacion();
 
         return;
     }
@@ -3563,24 +3376,73 @@ function cerrarSesion() {
         "adminSACM"
     );
 
-    actualizarUsuario();
+    moduloActual =
+        "calificacion";
 
-    if (
-        moduloActual ===
-        "kpi"
-    ) {
+    actualizarPermisosUI();
 
-        abrirModulo(
-            "calificacion"
-        );
+    mostrarEquiposCalificacion();
 
-    } else {
+}
 
-        abrirModulo(
-            moduloActual
-        );
 
-    }
+/* =========================================================
+   USUARIO SUPERIOR
+========================================================= */
+
+function renderUsuarioSuperior() {
+
+    return `
+
+        <div class="usuario-superior">
+
+            <div class="usuario-superior-icono">
+                👤
+            </div>
+
+            <div class="usuario-superior-info">
+
+                <div class="usuario-superior-nombre">
+                    ${
+                        esAdmin
+                            ? "Administrador"
+                            : "Modo consulta"
+                    }
+                </div>
+
+                <div class="usuario-superior-rol">
+                    ${
+                        esAdmin
+                            ? "SAC-M · Acceso completo"
+                            : "Solo lectura"
+                    }
+                </div>
+
+            </div>
+
+        </div>
+
+        <button
+            class="
+                btn-sesion
+                ${esAdmin ? "btn-sesion-admin" : ""}
+            "
+            onclick="
+                ${
+                    esAdmin
+                        ? "cerrarSesion()"
+                        : "abrirLogin()"
+                }
+            "
+        >
+            ${
+                esAdmin
+                    ? "Cerrar sesión"
+                    : "Ingresar"
+            }
+        </button>
+
+    `;
 
 }
 
@@ -3627,10 +3489,23 @@ function abrirModulo(
     panelNotificacionesAbierto =
         false;
 
+    /*
+        MODO CONSULTA:
+        únicamente puede acceder
+        a Calificación > Equipos.
+    */
     if (
-        modulo === "kpi" &&
         !esAdmin
     ) {
+
+        moduloActual =
+            "calificacion";
+
+        marcarMenuActivo(
+            "calificacion"
+        );
+
+        mostrarEquiposCalificacion();
 
         return;
     }
@@ -3888,71 +3763,11 @@ function generarNotificaciones() {
             }
         );
 
-    const programa =
-        obtenerPrograma(
-            anioActual()
-        );
-
-    if (programa) {
-
-        const mesActual =
-            new Date()
-            .getMonth() + 1;
-
-        programa.equipos
-            .forEach(
-                item => {
-
-                    if (
-                        item.equipoDeBaja
-                    ) {
-                        return;
-                    }
-
-                    if (
-                        item.estadoGeneral ===
-                        "Cumplido"
-                    ) {
-                        return;
-                    }
-
-                    if (
-                        item.mesNumero <=
-                        mesActual + 1
-                    ) {
-
-                        alertas.push({
-
-                            equipoCodigo:
-                                item.equipoCodigo,
-
-                            prioridad:
-                                3,
-
-                            icono:
-                                "🔵",
-
-                            titulo:
-                                `${item.equipoCodigo} · Programa ${programa.anio}`,
-
-                            texto:
-                                `Calificación programada con mes límite ${item.mes}.`
-
-                        });
-
-                    }
-
-                }
-            );
-
-    }
-
-    return alertas
-        .sort(
-            (a,b) =>
-                a.prioridad -
-                b.prioridad
-        );
+    return alertas.sort(
+        (a,b) =>
+            a.prioridad -
+            b.prioridad
+    );
 
 }
 
@@ -3967,61 +3782,64 @@ function renderAccionesTopbar(
         .length;
 
     return `
+
         <div class="topbar-acciones">
 
-            ${extra}
+            ${
+                esAdmin
+                    ? extra
+                    : ""
+            }
 
             ${
                 esAdmin &&
                 permitirPrograma
                     ? `
+
                         <button
                             class="btn-morado"
                             onclick="generarProgramaProximoAnio(true)"
                         >
                             📅 Programa ${anioActual()+1}
                         </button>
+
                     `
                     : ""
             }
 
-            <button
-                class="btn-campana"
-                title="Notificaciones"
-                onclick="toggleNotificaciones(event)"
-            >
-                🔔
+            ${
+                esAdmin
+                    ? `
 
-                ${
-                    cantidad
-                        ? `
-                            <span class="contador-notificacion">
-                                ${cantidad > 99 ? "99+" : cantidad}
-                            </span>
-                        `
-                        : ""
-                }
+                        <button
+                            class="btn-campana"
+                            title="Notificaciones"
+                            onclick="toggleNotificaciones(event)"
+                        >
+                            🔔
 
-            </button>
+                            ${
+                                cantidad
+                                    ? `
+                                        <span class="contador-notificacion">
+                                            ${cantidad > 99 ? "99+" : cantidad}
+                                        </span>
+                                    `
+                                    : ""
+                            }
 
-            <button
-                class="btn-secundario"
-                onclick="${
-                    esAdmin
-                        ? "cerrarSesion()"
-                        : "abrirLogin()"
-                }"
-            >
-                ${
-                    esAdmin
-                        ? "👤 Administrador"
-                        : "👤 Ingresar"
-                }
-            </button>
+                        </button>
+
+                    `
+                    : ""
+            }
+
+            ${renderUsuarioSuperior()}
 
             <div id="panelNotificaciones"></div>
 
         </div>
+
     `;
 
 }
@@ -4030,6 +3848,10 @@ function renderAccionesTopbar(
 function toggleNotificaciones(
     evento
 ) {
+
+    if (!esAdmin) {
+        return;
+    }
 
     if (evento) {
 
@@ -4168,12 +3990,37 @@ function abrirNotificacion(
 
 
 /* =========================================================
-   SUBMENÚ CALIFICACIÓN
+   SUBMENU CALIFICACIÓN
 ========================================================= */
 
 function submenuCalificacion(
     activo
 ) {
+
+    /*
+        MODO CONSULTA:
+        únicamente Equipos.
+    */
+    if (
+        !esAdmin
+    ) {
+
+        return `
+
+            <div class="submenu">
+
+                <button
+                    class="activo"
+                    onclick="mostrarEquiposCalificacion()"
+                >
+                    ⚙ Equipos
+                </button>
+
+            </div>
+
+        `;
+
+    }
 
     return `
 
@@ -4200,27 +4047,19 @@ function submenuCalificacion(
                 📅 Programa anual
             </button>
 
-            ${
-                esAdmin
-                    ? `
+            <button
+                class="${activo === "documentos" ? "activo" : ""}"
+                onclick="mostrarGestionDocumentos()"
+            >
+                ▣ Documentación
+            </button>
 
-                        <button
-                            class="${activo === "documentos" ? "activo" : ""}"
-                            onclick="mostrarGestionDocumentos()"
-                        >
-                            ▣ Documentación
-                        </button>
-
-                        <button
-                            class="${activo === "excel" ? "activo" : ""}"
-                            onclick="mostrarExcelCalificacion()"
-                        >
-                            ⇩ Carga Excel
-                        </button>
-
-                    `
-                    : ""
-            }
+            <button
+                class="${activo === "excel" ? "activo" : ""}"
+                onclick="mostrarExcelCalificacion()"
+            >
+                ⇩ Carga Excel
+            </button>
 
         </div>
 
@@ -4230,7 +4069,7 @@ function submenuCalificacion(
 
 
 /* =========================================================
-   TARJETAS RESUMEN
+   TARJETA RESUMEN
 ========================================================= */
 
 function tarjetaResumen(
@@ -4273,7 +4112,7 @@ function tarjetaResumen(
 
 
 /* =========================================================
-   RESUMEN IQ OQ PQ
+   RESUMEN ETAPA
 ========================================================= */
 
 function resumenEtapa(
@@ -4332,27 +4171,21 @@ function resumenEtapa(
                 estado.clase ===
                 "vigente"
             ) {
-
                 resultado.vigente++;
-
             }
 
             if (
                 estado.clase ===
                 "proximo"
             ) {
-
                 resultado.proximo++;
-
             }
 
             if (
                 estado.clase ===
                 "vencido"
             ) {
-
                 resultado.vencido++;
-
             }
 
         }
@@ -4383,8 +4216,7 @@ function tarjetaResumenEtapa(
                 </div>
 
                 <span class="badge neutro">
-                    ${datos.total}
-                    equipos
+                    ${datos.total} equipos
                 </span>
 
             </div>
@@ -4418,8 +4250,7 @@ function tarjetaResumenEtapa(
                 <div class="etapa-mini">
 
                     <div class="subdato">
-                        Vencidos /
-                        incompletos
+                        Vencidos / incompletos
                     </div>
 
                     <div class="etapa-mini-numero">
@@ -4438,10 +4269,19 @@ function tarjetaResumenEtapa(
 
 
 /* =========================================================
-   DASHBOARD INICIO
+   INICIO CALIFICACIÓN
 ========================================================= */
 
 function mostrarInicioCalificacion() {
+
+    if (
+        !esAdmin
+    ) {
+
+        mostrarEquiposCalificacion();
+        return;
+
+    }
 
     moduloActual =
         "calificacion";
@@ -4512,6 +4352,7 @@ function mostrarInicioCalificacion() {
         .map(
             equipo => ({
                 equipo,
+
                 accion:
                     proximaAccionEquipo(
                         equipo
@@ -4530,7 +4371,8 @@ function mostrarInicioCalificacion() {
         );
 
     const accionPrioritaria =
-        acciones[0] || null;
+        acciones[0] ||
+        null;
 
     document.getElementById(
         "contenido"
@@ -4608,10 +4450,18 @@ function mostrarInicioCalificacion() {
                 </div>
 
                 <div class="hero-descripcion">
-                    ${vigentes.length + proximos.length}
+
+                    ${
+                        vigentes.length +
+                        proximos.length
+                    }
+
                     de
+
                     ${activos.length}
+
                     equipos activos cuentan con sus etapas requeridas vigentes.
+
                 </div>
 
                 <div class="barra-fondo">
@@ -4619,7 +4469,8 @@ function mostrarInicioCalificacion() {
                     <div
                         class="barra-avance"
                         style="
-                            width:${porcentaje}%
+                            width:
+                            ${porcentaje}%
                         "
                     ></div>
 
@@ -4640,13 +4491,17 @@ function mostrarInicioCalificacion() {
                             <div class="accion-principal">
 
                                 <div class="accion-principal-titulo">
+
                                     ${escaparHTML(
                                         accionPrioritaria.equipo.codigo
                                     )}
+
                                     ·
+
                                     ${escaparHTML(
                                         accionPrioritaria.equipo.nombre
                                     )}
+
                                 </div>
 
                                 <div class="accion-principal-texto">
@@ -4746,7 +4601,7 @@ function mostrarInicioCalificacion() {
                     </h2>
 
                     <div class="subdato">
-                        Se utiliza RCD como referencia cuando aplica PQ y RCO cuando no aplica.
+                        RCD como referencia cuando aplica PQ y RCO cuando no aplica.
                     </div>
 
                 </div>
@@ -4759,21 +4614,9 @@ function mostrarInicioCalificacion() {
 
         <div class="tarjeta">
 
-            <div class="seccion-titulo">
-
-                <div>
-
-                    <h2>
-                        Actividad documental reciente
-                    </h2>
-
-                    <div class="subdato">
-                        Últimos documentos ingresados al sistema.
-                    </div>
-
-                </div>
-
-            </div>
+            <h2>
+                Actividad documental reciente
+            </h2>
 
             ${tablaActividadReciente()}
 
@@ -4785,7 +4628,7 @@ function mostrarInicioCalificacion() {
 
 
 /* =========================================================
-   EQUIPOS QUE REQUIEREN ATENCIÓN
+   TABLA ATENCIÓN
 ========================================================= */
 
 function tablaEquiposAtencion() {
@@ -4799,6 +4642,7 @@ function tablaEquiposAtencion() {
         )
         .map(
             equipo => ({
+
                 equipo,
 
                 estado:
@@ -4810,6 +4654,7 @@ function tablaEquiposAtencion() {
                     proximaAccionEquipo(
                         equipo
                     )
+
             })
         )
         .filter(
@@ -4818,30 +4663,6 @@ function tablaEquiposAtencion() {
                     "vigente" ||
                 item.accion.prioridad <
                     50
-        )
-        .sort(
-            (a,b) => {
-
-                const prioridadEstado = {
-                    vencido:1,
-                    proximo:2,
-                    vigente:3
-                };
-
-                return (
-                    (
-                        prioridadEstado[
-                            a.estado.clase
-                        ] || 9
-                    ) -
-                    (
-                        prioridadEstado[
-                            b.estado.clase
-                        ] || 9
-                    )
-                );
-
-            }
         )
         .slice(
             0,
@@ -4941,7 +4762,6 @@ function tablaEquiposAtencion() {
 
                                     <button
                                         class="btn-icono btn-azul"
-                                        title="Ver ficha"
                                         onclick="
                                             mostrarFichaEquipo(
                                                 '${escaparJS(
@@ -4972,7 +4792,7 @@ function tablaEquiposAtencion() {
 
 
 /* =========================================================
-   PRÓXIMAS RECALIFICACIONES
+   PRÓXIMAS CALIFICACIONES
 ========================================================= */
 
 function tablaProximasCalificaciones() {
@@ -5109,7 +4929,6 @@ function tablaProximasCalificaciones() {
 
                                     <button
                                         class="btn-icono btn-azul"
-                                        title="Ver ficha"
                                         onclick="
                                             mostrarFichaEquipo(
                                                 '${escaparJS(
@@ -5254,6 +5073,10 @@ function mostrarEquiposCalificacion() {
     moduloActual =
         "calificacion";
 
+    marcarMenuActivo(
+        "calificacion"
+    );
+
     indiceEdicionEquipo =
         null;
 
@@ -5270,12 +5093,17 @@ function mostrarEquiposCalificacion() {
                 </h1>
 
                 <div class="subtitulo-pagina">
-                    Registro maestro y estado global de calificación
+                    ${
+                        esAdmin
+                            ? "Registro maestro y estado global de calificación"
+                            : "Consulta de equipos calificados"
+                    }
                 </div>
 
             </div>
 
             ${renderAccionesTopbar(
+
                 esAdmin
                     ? `
 
@@ -5288,6 +5116,7 @@ function mostrarEquiposCalificacion() {
 
                     `
                     : ""
+
             )}
 
         </div>
@@ -5365,7 +5194,9 @@ function formEquipo(
     indice = null
 ) {
 
-    if (!esAdmin) {
+    if (
+        !requiereAdmin()
+    ) {
         return;
     }
 
@@ -5600,6 +5431,12 @@ function formEquipo(
 
 function guardarEquipo() {
 
+    if (
+        !esAdmin
+    ) {
+        return;
+    }
+
     const codigo =
         obtenerValor(
             "eqCodigo"
@@ -5747,10 +5584,6 @@ function guardarEquipo() {
                 "eqPQ"
             ) === "si";
 
-        /*
-            Actualizamos la relación documental
-            si cambia el código.
-        */
         calificaciones.forEach(
             documento => {
 
@@ -5809,7 +5642,7 @@ function guardarEquipo() {
 
 
 /* =========================================================
-   LISTA EQUIPOS
+   RENDER EQUIPOS
 ========================================================= */
 
 function renderEquipos() {
@@ -6106,7 +5939,7 @@ function renderEquipos() {
 
 
 /* =========================================================
-   FICHA EQUIPO
+   FICHA
 ========================================================= */
 
 function mostrarFichaEquipo(
@@ -6175,7 +6008,6 @@ function mostrarFichaEquipo(
                 <button
                     class="btn-secundario"
                     onclick="mostrarEquiposCalificacion()"
-                    style="margin-bottom:8px"
                 >
                     ← Equipos
                 </button>
@@ -6207,14 +6039,18 @@ function mostrarFichaEquipo(
                     </h1>
 
                     <div class="subtitulo-pagina">
+
                         ${escaparHTML(
                             equipo.area
                         )}
+
                         ·
+
                         ${escaparHTML(
                             equipo.ubicacion ||
                             "Ubicación no informada"
                         )}
+
                     </div>
 
                 </div>
@@ -6285,86 +6121,11 @@ function mostrarFichaEquipo(
 
         </div>
 
-        <div class="resumen">
-
-            ${tarjetaResumen(
-                "▣",
-                "Documentos históricos",
-                documentosEquipo.length,
-                "azul-bg"
-            )}
-
-            ${tarjetaResumen(
-                equipo.aplicaPQ !== false
-                    ? "✓"
-                    : "—",
-                "Aplica PQ",
-                equipo.aplicaPQ !== false
-                    ? "Sí"
-                    : "No",
-                "morado-bg"
-            )}
-
-            ${tarjetaResumen(
-                "📅",
-                "Referencia próxima recalificación",
-                referencia
-                    ? obtenerMes(
-                        referencia.vencimiento
-                    )
-                    : "—",
-                "amarillo-bg"
-            )}
-
-            ${tarjetaResumen(
-                "◷",
-                "Año referencia",
-                referencia
-                    ? obtenerAnioFecha(
-                        referencia.vencimiento
-                    )
-                    : "—",
-                "gris-bg"
-            )}
-
-            ${tarjetaResumen(
-                estado.icono,
-                "Estado global",
-                estado.clase === "vigente"
-                    ? "OK"
-                    : estado.clase === "proximo"
-                        ? "Próximo"
-                        : equipo.estado === "De baja"
-                            ? "Baja"
-                            : "Atención",
-                estado.clase === "vigente"
-                    ? "verde-bg"
-                    : estado.clase === "proximo"
-                        ? "amarillo-bg"
-                        : equipo.estado === "De baja"
-                            ? "gris-bg"
-                            : "rojo-bg"
-            )}
-
-        </div>
-
         <div class="tarjeta">
 
-            <div class="seccion-titulo">
-
-                <div>
-
-                    <h2>
-                        Datos del equipo
-                    </h2>
-
-                    <div class="subdato">
-                        Información maestra asociada al equipo.
-                    </div>
-
-                </div>
-
-            </div>
+            <h2>
+                Datos del equipo
+            </h2>
 
             <div class="ficha-grid">
 
@@ -6435,7 +6196,7 @@ function mostrarFichaEquipo(
                     </h2>
 
                     <div class="subdato">
-                        Últimos Protocolos y Reportes registrados para IQ, OQ y PQ.
+                        Últimos Protocolos y Reportes IQ / OQ / PQ.
                     </div>
 
                 </div>
@@ -6484,9 +6245,13 @@ function mostrarFichaEquipo(
 
         </div>
 
-        ${renderProgramaEquipo(
-            equipo
-        )}
+        ${
+            esAdmin
+                ? renderProgramaEquipo(
+                    equipo
+                )
+                : ""
+        }
 
         ${
             esAdmin
@@ -6504,8 +6269,7 @@ function mostrarFichaEquipo(
                                 ? `
 
                                     <p>
-                                        El equipo se encuentra de baja.
-                                        Su documentación histórica permanece almacenada y no participa en KPI.
+                                        El equipo está de baja y no participa en KPI.
                                     </p>
 
                                     <button
@@ -6525,7 +6289,7 @@ function mostrarFichaEquipo(
                                 : `
 
                                     <p>
-                                        Dar de baja conserva toda la documentación y excluye el equipo de los KPI.
+                                        Dar de baja conserva toda su documentación histórica.
                                     </p>
 
                                     <button
@@ -6565,14 +6329,8 @@ function mostrarFichaEquipo(
 
                             <br><br>
 
-                            Esta acción elimina el equipo,
-                            toda su documentación IQ/OQ/PQ
-                            y cualquier registro de planificación asociado.
-
-                            <br><br>
-
-                            Esta opción debe utilizarse solamente para
-                            registros creados por error.
+                            Elimina el equipo y toda su documentación IQ/OQ/PQ.
+                            Utiliza esta opción solamente para registros creados por error.
 
                         </div>
 
@@ -6598,21 +6356,9 @@ function mostrarFichaEquipo(
 
         <div class="tarjeta">
 
-            <div class="seccion-titulo">
-
-                <div>
-
-                    <h2>
-                        Historial documental completo
-                    </h2>
-
-                    <div class="subdato">
-                        Se mantienen todas las versiones históricas registradas.
-                    </div>
-
-                </div>
-
-            </div>
+            <h2>
+                Historial documental completo
+            </h2>
 
             ${tablaHistorialEquipo(
                 equipo.codigo
@@ -6652,7 +6398,7 @@ function datoFicha(
 
 
 /* =========================================================
-   TARJETAS IQ / OQ / PQ
+   TARJETAS IQ/OQ/PQ
 ========================================================= */
 
 function tarjetaEtapa(
@@ -6662,7 +6408,8 @@ function tarjetaEtapa(
 
     if (
         tipo === "PQ" &&
-        equipo.aplicaPQ === false
+        equipo.aplicaPQ ===
+        false
     ) {
 
         return `
@@ -6900,11 +6647,13 @@ function tablaHistorialEquipo(
                         <th>Vencimiento</th>
                         <th>Elaboró / Ejecutó</th>
                         <th>Estado</th>
+
                         ${
                             esAdmin
                                 ? "<th>Acciones</th>"
                                 : ""
                         }
+
                     </tr>
 
                 </thead>
@@ -6985,7 +6734,6 @@ function tablaHistorialEquipo(
 
                                                         <button
                                                             class="btn-icono btn-editar"
-                                                            title="Editar"
                                                             onclick="
                                                                 editarDocumentoDesdeFicha(
                                                                     ${indice}
@@ -6997,7 +6745,6 @@ function tablaHistorialEquipo(
 
                                                         <button
                                                             class="btn-icono btn-eliminar"
-                                                            title="Eliminar"
                                                             onclick="
                                                                 eliminarDocumentoDesdeFicha(
                                                                     ${indice},
@@ -7037,12 +6784,18 @@ function tablaHistorialEquipo(
 
 
 /* =========================================================
-   EDITAR EQUIPO DESDE FICHA
+   EDITAR DESDE FICHA
 ========================================================= */
 
 function editarEquipoDesdeFicha(
     indice
 ) {
+
+    if (
+        !requiereAdmin()
+    ) {
+        return;
+    }
 
     mostrarEquiposCalificacion();
 
@@ -7064,6 +6817,12 @@ function editarEquipoDesdeFicha(
 function mostrarFormularioBaja(
     codigo
 ) {
+
+    if (
+        !requiereAdmin()
+    ) {
+        return;
+    }
 
     const zona =
         document.getElementById(
@@ -7143,6 +6902,10 @@ function mostrarFormularioBaja(
 function confirmarBajaEquipo(
     codigo
 ) {
+
+    if (!esAdmin) {
+        return;
+    }
 
     const equipo =
         equipos.find(
@@ -7230,6 +6993,10 @@ function reactivarEquipo(
     codigo
 ) {
 
+    if (!esAdmin) {
+        return;
+    }
+
     const equipo =
         equipos.find(
             item =>
@@ -7243,11 +7010,9 @@ function reactivarEquipo(
 
     if (
         !confirm(
-            `¿Reactivar ${equipo.codigo}?\n\n` +
-            `El equipo volverá a participar en KPI y futuras programaciones.`
+            `¿Reactivar ${equipo.codigo}?`
         )
     ) {
-
         return;
     }
 
@@ -7290,7 +7055,7 @@ function reactivarEquipo(
 
 
 /* =========================================================
-   ELIMINACIÓN DEFINITIVA
+   ELIMINAR
 ========================================================= */
 
 function eliminarEquipoDefinitivamente(
@@ -7323,17 +7088,16 @@ function eliminarEquipoDefinitivamente(
         !confirm(
             `ELIMINACIÓN DEFINITIVA\n\n` +
             `${equipo.codigo} - ${equipo.nombre}\n\n` +
-            `Se eliminarán ${cantidadDocumentos} documento(s) de calificación y sus registros de programación.\n\n` +
-            `¿Deseas continuar?`
+            `También se eliminarán ${cantidadDocumentos} documento(s).\n\n` +
+            `¿Continuar?`
         )
     ) {
-
         return;
     }
 
     const escrito =
         prompt(
-            `Para confirmar escribe exactamente:\n\n${equipo.codigo}`
+            `Escribe exactamente el código:\n\n${equipo.codigo}`
         );
 
     if (
@@ -7348,7 +7112,7 @@ function eliminarEquipoDefinitivamente(
     ) {
 
         alert(
-            "El código ingresado no coincide. No se eliminó ningún dato."
+            "El código no coincide."
         );
 
         return;
@@ -7390,10 +7154,6 @@ function eliminarEquipoDefinitivamente(
 
     guardarTodo();
 
-    alert(
-        `El equipo ${codigo} fue eliminado definitivamente.`
-    );
-
     mostrarEquiposCalificacion();
 
 }
@@ -7405,7 +7165,9 @@ function eliminarEquipoDefinitivamente(
 
 function mostrarGestionDocumentos() {
 
-    if (!esAdmin) {
+    if (
+        !requiereAdmin()
+    ) {
         return;
     }
 
@@ -7469,17 +7231,9 @@ function mostrarGestionDocumentos() {
                         Todas las etapas
                     </option>
 
-                    <option value="IQ">
-                        IQ
-                    </option>
-
-                    <option value="OQ">
-                        OQ
-                    </option>
-
-                    <option value="PQ">
-                        PQ
-                    </option>
+                    <option value="IQ">IQ</option>
+                    <option value="OQ">OQ</option>
+                    <option value="PQ">PQ</option>
 
                 </select>
 
@@ -7520,7 +7274,9 @@ function formDocumentoCalificacion(
     codigoPreseleccionado = ""
 ) {
 
-    if (!esAdmin) {
+    if (
+        !requiereAdmin()
+    ) {
         return;
     }
 
@@ -7685,7 +7441,6 @@ function formDocumentoCalificacion(
                         value="${escaparHTML(
                             registro.codigo
                         )}"
-                        placeholder="Ej.: RCO-E780/EF-01"
                     >
 
                 </div>
@@ -7751,7 +7506,6 @@ function formDocumentoCalificacion(
                             registro.responsable ||
                             ""
                         )}"
-                        placeholder="Nombre de quien elaboró o ejecutó el documento"
                     >
 
                 </div>
@@ -7878,6 +7632,10 @@ function actualizarVencimientoDocumento() {
 
 function guardarDocumentoCalificacion() {
 
+    if (!esAdmin) {
+        return;
+    }
+
     actualizarVencimientoDocumento();
 
     const equipoCodigo =
@@ -7943,7 +7701,7 @@ function guardarDocumentoCalificacion() {
     ) {
 
         alert(
-            "Ingresa el código del documento y la fecha de emisión."
+            "Ingresa el código y la fecha de emisión."
         );
 
         return;
@@ -7974,7 +7732,7 @@ function guardarDocumentoCalificacion() {
     ) {
 
         alert(
-            "Ese documento ya existe con el mismo equipo, código y fecha."
+            "Ese documento ya existe."
         );
 
         return;
@@ -8008,6 +7766,10 @@ function guardarDocumentoCalificacion() {
 
 
 function renderDocumentosCalificacion() {
+
+    if (!esAdmin) {
+        return;
+    }
 
     const contenedor =
         document.getElementById(
@@ -8179,7 +7941,6 @@ function renderDocumentosCalificacion() {
 
                                             <button
                                                 class="btn-icono btn-editar"
-                                                title="Editar"
                                                 onclick="
                                                     formDocumentoCalificacion(
                                                         ${indice}
@@ -8191,7 +7952,6 @@ function renderDocumentosCalificacion() {
 
                                             <button
                                                 class="btn-icono btn-eliminar"
-                                                title="Eliminar"
                                                 onclick="
                                                     eliminarDocumentoCalificacion(
                                                         ${indice}
@@ -8227,12 +7987,15 @@ function eliminarDocumentoCalificacion(
     indice
 ) {
 
+    if (!esAdmin) {
+        return;
+    }
+
     if (
         !confirm(
             "¿Eliminar este documento?"
         )
     ) {
-
         return;
     }
 
@@ -8254,6 +8017,12 @@ function nuevoDocumentoDesdeFicha(
     codigo
 ) {
 
+    if (
+        !requiereAdmin()
+    ) {
+        return;
+    }
+
     mostrarGestionDocumentos();
 
     setTimeout(
@@ -8271,6 +8040,12 @@ function nuevoDocumentoDesdeFicha(
 function editarDocumentoDesdeFicha(
     indice
 ) {
+
+    if (
+        !requiereAdmin()
+    ) {
+        return;
+    }
 
     mostrarGestionDocumentos();
 
@@ -8290,12 +8065,15 @@ function eliminarDocumentoDesdeFicha(
     codigoEquipo
 ) {
 
+    if (!esAdmin) {
+        return;
+    }
+
     if (
         !confirm(
             "¿Eliminar este documento?"
         )
     ) {
-
         return;
     }
 
@@ -8316,7 +8094,7 @@ function eliminarDocumentoDesdeFicha(
 
 
 /* =========================================================
-   DOCUMENTOS ESPERADOS DEL PROGRAMA
+   PROGRAMA
 ========================================================= */
 
 function documentosEsperadosPrograma(
@@ -8326,47 +8104,27 @@ function documentosEsperadosPrograma(
     const documentos = [
 
         {
-            tipo:
-                "IQ",
-
-            documento:
-                "Protocolo",
-
-            prefijo:
-                "PCI"
+            tipo:"IQ",
+            documento:"Protocolo",
+            prefijo:"PCI"
         },
 
         {
-            tipo:
-                "IQ",
-
-            documento:
-                "Reporte",
-
-            prefijo:
-                "RCI"
+            tipo:"IQ",
+            documento:"Reporte",
+            prefijo:"RCI"
         },
 
         {
-            tipo:
-                "OQ",
-
-            documento:
-                "Protocolo",
-
-            prefijo:
-                "PCO"
+            tipo:"OQ",
+            documento:"Protocolo",
+            prefijo:"PCO"
         },
 
         {
-            tipo:
-                "OQ",
-
-            documento:
-                "Reporte",
-
-            prefijo:
-                "RCO"
+            tipo:"OQ",
+            documento:"Reporte",
+            prefijo:"RCO"
         }
 
     ];
@@ -8379,25 +8137,15 @@ function documentosEsperadosPrograma(
         documentos.push(
 
             {
-                tipo:
-                    "PQ",
-
-                documento:
-                    "Protocolo",
-
-                prefijo:
-                    "PCD"
+                tipo:"PQ",
+                documento:"Protocolo",
+                prefijo:"PCD"
             },
 
             {
-                tipo:
-                    "PQ",
-
-                documento:
-                    "Reporte",
-
-                prefijo:
-                    "RCD"
+                tipo:"PQ",
+                documento:"Reporte",
+                prefijo:"RCD"
             }
 
         );
@@ -8409,15 +8157,13 @@ function documentosEsperadosPrograma(
 }
 
 
-/* =========================================================
-   GENERAR PROGRAMA PRÓXIMO AÑO
-========================================================= */
-
 function generarProgramaProximoAnio(
     descargarExcel = false
 ) {
 
-    if (!esAdmin) {
+    if (
+        !requiereAdmin()
+    ) {
         return;
     }
 
@@ -8448,7 +8194,8 @@ function generarProgramaProximoAnio(
                 if (
                     obtenerAnioFecha(
                         referencia.vencimiento
-                    ) !== anio
+                    ) !==
+                    anio
                 ) {
                     return;
                 }
@@ -8544,8 +8291,7 @@ function generarProgramaProximoAnio(
         const continuar =
             confirm(
                 `Ya existe un Programa de Calificaciones ${anio}.\n\n` +
-                `¿Actualizarlo con la información actual?\n\n` +
-                `Los cumplimientos existentes serán conservados cuando corresponda.`
+                `¿Actualizarlo con la información actual?`
             );
 
         if (!continuar) {
@@ -8562,53 +8308,6 @@ function generarProgramaProximoAnio(
 
             return;
         }
-
-        candidatos.forEach(
-            nuevo => {
-
-                const anterior =
-                    existente.equipos
-                    ?.find(
-                        item =>
-                            item.equipoCodigo ===
-                            nuevo.equipoCodigo
-                    );
-
-                if (!anterior) {
-                    return;
-                }
-
-                nuevo.documentos.forEach(
-                    docNuevo => {
-
-                        const docAnterior =
-                            anterior.documentos
-                            ?.find(
-                                doc =>
-                                    doc.tipo ===
-                                        docNuevo.tipo &&
-                                    doc.documento ===
-                                        docNuevo.documento
-                            );
-
-                        if (
-                            docAnterior &&
-                            docAnterior.estado ===
-                            "Cumplido"
-                        ) {
-
-                            Object.assign(
-                                docNuevo,
-                                docAnterior
-                            );
-
-                        }
-
-                    }
-                );
-
-            }
-        );
 
         existente.fechaGeneracion =
             fechaHoy();
@@ -8651,21 +8350,12 @@ function generarProgramaProximoAnio(
 
     }
 
-    alert(
-        `Programa de Calificaciones ${anio} generado.\n\n` +
-        `Equipos programados: ${programa.equipos.length}`
-    );
-
     mostrarProgramaCalificacion(
         anio
     );
 
 }
 
-
-/* =========================================================
-   CUMPLIMIENTO DEL PROGRAMA
-========================================================= */
 
 function actualizarCumplimientoProgramas() {
 
@@ -8789,17 +8479,10 @@ function actualizarCumplimientoProgramas() {
 }
 
 
-/* =========================================================
-   RESUMEN PROGRAMA
-========================================================= */
-
 function calcularResumenPrograma(
     programa
 ) {
 
-    /*
-        Equipos de baja se excluyen del denominador.
-    */
     const equiposActivos =
         programa.equipos
         ?.filter(
@@ -8867,11 +8550,11 @@ function calcularResumenPrograma(
 }
 
 
-/* =========================================================
-   PROGRAMA EN INICIO
-========================================================= */
-
 function renderProgramaInicio() {
+
+    if (!esAdmin) {
+        return "";
+    }
 
     const programa =
         obtenerPrograma(
@@ -8896,29 +8579,21 @@ function renderProgramaInicio() {
                         </h2>
 
                         <div class="subdato">
-                            Aún no existe un programa de calificaciones generado.
+                            Aún no existe un programa generado.
                         </div>
 
                     </div>
 
-                    ${
-                        esAdmin
-                            ? `
-
-                                <button
-                                    class="btn-morado"
-                                    onclick="
-                                        generarProgramaProximoAnio(
-                                            true
-                                        )
-                                    "
-                                >
-                                    📅 Generar ${anioActual()+1}
-                                </button>
-
-                            `
-                            : ""
-                    }
+                    <button
+                        class="btn-morado"
+                        onclick="
+                            generarProgramaProximoAnio(
+                                true
+                            )
+                        "
+                    >
+                        📅 Generar ${anioActual()+1}
+                    </button>
 
                 </div>
 
@@ -8949,10 +8624,6 @@ function renderProgramaInicio() {
                         ${programa.anio}
                     </div>
 
-                    <div class="subdato">
-                        Seguimiento automático por documento.
-                    </div>
-
                 </div>
 
                 <button
@@ -8980,7 +8651,12 @@ function renderProgramaInicio() {
 
             </div>
 
-            <div style="margin-top:9px;font-size:12px">
+            <div
+                style="
+                    margin-top:9px;
+                    font-size:12px
+                "
+            >
 
                 <strong>
                     ${resumen.porcentaje}%
@@ -8989,8 +8665,11 @@ function renderProgramaInicio() {
                 ·
 
                 ${resumen.cumplidos}
+
                 de
+
                 ${resumen.total}
+
                 documentos cumplidos
 
             </div>
@@ -9002,13 +8681,13 @@ function renderProgramaInicio() {
 }
 
 
-/* =========================================================
-   PROGRAMA EQUIPO
-========================================================= */
-
 function renderProgramaEquipo(
     equipo
 ) {
+
+    if (!esAdmin) {
+        return "";
+    }
 
     const coincidencias =
         [];
@@ -9060,125 +8739,15 @@ function renderProgramaEquipo(
 
         <div class="tarjeta">
 
-            <div class="seccion-titulo">
+            <h2>
+                Programa ${actual.programa.anio}
+            </h2>
 
-                <div>
-
-                    <h2>
-                        Programa ${actual.programa.anio}
-                    </h2>
-
-                    <div class="subdato">
-
-                        Mes límite:
-
-                        <strong>
-                            ${actual.item.mes}
-                        </strong>
-
-                        ·
-
-                        Referencia:
-
-                        <strong>
-                            ${escaparHTML(
-                                actual.item.referenciaCodigo
-                            )}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-                <button
-                    class="btn-azul"
-                    onclick="
-                        mostrarProgramaCalificacion(
-                            ${actual.programa.anio}
-                        )
-                    "
-                >
-                    Ver programa
-                </button>
-
-            </div>
-
-            <div class="tabla-contenedor">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Documento</th>
-                            <th>Estado</th>
-                            <th>Código nuevo</th>
-                            <th>Fecha real</th>
-                            <th>Elaboró / Ejecutó</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        ${actual.item.documentos.map(
-                            documento => `
-
-                                <tr>
-
-                                    <td>
-                                        ${documento.tipo}
-                                        ${documento.documento}
-                                    </td>
-
-                                    <td>
-
-                                        ${
-                                            documento.estado ===
-                                            "Cumplido"
-                                                ? `
-                                                    <span class="badge cumplido">
-                                                        ✓ Cumplido
-                                                    </span>
-                                                `
-                                                : `
-                                                    <span class="badge pendiente">
-                                                        Pendiente
-                                                    </span>
-                                                `
-                                        }
-
-                                    </td>
-
-                                    <td>
-                                        ${escaparHTML(
-                                            documento.codigoCumplimiento ||
-                                            "—"
-                                        )}
-                                    </td>
-
-                                    <td>
-                                        ${fechaBonita(
-                                            documento.fechaCumplimiento
-                                        )}
-                                    </td>
-
-                                    <td>
-                                        ${escaparHTML(
-                                            documento.responsable ||
-                                            "—"
-                                        )}
-                                    </td>
-
-                                </tr>
-
-                            `
-                        ).join("")}
-
-                    </tbody>
-
-                </table>
-
+            <div class="subdato">
+                Mes límite:
+                <strong>
+                    ${actual.item.mes}
+                </strong>
             </div>
 
         </div>
@@ -9188,16 +8757,15 @@ function renderProgramaEquipo(
 }
 
 
-/* =========================================================
-   PANTALLA PROGRAMA
-========================================================= */
-
 function mostrarProgramaCalificacion(
     anioSeleccionado = null
 ) {
 
-    moduloActual =
-        "calificacion";
+    if (
+        !requiereAdmin()
+    ) {
+        return;
+    }
 
     actualizarCumplimientoProgramas();
 
@@ -9239,7 +8807,7 @@ function mostrarProgramaCalificacion(
                 </h1>
 
                 <div class="subtitulo-pagina">
-                    Planificación y cumplimiento automático por documento
+                    Planificación y cumplimiento automático
                 </div>
 
             </div>
@@ -9248,24 +8816,16 @@ function mostrarProgramaCalificacion(
 
                 `
 
-                    ${
-                        esAdmin
-                            ? `
-
-                                <button
-                                    class="btn-morado"
-                                    onclick="
-                                        generarProgramaProximoAnio(
-                                            true
-                                        )
-                                    "
-                                >
-                                    📅 Generar ${anioActual()+1}
-                                </button>
-
-                            `
-                            : ""
-                    }
+                    <button
+                        class="btn-morado"
+                        onclick="
+                            generarProgramaProximoAnio(
+                                true
+                            )
+                        "
+                    >
+                        📅 Generar ${anioActual()+1}
+                    </button>
 
                     ${
                         programa
@@ -9297,53 +8857,6 @@ function mostrarProgramaCalificacion(
         ${submenuCalificacion("programa")}
 
         ${
-            anios.length
-                ? `
-
-                    <div class="tarjeta">
-
-                        <label>
-                            Año del programa
-                        </label>
-
-                        <select
-                            style="max-width:220px"
-                            onchange="
-                                mostrarProgramaCalificacion(
-                                    Number(
-                                        this.value
-                                    )
-                                )
-                            "
-                        >
-
-                            ${anios.map(
-                                valor => `
-
-                                    <option
-                                        value="${valor}"
-                                        ${
-                                            valor ===
-                                            Number(anio)
-                                                ? "selected"
-                                                : ""
-                                        }
-                                    >
-                                        ${valor}
-                                    </option>
-
-                                `
-                            ).join("")}
-
-                        </select>
-
-                    </div>
-
-                `
-                : ""
-        }
-
-        ${
             programa
                 ? renderProgramaCompleto(
                     programa
@@ -9355,29 +8868,6 @@ function mostrarProgramaCalificacion(
                         <h2>
                             Sin programa generado
                         </h2>
-
-                        <p>
-                            Aún no existe un programa almacenado.
-                        </p>
-
-                        ${
-                            esAdmin
-                                ? `
-
-                                    <button
-                                        class="btn-principal"
-                                        onclick="
-                                            generarProgramaProximoAnio(
-                                                true
-                                            )
-                                        "
-                                    >
-                                        Generar programa ${anioActual()+1}
-                                    </button>
-
-                                `
-                                : ""
-                        }
 
                     </div>
 
@@ -9414,24 +8904,12 @@ function renderProgramaCompleto(
                         ${programa.anio}
                     </div>
 
-                    <div class="subdato">
-                        Generado / actualizado:
-                        ${fechaBonita(
-                            programa.fechaGeneracion
-                        )}
-                    </div>
-
                 </div>
 
                 <span
                     class="
                         badge
-                        ${
-                            resumen.porcentaje ===
-                            100
-                                ? "cumplido"
-                                : "programado"
-                        }
+                        programado
                     "
                 >
                     ${resumen.porcentaje}%
@@ -9496,7 +8974,7 @@ function renderProgramaCompleto(
 
                 <div class="programa-mini">
 
-                    Equipos excluidos
+                    Excluidos
 
                     <strong>
                         ${resumen.excluidos}
@@ -9511,163 +8989,12 @@ function renderProgramaCompleto(
         <div class="tarjeta">
 
             <h2>
-                Cumplimiento por mes
-            </h2>
-
-            ${tablaProgramaMeses(
-                programa
-            )}
-
-        </div>
-
-        <div class="tarjeta">
-
-            <h2>
                 Programa por equipo y documento
             </h2>
 
             ${tablaProgramaDocumentos(
                 programa
             )}
-
-        </div>
-
-    `;
-
-}
-
-
-function tablaProgramaMeses(
-    programa
-) {
-
-    const datos =
-        MESES
-        .slice(1)
-        .map(
-            (
-                mes,
-                indice
-            ) => {
-
-                const equiposMes =
-                    (
-                        programa.equipos ||
-                        []
-                    )
-                    .filter(
-                        item =>
-                            item.mesNumero ===
-                            indice + 1 &&
-                            !item.equipoDeBaja
-                    );
-
-                const documentos =
-                    equiposMes.flatMap(
-                        item =>
-                            item.documentos ||
-                            []
-                    );
-
-                return {
-
-                    mes,
-
-                    equipos:
-                        equiposMes.length,
-
-                    documentos:
-                        documentos.length,
-
-                    cumplidos:
-                        documentos.filter(
-                            documento =>
-                                documento.estado ===
-                                "Cumplido"
-                        ).length
-
-                };
-
-            }
-        )
-        .filter(
-            item =>
-                item.equipos >
-                0
-        );
-
-    if (
-        !datos.length
-    ) {
-
-        return `
-
-            <div class="subdato">
-                Sin equipos programados.
-            </div>
-
-        `;
-
-    }
-
-    return `
-
-        <div class="tabla-contenedor">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>Mes límite</th>
-                        <th>Equipos</th>
-                        <th>Documentos</th>
-                        <th>Cumplidos</th>
-                        <th>Pendientes</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    ${datos.map(
-                        item => `
-
-                            <tr>
-
-                                <td>
-                                    <strong>
-                                        ${item.mes}
-                                    </strong>
-                                </td>
-
-                                <td>
-                                    ${item.equipos}
-                                </td>
-
-                                <td>
-                                    ${item.documentos}
-                                </td>
-
-                                <td>
-                                    ${item.cumplidos}
-                                </td>
-
-                                <td>
-                                    ${
-                                        item.documentos -
-                                        item.cumplidos
-                                    }
-                                </td>
-
-                            </tr>
-
-                        `
-                    ).join("")}
-
-                </tbody>
-
-            </table>
 
         </div>
 
@@ -9729,7 +9056,6 @@ function tablaProgramaDocumentos(
                         <th>Código cumplimiento</th>
                         <th>Fecha real</th>
                         <th>Elaboró / Ejecutó</th>
-                        <th></th>
                     </tr>
 
                 </thead>
@@ -9817,24 +9143,6 @@ function tablaProgramaDocumentos(
                                     )}
                                 </td>
 
-                                <td>
-
-                                    <button
-                                        class="btn-icono btn-azul"
-                                        title="Ver ficha"
-                                        onclick="
-                                            mostrarFichaEquipo(
-                                                '${escaparJS(
-                                                    fila.item.equipoCodigo
-                                                )}'
-                                            )
-                                        "
-                                    >
-                                        👁
-                                    </button>
-
-                                </td>
-
                             </tr>
 
                         `
@@ -9851,97 +9159,28 @@ function tablaProgramaDocumentos(
 }
 
 
-/* =========================================================
-   EXCEL DEL PROGRAMA
-========================================================= */
-
 function descargarProgramaExcel(
     programa
 ) {
+
+    if (!esAdmin) {
+        return;
+    }
 
     if (!programa) {
         return;
     }
 
-    const documentos =
+    const filas =
         [];
 
-    const resumenEquipos =
-        [];
-
-    (
-        programa.equipos ||
-        []
-    )
-    .forEach(
+    programa.equipos.forEach(
         item => {
 
-            const activos =
-                item.documentos ||
-                [];
-
-            const cumplidos =
-                activos.filter(
-                    documento =>
-                        documento.estado ===
-                        "Cumplido"
-                ).length;
-
-            const porcentaje =
-                activos.length
-                    ? Math.round(
-                        (
-                            cumplidos /
-                            activos.length
-                        ) *
-                        100
-                    )
-                    : 0;
-
-            resumenEquipos.push({
-
-                "Año Programa":
-                    programa.anio,
-
-                "Mes límite":
-                    item.mes,
-
-                "Código equipo":
-                    item.equipoCodigo,
-
-                "Equipo":
-                    item.equipoNombre,
-
-                "Área":
-                    item.area,
-
-                "Aplica PQ":
-                    item.aplicaPQ
-                        ? "Sí"
-                        : "No",
-
-                "Documento referencia":
-                    item.referenciaTipo,
-
-                "Código referencia":
-                    item.referenciaCodigo,
-
-                "Estado equipo":
-                    item.equipoDeBaja
-                        ? "De baja"
-                        : "Activo",
-
-                "Cumplimiento":
-                    item.equipoDeBaja
-                        ? "Excluido"
-                        : `${porcentaje}%`
-
-            });
-
-            activos.forEach(
+            item.documentos.forEach(
                 documento => {
 
-                    documentos.push({
+                    filas.push({
 
                         "Año Programa":
                             programa.anio,
@@ -9972,15 +9211,7 @@ function descargarProgramaExcel(
                         "Documento programado":
                             `${documento.tipo} ${documento.documento}`,
 
-                        "Prefijo":
-                            documento.prefijo,
-
-                        "Estado equipo":
-                            item.equipoDeBaja
-                                ? "De baja"
-                                : "Activo",
-
-                        "Estado documento":
+                        "Estado":
                             item.equipoDeBaja
                                 ? "Excluido"
                                 : documento.estado,
@@ -10002,29 +9233,18 @@ function descargarProgramaExcel(
         }
     );
 
+    const hoja =
+        XLSX.utils.json_to_sheet(
+            filas
+        );
+
     const libro =
         XLSX.utils.book_new();
 
-    const hojaDocumentos =
-        XLSX.utils.json_to_sheet(
-            documentos
-        );
-
-    const hojaResumen =
-        XLSX.utils.json_to_sheet(
-            resumenEquipos
-        );
-
     XLSX.utils.book_append_sheet(
         libro,
-        hojaResumen,
-        "Resumen Equipos"
-    );
-
-    XLSX.utils.book_append_sheet(
-        libro,
-        hojaDocumentos,
-        "Programa Documentos"
+        hoja,
+        `Programa ${programa.anio}`
     );
 
     XLSX.writeFile(
@@ -10036,17 +9256,16 @@ function descargarProgramaExcel(
 
 
 /* =========================================================
-   CARGA EXCEL DE EQUIPOS
+   EXCEL CALIFICACIÓN
 ========================================================= */
 
 function mostrarExcelCalificacion() {
 
-    if (!esAdmin) {
+    if (
+        !requiereAdmin()
+    ) {
         return;
     }
-
-    moduloActual =
-        "calificacion";
 
     excelTemporal =
         null;
@@ -10064,7 +9283,7 @@ function mostrarExcelCalificacion() {
                 </h1>
 
                 <div class="subtitulo-pagina">
-                    Una fila por equipo con información técnica y documentos IQ/OQ/PQ
+                    Una fila por equipo con información técnica y documental
                 </div>
 
             </div>
@@ -10084,7 +9303,7 @@ function mostrarExcelCalificacion() {
                 </h2>
 
                 <p>
-                    La aplicación calcula automáticamente los vencimientos a 5 años desde la fecha de emisión.
+                    Los vencimientos se calculan automáticamente a 5 años.
                 </p>
 
                 <div
@@ -10145,11 +9364,11 @@ function mostrarExcelCalificacion() {
 }
 
 
-/* =========================================================
-   PLANTILLA EXCEL
-========================================================= */
-
 function descargarPlantillaCalificacion() {
+
+    if (!esAdmin) {
+        return;
+    }
 
     const datos = [
 
@@ -10259,13 +9478,13 @@ function descargarPlantillaCalificacion() {
 }
 
 
-/* =========================================================
-   LEER EXCEL
-========================================================= */
-
 function leerExcelCalificacion(
     evento
 ) {
+
+    if (!esAdmin) {
+        return;
+    }
 
     const archivo =
         evento.target.files[0];
@@ -10288,13 +9507,8 @@ function leerExcelCalificacion(
                             eventoLectura.target.result
                         ),
                         {
-
-                            type:
-                                "array",
-
-                            cellDates:
-                                true
-
+                            type:"array",
+                            cellDates:true
                         }
                     );
 
@@ -10307,13 +9521,8 @@ function leerExcelCalificacion(
                     XLSX.utils.sheet_to_json(
                         hoja,
                         {
-
-                            defval:
-                                "",
-
-                            raw:
-                                true
-
+                            defval:"",
+                            raw:true
                         }
                     );
 
@@ -10346,14 +9555,14 @@ function leerExcelCalificacion(
 }
 
 
-/* =========================================================
-   PROCESAR EXCEL
-========================================================= */
-
 function procesarExcelCalificacion(
     filas,
     nombreArchivo
 ) {
+
+    if (!esAdmin) {
+        return;
+    }
 
     const resultados =
         [];
@@ -10417,6 +9626,7 @@ function procesarExcelCalificacion(
                         "error",
 
                     codigo,
+
                     nombre,
 
                     mensaje:
@@ -10448,6 +9658,7 @@ function procesarExcelCalificacion(
                         "error",
 
                     codigo,
+
                     nombre,
 
                     mensaje:
@@ -10550,164 +9761,94 @@ function procesarExcelCalificacion(
             const documentos =
                 [];
 
-            const errores =
-                [];
-
-            analizarDocumentoExcel(
-
+            agregarDocumentoDesdeFilaExcel(
                 documentos,
-                errores,
                 fila,
                 equipo,
-
                 "IQ",
                 "Protocolo",
-
                 "Protocolo IQ",
                 "Emisión Protocolo IQ",
-
                 [
                     "Elaboró Protocolo IQ",
                     "Elaboro Protocolo IQ"
                 ]
-
             );
 
-            analizarDocumentoExcel(
-
+            agregarDocumentoDesdeFilaExcel(
                 documentos,
-                errores,
                 fila,
                 equipo,
-
                 "IQ",
                 "Reporte",
-
                 "Reporte IQ",
                 "Emisión Reporte IQ",
-
                 [
                     "Ejecutó Reporte IQ",
-                    "Ejecuto Reporte IQ",
-                    "Elaboró Reporte IQ"
+                    "Ejecuto Reporte IQ"
                 ]
-
             );
 
-            analizarDocumentoExcel(
-
+            agregarDocumentoDesdeFilaExcel(
                 documentos,
-                errores,
                 fila,
                 equipo,
-
                 "OQ",
                 "Protocolo",
-
                 "Protocolo OQ",
                 "Emisión Protocolo OQ",
-
                 [
                     "Elaboró Protocolo OQ",
                     "Elaboro Protocolo OQ"
                 ]
-
             );
 
-            analizarDocumentoExcel(
-
+            agregarDocumentoDesdeFilaExcel(
                 documentos,
-                errores,
                 fila,
                 equipo,
-
                 "OQ",
                 "Reporte",
-
                 "Reporte OQ",
                 "Emisión Reporte OQ",
-
                 [
                     "Ejecutó Reporte OQ",
-                    "Ejecuto Reporte OQ",
-                    "Elaboró Reporte OQ"
+                    "Ejecuto Reporte OQ"
                 ]
-
             );
 
             if (
                 aplicaPQ
             ) {
 
-                analizarDocumentoExcel(
-
+                agregarDocumentoDesdeFilaExcel(
                     documentos,
-                    errores,
                     fila,
                     equipo,
-
                     "PQ",
                     "Protocolo",
-
                     "Protocolo PQ",
                     "Emisión Protocolo PQ",
-
                     [
                         "Elaboró Protocolo PQ",
                         "Elaboro Protocolo PQ"
                     ]
-
                 );
 
-                analizarDocumentoExcel(
-
+                agregarDocumentoDesdeFilaExcel(
                     documentos,
-                    errores,
                     fila,
                     equipo,
-
                     "PQ",
                     "Reporte",
-
                     "Reporte PQ",
                     "Emisión Reporte PQ",
-
                     [
                         "Ejecutó Reporte PQ",
-                        "Ejecuto Reporte PQ",
-                        "Elaboró Reporte PQ"
+                        "Ejecuto Reporte PQ"
                     ]
-
                 );
 
-            }
-
-            if (
-                errores.length
-            ) {
-
-                resultados.push({
-
-                    fila:
-                        indice + 2,
-
-                    estado:
-                        "error",
-
-                    codigo,
-                    nombre,
-
-                    mensaje:
-                        errores.join(
-                            " · "
-                        ),
-
-                    data:
-                        null
-
-                });
-
-                return;
             }
 
             const existe =
@@ -10730,6 +9871,7 @@ function procesarExcelCalificacion(
                         : "valido",
 
                 codigo,
+
                 nombre,
 
                 mensaje:
@@ -10738,10 +9880,8 @@ function procesarExcelCalificacion(
                         : "Equipo nuevo",
 
                 data:{
-
                     equipo,
                     documentos
-
                 }
 
             });
@@ -10763,22 +9903,15 @@ function procesarExcelCalificacion(
 }
 
 
-function analizarDocumentoExcel(
-
+function agregarDocumentoDesdeFilaExcel(
     destino,
-    errores,
-
     fila,
     equipo,
-
     tipo,
     documento,
-
     columnaCodigo,
     columnaFecha,
-
     columnasResponsable
-
 ) {
 
     const codigo =
@@ -10789,71 +9922,18 @@ function analizarDocumentoExcel(
             )
         ).trim();
 
-    const fechaOriginal =
-        columnaExcel(
-            fila,
-            [columnaFecha]
-        );
-
     const fecha =
         normalizarFechaExcel(
-            fechaOriginal
+            columnaExcel(
+                fila,
+                [columnaFecha]
+            )
         );
 
-    /*
-        Ambos vacíos:
-        no hay documento y es válido.
-    */
     if (
-        !codigo &&
-        !fechaOriginal
-    ) {
-
-        return;
-    }
-
-    /*
-        Código sin fecha.
-    */
-    if (
-        codigo &&
-        !fechaOriginal
-    ) {
-
-        errores.push(
-            `${columnaCodigo} sin fecha de emisión`
-        );
-
-        return;
-    }
-
-    /*
-        Fecha sin código.
-    */
-    if (
-        !codigo &&
-        fechaOriginal
-    ) {
-
-        errores.push(
-            `${columnaFecha} sin código de documento`
-        );
-
-        return;
-    }
-
-    /*
-        Fecha presente pero inválida.
-    */
-    if (
-        fechaOriginal &&
+        !codigo ||
         !fecha
     ) {
-
-        errores.push(
-            `Fecha inválida en ${columnaFecha}`
-        );
-
         return;
     }
 
@@ -10872,9 +9952,7 @@ function analizarDocumentoExcel(
         codigo,
 
         version:
-            extraerVersionDocumento(
-                codigo
-            ),
+            "",
 
         fecha,
 
@@ -10897,32 +9975,12 @@ function analizarDocumentoExcel(
 }
 
 
-function extraerVersionDocumento(
-    codigo
-) {
-
-    const partes =
-        String(
-            codigo || ""
-        )
-        .split("-");
-
-    return partes.length > 1
-        ? partes[
-            partes.length - 1
-        ]
-        : "";
-
-}
-
-
-/* =========================================================
-   PREVIEW EXCEL
-========================================================= */
-
 function renderPreviewExcelCalificacion() {
 
-    if (!excelTemporal) {
+    if (
+        !esAdmin ||
+        !excelTemporal
+    ) {
         return;
     }
 
@@ -10959,15 +10017,6 @@ function renderPreviewExcelCalificacion() {
             <h2>
                 Vista previa
             </h2>
-
-            <div class="subdato">
-                Archivo:
-                <strong>
-                    ${escaparHTML(
-                        excelTemporal.archivo
-                    )}
-                </strong>
-            </div>
 
             <div class="excel-resumen">
 
@@ -11013,15 +10062,10 @@ function renderPreviewExcelCalificacion() {
 
             </div>
 
-            <div
-                style="
-                    max-width:450px;
-                    margin-bottom:15px
-                "
-            >
+            <div style="max-width:450px">
 
                 <label>
-                    Equipos ya existentes
+                    Equipos existentes
                 </label>
 
                 <select
@@ -11040,77 +10084,9 @@ function renderPreviewExcelCalificacion() {
 
             </div>
 
-            <div class="tabla-contenedor">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Fila</th>
-                            <th>Código</th>
-                            <th>Equipo</th>
-                            <th>Documentos detectados</th>
-                            <th>Resultado</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        ${resultados.map(
-                            item => `
-
-                                <tr
-                                    class="${
-                                        item.estado ===
-                                        "valido"
-                                            ? "fila-valida"
-                                            : item.estado ===
-                                              "duplicado"
-                                                ? "fila-duplicada"
-                                                : "fila-error"
-                                    }"
-                                >
-
-                                    <td>
-                                        ${item.fila}
-                                    </td>
-
-                                    <td class="codigo">
-                                        ${escaparHTML(
-                                            item.codigo
-                                        )}
-                                    </td>
-
-                                    <td>
-                                        ${escaparHTML(
-                                            item.nombre
-                                        )}
-                                    </td>
-
-                                    <td>
-                                        ${item.data?.documentos?.length || 0}
-                                    </td>
-
-                                    <td>
-                                        ${escaparHTML(
-                                            item.mensaje
-                                        )}
-                                    </td>
-
-                                </tr>
-
-                            `
-                        ).join("")}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-            <div class="acciones-form">
+            <div
+                class="acciones-form"
+            >
 
                 <button
                     class="btn-principal"
@@ -11121,7 +10097,12 @@ function renderPreviewExcelCalificacion() {
 
                 <button
                     class="btn-secundario"
-                    onclick="cancelarImportacionExcel()"
+                    onclick="
+                        excelTemporal=null;
+                        document.getElementById(
+                            'previewExcel'
+                        ).innerHTML='';
+                    "
                 >
                     Cancelar
                 </button>
@@ -11135,33 +10116,12 @@ function renderPreviewExcelCalificacion() {
 }
 
 
-function cancelarImportacionExcel() {
-
-    excelTemporal =
-        null;
-
-    const contenedor =
-        document.getElementById(
-            "previewExcel"
-        );
-
-    if (contenedor) {
-
-        contenedor.innerHTML =
-            "";
-
-    }
-
-}
-
-
-/* =========================================================
-   CONFIRMAR IMPORTACIÓN
-========================================================= */
-
 function confirmarImportacionCalificacion() {
 
-    if (!excelTemporal) {
+    if (
+        !esAdmin ||
+        !excelTemporal
+    ) {
         return;
     }
 
@@ -11171,15 +10131,6 @@ function confirmarImportacionCalificacion() {
         ) ||
         "omitir";
 
-    let nuevos =
-        0;
-
-    let actualizados =
-        0;
-
-    let omitidos =
-        0;
-
     excelTemporal.resultados
         .forEach(
             resultado => {
@@ -11188,10 +10139,7 @@ function confirmarImportacionCalificacion() {
                     resultado.estado ===
                     "error"
                 ) {
-
-                    omitidos++;
                     return;
-
                 }
 
                 const data =
@@ -11208,9 +10156,6 @@ function confirmarImportacionCalificacion() {
                             ).toLowerCase()
                     );
 
-                /*
-                    EQUIPO NUEVO
-                */
                 if (
                     indice === -1
                 ) {
@@ -11226,30 +10171,19 @@ function confirmarImportacionCalificacion() {
                             )
                     );
 
-                    nuevos++;
-
                     return;
                 }
 
-                /*
-                    EQUIPO EXISTENTE
-                */
                 if (
                     modo ===
                     "omitir"
                 ) {
-
-                    omitidos++;
                     return;
                 }
 
                 const anterior =
                     equipos[indice];
 
-                /*
-                    Conservamos estado de baja,
-                    fecha de baja e historial.
-                */
                 equipos[indice] = {
 
                     ...anterior,
@@ -11284,21 +10218,12 @@ function confirmarImportacionCalificacion() {
                         )
                 );
 
-                actualizados++;
-
             }
         );
 
     guardarTodo();
 
     actualizarCumplimientoProgramas();
-
-    alert(
-        `Importación finalizada.\n\n` +
-        `Equipos nuevos: ${nuevos}\n` +
-        `Equipos actualizados: ${actualizados}\n` +
-        `Omitidos / errores: ${omitidos}`
-    );
 
     excelTemporal =
         null;
@@ -11340,20 +10265,11 @@ function agregarDocumentoSiNoExiste(
 }
 
 
-/* =========================================================
-   EXPORTAR BASE
-========================================================= */
-
 function exportarCalificacionExcel() {
 
     if (
-        !equipos.length
+        !esAdmin
     ) {
-
-        alert(
-            "No existen equipos para exportar."
-        );
-
         return;
     }
 
@@ -11493,48 +10409,30 @@ function exportarCalificacionExcel() {
                         "",
 
                     "Protocolo PQ":
-                        equipo.aplicaPQ !==
-                        false
-                            ? pp?.codigo ||
-                              ""
-                            : "NO APLICA",
+                        pp?.codigo ||
+                        "",
 
                     "Emisión Protocolo PQ":
-                        equipo.aplicaPQ !==
-                        false
-                            ? fechaDocumento(
-                                pp
-                              )
-                            : "",
+                        fechaDocumento(
+                            pp
+                        ),
 
                     "Elaboró Protocolo PQ":
-                        equipo.aplicaPQ !==
-                        false
-                            ? pp?.responsable ||
-                              ""
-                            : "",
+                        pp?.responsable ||
+                        "",
 
                     "Reporte PQ":
-                        equipo.aplicaPQ !==
-                        false
-                            ? rp?.codigo ||
-                              ""
-                            : "NO APLICA",
+                        rp?.codigo ||
+                        "",
 
                     "Emisión Reporte PQ":
-                        equipo.aplicaPQ !==
-                        false
-                            ? fechaDocumento(
-                                rp
-                              )
-                            : "",
+                        fechaDocumento(
+                            rp
+                        ),
 
                     "Ejecutó Reporte PQ":
-                        equipo.aplicaPQ !==
-                        false
-                            ? rp?.responsable ||
-                              ""
-                            : ""
+                        rp?.responsable ||
+                        ""
 
                 };
 
@@ -11567,86 +10465,11 @@ function exportarCalificacionExcel() {
    KPI
 ========================================================= */
 
-function contarKPIEtapa(
-    tipo
-) {
-
-    const lista =
-        equipos.filter(
-            equipo => {
-
-                if (
-                    equipo.estado ===
-                    "De baja"
-                ) {
-
-                    return false;
-                }
-
-                if (
-                    tipo === "PQ" &&
-                    equipo.aplicaPQ ===
-                    false
-                ) {
-
-                    return false;
-                }
-
-                return true;
-
-            }
-        );
-
-    let vigente =
-        0;
-
-    let vencido =
-        0;
-
-    lista.forEach(
-        equipo => {
-
-            const estado =
-                estadoEtapa(
-                    equipo,
-                    tipo
-                );
-
-            if (
-                estado.clase ===
-                    "vigente" ||
-                estado.clase ===
-                    "proximo"
-            ) {
-
-                vigente++;
-
-            } else {
-
-                vencido++;
-
-            }
-
-        }
-    );
-
-    return {
-
-        total:
-            lista.length,
-
-        vigente,
-
-        vencido
-
-    };
-
-}
-
-
 function mostrarKPI() {
 
-    if (!esAdmin) {
+    if (
+        !requiereAdmin()
+    ) {
         return;
     }
 
@@ -11656,8 +10479,6 @@ function mostrarKPI() {
     marcarMenuActivo(
         "kpi"
     );
-
-    actualizarCumplimientoProgramas();
 
     const activos =
         equipos.filter(
@@ -11673,33 +10494,6 @@ function mostrarKPI() {
                     equipo
                 )
         );
-
-    const iq =
-        contarKPIEtapa(
-            "IQ"
-        );
-
-    const oq =
-        contarKPIEtapa(
-            "OQ"
-        );
-
-    const pq =
-        contarKPIEtapa(
-            "PQ"
-        );
-
-    const programa =
-        obtenerPrograma(
-            anioActual()
-        );
-
-    const resumenPrograma =
-        programa
-            ? calcularResumenPrograma(
-                programa
-            )
-            : null;
 
     document.getElementById(
         "contenido"
@@ -11755,116 +10549,6 @@ function mostrarKPI() {
                 "gris-bg"
             )}
 
-            ${tarjetaResumen(
-                "📅",
-                programa
-                    ? `Programa ${programa.anio}`
-                    : "Programa anual",
-                resumenPrograma
-                    ? `${resumenPrograma.porcentaje}%`
-                    : "—",
-                "morado-bg"
-            )}
-
-        </div>
-
-        <div class="panel-etapas">
-
-            ${tarjetaKPIEtapa(
-                "IQ",
-                iq
-            )}
-
-            ${tarjetaKPIEtapa(
-                "OQ",
-                oq
-            )}
-
-            ${tarjetaKPIEtapa(
-                "PQ",
-                pq
-            )}
-
-        </div>
-
-    `;
-
-}
-
-
-function tarjetaKPIEtapa(
-    tipo,
-    datos
-) {
-
-    const porcentaje =
-        datos.total
-            ? Math.round(
-                (
-                    datos.vigente /
-                    datos.total
-                ) *
-                100
-            )
-            : 0;
-
-    return `
-
-        <div class="etapa-resumen">
-
-            <div class="etapa-resumen-cabecera">
-
-                <div class="etapa-resumen-titulo">
-                    ${tipo}
-                </div>
-
-                <strong>
-                    ${porcentaje}%
-                </strong>
-
-            </div>
-
-            <div class="etapa-estados">
-
-                <div class="etapa-mini">
-
-                    <div class="subdato">
-                        Total
-                    </div>
-
-                    <div class="etapa-mini-numero">
-                        ${datos.total}
-                    </div>
-
-                </div>
-
-                <div class="etapa-mini">
-
-                    <div class="subdato">
-                        Vigente
-                    </div>
-
-                    <div class="etapa-mini-numero">
-                        ${datos.vigente}
-                    </div>
-
-                </div>
-
-                <div class="etapa-mini">
-
-                    <div class="subdato">
-                        Vencido /
-                        incompleto
-                    </div>
-
-                    <div class="etapa-mini-numero">
-                        ${datos.vencido}
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
 
     `;
@@ -11880,6 +10564,12 @@ function mostrarModuloSimple(
     titulo,
     subtitulo
 ) {
+
+    if (
+        !requiereAdmin()
+    ) {
+        return;
+    }
 
     document.getElementById(
         "contenido"
@@ -11910,8 +10600,7 @@ function mostrarModuloSimple(
             </h2>
 
             <p>
-                De momento estamos terminando completamente
-                Calificación de Equipos antes de continuar con esta sección.
+                Actualmente estamos terminando Calificación de Equipos.
             </p>
 
         </div>
@@ -11925,6 +10614,12 @@ function mostrarModuloDocumental(
     titulo,
     categorias
 ) {
+
+    if (
+        !requiereAdmin()
+    ) {
+        return;
+    }
 
     document.getElementById(
         "contenido"
@@ -11976,7 +10671,7 @@ function mostrarModuloDocumental(
 
 
 /* =========================================================
-   SINCRONIZACIÓN ENTRE PESTAÑAS
+   SINCRONIZACIÓN
 ========================================================= */
 
 window.addEventListener(
@@ -11998,33 +10693,25 @@ window.addEventListener(
                 "programasCalificacion"
             );
 
-        equiposCalibracion =
-            leerDatos(
-                "equiposCalibracion"
-            );
-
-        registrosCalibracion =
-            leerDatos(
-                "registrosCalibracion"
-            );
-
-        documentosSACM =
-            leerDatos(
-                "documentosSACM"
-            );
-
-        registrosDocumentales =
-            leerDatos(
-                "registrosDocumentales"
-            );
-
         migrarDatosAntiguos();
 
         actualizarCumplimientoProgramas();
 
-        abrirModulo(
-            moduloActual
-        );
+        actualizarPermisosUI();
+
+        if (
+            esAdmin
+        ) {
+
+            abrirModulo(
+                moduloActual
+            );
+
+        } else {
+
+            mostrarEquiposCalificacion();
+
+        }
 
     }
 );
@@ -12038,11 +10725,28 @@ migrarDatosAntiguos();
 
 actualizarCumplimientoProgramas();
 
-actualizarUsuario();
+actualizarPermisosUI();
 
-abrirModulo(
-    "calificacion"
-);
+/*
+    AL ABRIR LA APP:
+
+    ADMIN:
+    entra al Inicio de Calificaciones.
+
+    CONSULTA:
+    entra directamente a Equipos.
+*/
+if (
+    esAdmin
+) {
+
+    mostrarInicioCalificacion();
+
+} else {
+
+    mostrarEquiposCalificacion();
+
+}
 
 </script>
 
