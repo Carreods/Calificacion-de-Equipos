@@ -2,39 +2,323 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Gestión SAC-M</title>
 <link rel="icon" type="image/png" href="PPPP.png">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eef1f3;color:#17212b}button,input,select,textarea{font-family:inherit}button{border:0;border-radius:8px;padding:9px 13px;cursor:pointer;font-weight:700;transition:.15s}button:hover{transform:translateY(-1px)}input,select,textarea{width:100%;min-height:40px;padding:10px 11px;border:1px solid #d2d9df;border-radius:8px;background:#fff;outline:none;font-size:13px}input:focus,select:focus,textarea:focus{border-color:#9aa8b4;box-shadow:0 0 0 3px rgba(25,108,184,.08)}input[readonly]{background:#edf1f4}label{display:block;margin-bottom:6px;font-size:12px;font-weight:700}
-.sidebar{position:fixed;inset:0 auto 0 0;width:250px;background:#fff;border-right:1px solid #dfe4e8;padding:18px 12px;overflow:auto;z-index:200}.logo-box{padding:5px 8px 15px;border-bottom:1px solid #e6e9ed;cursor:pointer}.logo-imagen{display:block;width:150px;margin-bottom:10px}.logo-subtitulo{font-size:13px;font-weight:700;line-height:1.35}.logo-descripcion{margin-top:4px;color:#687887;font-size:10px;letter-spacing:.6px}.menu{list-style:none;padding:0;margin:16px 0}.menu li{display:flex;align-items:center;gap:10px;margin-bottom:4px;padding:10px 11px;border-radius:9px;color:#536373;font-size:13px;cursor:pointer}.menu li:hover{background:#f5f7f8}.menu li.activo{background:#fde8ea;color:#e30613;font-weight:700}.menu-icono{width:19px;text-align:center}
-.contenido{min-height:100vh;margin-left:250px;padding:18px 28px 28px}.topbar{position:sticky;top:0;z-index:90;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:10px 0 15px;margin-bottom:8px;background:rgba(238,241,243,.94);backdrop-filter:blur(10px)}.topbar-acciones{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.titulo-pagina{margin:0;font-size:27px;letter-spacing:-.4px}.subtitulo-pagina{margin-top:5px;color:#687887;font-size:13px}
-.usuario-superior{display:flex;align-items:center;gap:9px;min-height:42px;padding:6px 11px;background:#fff;border:1px solid #dfe4e8;border-radius:10px}.usuario-icono{width:29px;height:29px;display:flex;align-items:center;justify-content:center;background:#f2f4f6;border-radius:50%}.usuario-nombre{font-size:11px;font-weight:800}.usuario-rol{margin-top:2px;color:#748291;font-size:9px}
-.tarjeta,.modulo-card,.hero-panel,.resumen-card,.etapa-resumen{background:#fff;border:1px solid #dfe4e8;box-shadow:0 5px 20px rgba(30,45,60,.06)}.tarjeta{padding:20px;margin-bottom:18px;border-radius:14px}.tarjeta h2,.tarjeta h3{margin-top:0}.subdato{color:#748392;font-size:11px;line-height:1.5}.seccion-titulo{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:15px}.seccion-titulo h2{margin:0}
-.btn-principal{background:#e30613;color:#fff}.btn-principal:hover{background:#bd0010}.btn-secundario,.btn-gris,.btn-editar,.btn-sesion{background:#edf1f4;color:#344454}.btn-verde{background:#dff7e8;color:#16834a}.btn-azul{background:#e7f1ff;color:#196cb8}.btn-amarillo{background:#fff0ca;color:#9b6600}.btn-morado{background:#eee9ff;color:#6e55b3}.btn-eliminar{background:#fde1e3;color:#d91f2b}.btn-baja{background:#fff0f1;color:#c8202b}.btn-reactivar{background:#dff7e8;color:#16834a}.btn-eliminar-definitivo{background:#a9000b;color:#fff}.btn-sesion{min-height:42px;background:#fff;border:1px solid #dfe4e8}.btn-icono{width:36px;height:36px;padding:0;display:inline-flex;align-items:center;justify-content:center}.botones,.acciones-form,.acciones-tabla{display:flex;flex-wrap:wrap;gap:8px}.acciones-form{margin-top:15px}
-.btn-campana{position:relative;width:42px;height:42px;padding:0;background:#fff;border:1px solid #dfe4e8;color:#364655;font-size:18px}.contador-notificacion{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;display:flex;align-items:center;justify-content:center;padding:0 5px;background:#e30613;color:#fff;border:2px solid #eef1f3;border-radius:20px;font-size:9px}.panel-notificaciones{position:absolute;top:50px;right:0;width:410px;max-height:540px;overflow:auto;background:#fff;border:1px solid #dfe4e8;border-radius:14px;box-shadow:0 16px 45px rgba(25,35,45,.18);z-index:1000}.panel-notificaciones-header{position:sticky;top:0;display:flex;justify-content:space-between;padding:14px 16px;background:#fff;border-bottom:1px solid #e5e9ec}.notificacion-item{padding:13px 16px;border-bottom:1px solid #edf0f2;cursor:pointer}.notificacion-item:hover{background:#f7f9fa}.notificacion-titulo{font-size:12px;font-weight:700}.notificacion-texto{margin-top:4px;color:#71808e;font-size:11px;line-height:1.5}
-.submenu{display:flex;gap:7px;flex-wrap:wrap;padding:7px;margin-bottom:20px;background:#fff;border:1px solid #dfe4e8;border-radius:12px}.submenu button{background:transparent;color:#627181}.submenu button.activo{background:#fde8ea;color:#e30613}
-.resumen{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px;margin-bottom:18px}.resumen-card{display:flex;align-items:center;gap:12px;min-height:92px;padding:16px;border-radius:13px}.resumen-icono{width:43px;height:43px;display:flex;align-items:center;justify-content:center;flex:none;border-radius:50%;font-size:19px}.resumen-titulo{color:#687887;font-size:11px;line-height:1.35}.resumen-numero{margin-top:3px;font-size:24px;font-weight:800}.verde-bg{background:#dff7e8}.amarillo-bg{background:#fff0ca}.rojo-bg{background:#fde1e3}.azul-bg{background:#e7f1ff}.gris-bg{background:#edf1f4}.morado-bg{background:#eee9ff}
-.inicio-bienvenida{padding:28px;background:linear-gradient(135deg,#fff,#f7f9fa);border:1px solid #dfe4e8;border-radius:16px;margin-bottom:18px;box-shadow:0 5px 20px rgba(30,45,60,.06)}.inicio-bienvenida h1{margin:0 0 7px;font-size:30px}.inicio-bienvenida p{margin:0;color:#687887;font-size:13px}.modulo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.modulo-card{padding:19px;border-radius:13px;cursor:pointer;transition:.15s}.modulo-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(30,45,60,.1)}.modulo-icono{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#f1f3f5;font-size:20px;margin-bottom:12px}.modulo-card h3{margin:0 0 7px;font-size:15px}
-.dashboard-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;margin-bottom:18px}.hero-panel{padding:22px;border-radius:15px}.hero-label{color:#687887;font-size:11px;text-transform:uppercase;letter-spacing:.5px}.hero-numero{margin-top:5px;font-size:37px;font-weight:800}.hero-descripcion{margin-top:5px;color:#687887;font-size:12px}.barra-fondo{height:12px;margin-top:15px;overflow:hidden;background:#e9edef;border-radius:20px}.barra-avance{height:100%;background:#25a45d;border-radius:20px}.accion-principal{margin-top:14px;padding:15px;background:#f7f9fa;border-left:4px solid #196cb8;border-radius:9px}.accion-principal-titulo{font-size:13px;font-weight:800}.accion-principal-texto{margin-top:5px;color:#657584;font-size:12px;line-height:1.5}
-.panel-etapas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:18px}.etapa-resumen{padding:18px;border-radius:13px}.etapa-resumen-cabecera{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.etapa-resumen-titulo{font-size:20px;font-weight:800}.etapa-estados{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.etapa-mini{padding:10px;background:#f7f8fa;border-radius:9px}.etapa-mini-numero{margin-top:4px;font-size:19px;font-weight:800}
-.badge{display:inline-block;padding:6px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}.vigente,.cumplido{background:#dff7e8;color:#16834a}.proximo,.pendiente{background:#fff0ca;color:#b97900}.vencido{background:#fde1e3;color:#d91f2b}.neutro,.baja{background:#edf1f4;color:#667685}.programado{background:#e7f1ff;color:#196cb8}.punto{display:inline-block;width:11px;height:11px;margin-right:6px;border-radius:50%;vertical-align:-1px}.punto-verde{background:#21a35c}.punto-amarillo{background:#e4a000}.punto-rojo{background:#dc303c}.punto-gris{background:#a7b0b8}
-.tabla-contenedor{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th{padding:11px 10px;background:#f3f5f6;color:#455565;border-bottom:1px solid #dfe3e8;text-align:left;white-space:nowrap}td{padding:12px 10px;border-bottom:1px solid #e7eaed;vertical-align:middle}tbody tr:hover td{background:#fafbfc}.codigo{font-weight:800}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.form-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.completo{grid-column:1/-1}.filtros{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:15px}
-.ficha-hero{margin-bottom:18px;padding:22px;background:linear-gradient(135deg,#fff,#fafbfc);border:1px solid #dfe4e8;border-radius:16px;box-shadow:0 5px 20px rgba(30,45,60,.06)}.ficha-hero-cabecera{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}.ficha-codigo{margin-bottom:5px;color:#e30613;font-size:15px;font-weight:800}.ficha-nombre{margin:0;font-size:27px}.ficha-estado-area{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.estado-global-grande{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:22px;font-size:12px;font-weight:800}.ficha-proxima-accion{margin-top:18px;padding:14px 16px;background:#f6f8fa;border-left:4px solid #196cb8;border-radius:9px}.ficha-proxima-accion strong{display:block;margin-bottom:4px;font-size:12px}.ficha-proxima-accion span{font-size:12px;color:#607080}.ficha-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.ficha-dato{padding:14px;background:#f7f8fa;border-radius:10px}.ficha-label{color:#71808f;font-size:11px}.ficha-valor{margin-top:4px;font-size:14px;font-weight:700}
-.calificacion-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.etapa-card{overflow:hidden;background:#fff;border:1px solid #dfe4e8;border-left:5px solid #a8b1ba;border-radius:12px}.etapa-card.estado-vigente{border-left-color:#16834a}.etapa-card.estado-proximo{border-left-color:#e1a000}.etapa-card.estado-vencido{border-left-color:#d91f2b}.etapa-header{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:#f4f6f7}.etapa-titulo{font-size:16px;font-weight:800}.doc-card{padding:14px;border-top:1px solid #e8ebee}.doc-tipo{margin-bottom:5px;color:#6b7885;font-size:11px}.doc-codigo{margin-bottom:8px;font-weight:800;word-break:break-word}.doc-linea{margin-top:5px;color:#5d6c7b;font-size:11px}.sin-documento{color:#87939e;font-size:12px}
-.programa-cabecera{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:15px}.programa-anio{font-size:28px;font-weight:800}.programa-resumen{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:15px}.programa-mini{padding:13px;background:#f7f8fa;border-radius:9px;font-size:11px;color:#677684}.programa-mini strong{display:block;margin-top:4px;color:#17212b;font-size:20px}
-.excel-panel{padding:30px;background:#fafbfc;border:2px dashed #d2d9df;border-radius:14px;text-align:center}.excel-resumen{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}.excel-resumen-card{padding:14px;background:#fff;border:1px solid #dfe4e8;border-radius:10px}.excel-resumen-card strong{display:block;margin-top:4px;font-size:23px}.fila-valida td{background:#f5fbf7!important}.fila-duplicada td{background:#fff8e7!important}.fila-error td{background:#fff1f2!important}
-.zona-peligro{background:#fff9f9;border-color:#efb7bc}.zona-peligro h2{color:#aa000b}.advertencia{padding:13px;background:#fde1e3;color:#98131d;border-radius:9px;font-size:12px;line-height:1.55}
-.login-overlay{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,.45);z-index:2000}.login-card{width:360px;max-width:90%;padding:24px;background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.22)}.login-error{display:none;margin-bottom:10px;color:#d91f2b;font-size:12px}
-@media(max-width:1200px){.resumen{grid-template-columns:repeat(3,1fr)}.programa-resumen{grid-template-columns:repeat(3,1fr)}}@media(max-width:1000px){.dashboard-hero,.panel-etapas,.calificacion-grid{grid-template-columns:1fr}.ficha-grid{grid-template-columns:repeat(2,1fr)}.modulo-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:800px){.sidebar{width:190px}.contenido{margin-left:190px;padding:12px 15px}.logo-imagen{width:140px}.topbar,.ficha-hero-cabecera{flex-direction:column}.topbar-acciones,.ficha-estado-area{justify-content:flex-start;width:100%}.resumen,.programa-resumen,.form-grid,.form-grid-3,.filtros,.ficha-grid,.excel-resumen,.modulo-grid{grid-template-columns:1fr}.completo{grid-column:auto}}
+*{box-sizing:border-box}
+:root{
+--prater:#e30613;--prater-dark:#bd0010;--prater-soft:#fde8ea;
+--bg:#eef1f3;--white:#fff;--text:#17212b;--muted:#687887;--border:#dfe4e8;
+--green:#16834a;--green-bg:#dff7e8;--yellow:#b97900;--yellow-bg:#fff0ca;
+--red:#d91f2b;--red-bg:#fde1e3;--blue:#196cb8;--blue-bg:#e7f1ff;
+--purple:#6e55b3;--purple-bg:#eee9ff;--gray:#667685;--gray-bg:#edf1f4;
+--shadow:0 5px 20px rgba(30,45,60,.06)
+}
+
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+body.menu-abierto{overflow:hidden}
+button,input,select,textarea{font-family:inherit}
+button{border:0;border-radius:8px;padding:9px 13px;cursor:pointer;font-weight:700;transition:.15s}
+button:hover{transform:translateY(-1px)}
+button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+input,select,textarea{width:100%;min-height:40px;padding:10px 11px;border:1px solid #d2d9df;border-radius:8px;background:#fff;color:var(--text);outline:none;font-size:13px}
+input:focus,select:focus,textarea:focus{border-color:#9aa8b4;box-shadow:0 0 0 3px rgba(25,108,184,.08)}
+input[readonly]{background:#edf1f4;color:#576675}
+textarea{min-height:90px;resize:vertical}
+label{display:block;margin-bottom:6px;font-size:12px;font-weight:700}
+
+/* SIDEBAR */
+.sidebar{
+position:fixed;inset:0 auto 0 0;width:250px;background:#fff;border-right:1px solid var(--border);
+padding:18px 12px;overflow-y:auto;z-index:500;transition:transform .22s ease
+}
+.logo-box{padding:5px 8px 15px;border-bottom:1px solid #e6e9ed;cursor:pointer}
+.logo-imagen{display:block;width:150px;height:auto;margin-bottom:10px}
+.logo-subtitulo{font-size:13px;font-weight:700;line-height:1.35}
+.logo-descripcion{margin-top:4px;color:var(--muted);font-size:10px;letter-spacing:.6px}
+.sidebar-cerrar{display:none;position:absolute;top:12px;right:12px;width:36px;height:36px;padding:0;background:#f1f3f5;color:#465462;font-size:18px}
+.menu{list-style:none;padding:0;margin:16px 0}
+.menu li{display:flex;align-items:center;gap:10px;margin-bottom:4px;padding:10px 11px;border-radius:9px;color:#536373;font-size:13px;cursor:pointer;transition:.15s}
+.menu li:hover{background:#f5f7f8}
+.menu li.activo{background:var(--prater-soft);color:var(--prater);font-weight:700}
+.menu-icono{width:19px;flex:none;text-align:center}
+.menu-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.45);z-index:450}
+
+/* CONTENT */
+.contenido{min-height:100vh;margin-left:250px;padding:18px 28px 28px}
+.topbar{
+position:sticky;top:0;z-index:90;display:flex;justify-content:space-between;align-items:flex-start;
+gap:20px;padding:10px 0 15px;margin-bottom:8px;background:rgba(238,241,243,.95);backdrop-filter:blur(10px)
+}
+.topbar-izquierda{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.menu-movil-btn{display:none;width:42px;height:42px;padding:0;background:#fff;border:1px solid var(--border);font-size:20px;flex:none}
+.titulo-bloque{min-width:0}
+.titulo-pagina{margin:0;font-size:27px;letter-spacing:-.4px}
+.subtitulo-pagina{margin-top:5px;color:var(--muted);font-size:13px}
+.topbar-acciones{position:relative;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:8px}
+
+/* USER */
+.usuario-superior{display:flex;align-items:center;gap:9px;min-height:42px;padding:6px 11px;background:#fff;border:1px solid var(--border);border-radius:10px}
+.usuario-icono{width:29px;height:29px;display:flex;align-items:center;justify-content:center;background:#f2f4f6;border-radius:50%;flex:none}
+.usuario-nombre{font-size:11px;font-weight:800}
+.usuario-rol{margin-top:2px;color:#748291;font-size:9px}
+.btn-sesion{min-height:42px;background:#fff;color:#445465;border:1px solid var(--border)}
+
+/* CARDS */
+.tarjeta,.modulo-card,.hero-panel,.resumen-card,.etapa-resumen{background:#fff;border:1px solid var(--border);box-shadow:var(--shadow)}
+.tarjeta{padding:20px;margin-bottom:18px;border-radius:14px}
+.tarjeta h2,.tarjeta h3{margin-top:0}
+.subdato{color:#748392;font-size:11px;line-height:1.5}
+.seccion-titulo{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:15px}
+.seccion-titulo h2{margin:0}
+
+/* BUTTONS */
+.btn-principal{background:var(--prater);color:#fff}
+.btn-principal:hover{background:var(--prater-dark)}
+.btn-secundario,.btn-gris,.btn-editar{background:#edf1f4;color:#344454}
+.btn-verde{background:var(--green-bg);color:var(--green)}
+.btn-azul{background:var(--blue-bg);color:var(--blue)}
+.btn-amarillo{background:var(--yellow-bg);color:#9b6600}
+.btn-morado{background:var(--purple-bg);color:var(--purple)}
+.btn-eliminar{background:var(--red-bg);color:var(--red)}
+.btn-baja{background:#fff0f1;color:#c8202b}
+.btn-reactivar{background:var(--green-bg);color:var(--green)}
+.btn-eliminar-definitivo{background:#a9000b;color:#fff}
+.btn-icono{width:36px;height:36px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.botones,.acciones-form,.acciones-tabla{display:flex;flex-wrap:wrap;gap:8px}
+.acciones-form{margin-top:15px}
+
+/* NOTIFICATIONS */
+.btn-campana{position:relative;width:42px;height:42px;padding:0;background:#fff;border:1px solid var(--border);color:#364655;font-size:18px}
+.contador-notificacion{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;display:flex;align-items:center;justify-content:center;padding:0 5px;background:var(--prater);color:#fff;border:2px solid var(--bg);border-radius:20px;font-size:9px}
+.panel-notificaciones{position:absolute;top:50px;right:0;width:410px;max-height:540px;overflow-y:auto;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 16px 45px rgba(25,35,45,.18);z-index:1000}
+.panel-notificaciones-header{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#fff;border-bottom:1px solid #e5e9ec}
+.notificacion-item{padding:13px 16px;border-bottom:1px solid #edf0f2;cursor:pointer}
+.notificacion-item:hover{background:#f7f9fa}
+.notificacion-titulo{font-size:12px;font-weight:700}
+.notificacion-texto{margin-top:4px;color:#71808e;font-size:11px;line-height:1.5}
+
+/* SUBMENU */
+.submenu{display:flex;flex-wrap:wrap;gap:7px;padding:7px;margin-bottom:20px;background:#fff;border:1px solid var(--border);border-radius:12px;overflow-x:auto}
+.submenu button{background:transparent;color:#627181;white-space:nowrap}
+.submenu button:hover{background:#f3f5f6}
+.submenu button.activo{background:var(--prater-soft);color:var(--prater)}
+
+/* GENERAL HOME */
+.inicio-bienvenida{padding:28px;background:linear-gradient(135deg,#fff,#f7f9fa);border:1px solid var(--border);border-radius:16px;margin-bottom:18px;box-shadow:var(--shadow)}
+.inicio-bienvenida h1{margin:0 0 7px;font-size:30px}
+.inicio-bienvenida p{margin:0;color:var(--muted);font-size:13px}
+.modulo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.modulo-card{padding:19px;border-radius:13px;cursor:pointer;transition:.15s}
+.modulo-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(30,45,60,.1)}
+.modulo-icono{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#f1f3f5;font-size:20px;margin-bottom:12px}
+.modulo-card h3{margin:0 0 7px;font-size:15px}
+
+/* DASHBOARD */
+.resumen{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px;margin-bottom:18px}
+.resumen-card{display:flex;align-items:center;gap:12px;min-height:92px;padding:16px;border-radius:13px}
+.resumen-icono{width:43px;height:43px;display:flex;align-items:center;justify-content:center;flex:none;border-radius:50%;font-size:19px}
+.resumen-titulo{color:var(--muted);font-size:11px;line-height:1.35}
+.resumen-numero{margin-top:3px;font-size:24px;font-weight:800}
+.verde-bg{background:var(--green-bg)}.amarillo-bg{background:var(--yellow-bg)}.rojo-bg{background:var(--red-bg)}.azul-bg{background:var(--blue-bg)}.gris-bg{background:var(--gray-bg)}.morado-bg{background:var(--purple-bg)}
+.dashboard-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;margin-bottom:18px}
+.hero-panel{padding:22px;border-radius:15px}
+.hero-label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.hero-numero{margin-top:5px;font-size:37px;font-weight:800}
+.hero-descripcion{margin-top:5px;color:var(--muted);font-size:12px}
+.barra-fondo{height:12px;margin-top:15px;overflow:hidden;background:#e9edef;border-radius:20px}
+.barra-avance{height:100%;background:#25a45d;border-radius:20px;transition:width .25s}
+.accion-principal{margin-top:14px;padding:15px;background:#f7f9fa;border-left:4px solid var(--blue);border-radius:9px}
+.accion-principal-titulo{font-size:13px;font-weight:800}
+.accion-principal-texto{margin-top:5px;color:#657584;font-size:12px;line-height:1.5}
+
+/* STAGES */
+.panel-etapas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.etapa-resumen{padding:18px;border-radius:13px}
+.etapa-resumen-cabecera{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.etapa-resumen-titulo{font-size:20px;font-weight:800}
+.etapa-estados{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.etapa-mini{padding:10px;background:#f7f8fa;border-radius:9px}
+.etapa-mini-numero{margin-top:4px;font-size:19px;font-weight:800}
+
+/* STATES */
+.badge{display:inline-block;padding:6px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.vigente,.cumplido{background:var(--green-bg);color:var(--green)}
+.proximo,.pendiente{background:var(--yellow-bg);color:var(--yellow)}
+.vencido{background:var(--red-bg);color:var(--red)}
+.neutro,.baja{background:var(--gray-bg);color:var(--gray)}
+.programado{background:var(--blue-bg);color:var(--blue)}
+.punto{display:inline-block;width:11px;height:11px;margin-right:6px;border-radius:50%;vertical-align:-1px}
+.punto-verde{background:#21a35c}.punto-amarillo{background:#e4a000}.punto-rojo{background:#dc303c}.punto-gris{background:#a7b0b8}
+
+/* TABLES */
+.tabla-contenedor{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:11px 10px;background:#f3f5f6;color:#455565;border-bottom:1px solid #dfe3e8;text-align:left;white-space:nowrap}
+td{padding:12px 10px;border-bottom:1px solid #e7eaed;vertical-align:middle}
+tbody tr:hover td{background:#fafbfc}
+.codigo{font-weight:800}
+
+/* MOBILE EQUIPMENT CARDS */
+.lista-equipos-movil{display:none}
+.equipo-movil-card{padding:16px;background:#fff;border:1px solid var(--border);border-radius:13px;margin-bottom:11px;box-shadow:0 3px 12px rgba(30,45,60,.04)}
+.equipo-movil-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.equipo-movil-codigo{color:var(--prater);font-size:13px;font-weight:800}
+.equipo-movil-nombre{font-size:16px;font-weight:800;margin-top:3px}
+.equipo-movil-datos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+.equipo-movil-dato{padding:9px;background:#f7f8fa;border-radius:8px}
+.equipo-movil-label{font-size:9px;color:#7a8793;text-transform:uppercase}
+.equipo-movil-valor{font-size:11px;font-weight:700;margin-top:3px}
+.equipo-movil-accion{margin-top:12px;padding:11px;background:#f7f9fa;border-left:3px solid var(--blue);border-radius:8px;font-size:11px}
+.equipo-movil-botones{display:flex;gap:8px;margin-top:12px}
+.equipo-movil-botones button{flex:1}
+
+/* FORMS */
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.completo{grid-column:1/-1}
+.filtros{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:15px}
+
+/* FICHA */
+.ficha-hero{margin-bottom:18px;padding:22px;background:linear-gradient(135deg,#fff,#fafbfc);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
+.ficha-hero-cabecera{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.ficha-codigo{margin-bottom:5px;color:var(--prater);font-size:15px;font-weight:800}
+.ficha-nombre{margin:0;font-size:27px}
+.ficha-estado-area{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+.estado-global-grande{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:22px;font-size:12px;font-weight:800}
+.ficha-proxima-accion{margin-top:18px;padding:14px 16px;background:#f6f8fa;border-left:4px solid var(--blue);border-radius:9px}
+.ficha-proxima-accion strong{display:block;margin-bottom:4px;font-size:12px}
+.ficha-proxima-accion span{color:#607080;font-size:12px}
+.ficha-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ficha-dato{padding:14px;background:#f7f8fa;border-radius:10px}
+.ficha-label{color:#71808f;font-size:11px}
+.ficha-valor{margin-top:4px;font-size:14px;font-weight:700}
+
+/* IQ OQ PQ */
+.calificacion-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.etapa-card{overflow:hidden;background:#fff;border:1px solid var(--border);border-left:5px solid #a8b1ba;border-radius:12px}
+.etapa-card.estado-vigente{border-left-color:var(--green)}
+.etapa-card.estado-proximo{border-left-color:#e1a000}
+.etapa-card.estado-vencido{border-left-color:var(--red)}
+.etapa-card.estado-neutro{border-left-color:#a8b1ba}
+.etapa-header{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:#f4f6f7}
+.etapa-titulo{font-size:16px;font-weight:800}
+.doc-card{padding:14px;border-top:1px solid #e8ebee}
+.doc-tipo{margin-bottom:5px;color:#6b7885;font-size:11px}
+.doc-codigo{margin-bottom:8px;font-weight:800;word-break:break-word}
+.doc-linea{margin-top:5px;color:#5d6c7b;font-size:11px;line-height:1.45}
+.sin-documento{color:#87939e;font-size:12px;line-height:1.5}
+
+/* PROGRAM */
+.programa-cabecera{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:15px}
+.programa-anio{margin-top:3px;font-size:28px;font-weight:800}
+.programa-resumen{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:15px}
+.programa-mini{padding:13px;background:#f7f8fa;border-radius:9px;font-size:11px;color:#677684}
+.programa-mini strong{display:block;margin-top:4px;color:var(--text);font-size:20px}
+
+/* EXCEL */
+.excel-panel{padding:30px;background:#fafbfc;border:2px dashed #d2d9df;border-radius:14px;text-align:center}
+.excel-resumen{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.excel-resumen-card{padding:14px;background:#fff;border:1px solid var(--border);border-radius:10px}
+.excel-resumen-card strong{display:block;margin-top:4px;font-size:23px}
+.fila-valida td{background:#f5fbf7!important}
+.fila-duplicada td{background:#fff8e7!important}
+.fila-error td{background:#fff1f2!important}
+
+/* DANGER */
+.zona-peligro{background:#fff9f9;border-color:#efb7bc}
+.zona-peligro h2{color:#aa000b}
+.advertencia{padding:13px;background:var(--red-bg);color:#98131d;border-radius:9px;font-size:12px;line-height:1.55}
+
+/* LOGIN */
+.login-overlay{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;padding:15px;background:rgba(0,0,0,.45);z-index:2000}
+.login-card{width:360px;max-width:100%;padding:24px;background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.22)}
+.login-error{display:none;margin-bottom:10px;color:var(--red);font-size:12px}
+
+/* TABLET */
+@media(max-width:1200px){
+.resumen{grid-template-columns:repeat(3,minmax(0,1fr))}
+.programa-resumen{grid-template-columns:repeat(3,minmax(0,1fr))}
+.modulo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:1000px){
+.dashboard-hero{grid-template-columns:1fr}
+.panel-etapas,.calificacion-grid{grid-template-columns:1fr}
+.ficha-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* MOBILE */
+@media(max-width:800px){
+.sidebar{width:min(300px,86vw);transform:translateX(-105%);box-shadow:8px 0 30px rgba(0,0,0,.15)}
+.sidebar.abierto{transform:translateX(0)}
+.sidebar-cerrar{display:block}
+.menu-overlay.visible{display:block}
+.contenido{margin-left:0;padding:10px 13px 25px}
+.logo-box{padding-top:16px}
+.logo-imagen{width:140px}
+.menu-movil-btn{display:inline-flex;align-items:center;justify-content:center}
+.topbar{align-items:flex-start;gap:10px;padding-top:7px}
+.topbar-izquierda{align-items:flex-start}
+.titulo-pagina{font-size:21px;line-height:1.15}
+.subtitulo-pagina{font-size:11px}
+.topbar-acciones{gap:6px}
+.usuario-superior{padding:5px 8px}
+.usuario-superior .usuario-rol{display:none}
+.usuario-icono{width:27px;height:27px}
+.btn-sesion{padding:8px 10px;font-size:11px}
+.btn-campana{width:39px;height:39px}
+.inicio-bienvenida{padding:20px}
+.inicio-bienvenida h1{font-size:24px}
+.modulo-grid,.resumen,.programa-resumen,.form-grid,.form-grid-3,.filtros,.ficha-grid,.excel-resumen{grid-template-columns:1fr}
+.modulo-card{padding:16px}
+.resumen-card{min-height:78px}
+.dashboard-hero,.panel-etapas,.calificacion-grid{grid-template-columns:1fr}
+.ficha-hero{padding:17px}
+.ficha-hero-cabecera{flex-direction:column}
+.ficha-estado-area{justify-content:flex-start}
+.ficha-nombre{font-size:23px}
+.tarjeta{padding:16px}
+.seccion-titulo,.programa-cabecera{align-items:flex-start;flex-direction:column}
+.completo{grid-column:auto}
+.excel-panel{padding:20px 12px}
+.botones>button,.acciones-form>button{min-height:42px}
+.panel-notificaciones{position:fixed;top:65px;left:12px;right:12px;width:auto;max-height:70vh}
+.submenu{flex-wrap:nowrap}
+.tabla-equipos-escritorio{display:none}
+.lista-equipos-movil{display:block}
+}
+
+@media(max-width:480px){
+.contenido{padding:8px 10px 22px}
+.topbar{flex-direction:column}
+.topbar-acciones{width:100%;justify-content:flex-end}
+.titulo-pagina{font-size:20px}
+.resumen-numero{font-size:21px}
+.hero-numero{font-size:31px}
+.equipo-movil-datos{grid-template-columns:1fr}
+.usuario-superior-info{max-width:90px}
+.usuario-nombre{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+
+@media(min-width:801px){
+.tabla-equipos-escritorio{display:block}
+.lista-equipos-movil{display:none}
+}
 </style>
 </head>
+
 <body>
 
-<aside class="sidebar">
-<div class="logo-box" onclick="mostrarInicioGeneral()" title="Volver al inicio">
+<div id="menuOverlay" class="menu-overlay" onclick="cerrarMenuMovil()"></div>
+
+<aside class="sidebar" id="sidebar">
+<button class="sidebar-cerrar" onclick="cerrarMenuMovil()">×</button>
+
+<div class="logo-box" onclick="mostrarInicioGeneral();cerrarMenuMovil()" title="Inicio General SAC-M">
 <img src="logo prater.png" class="logo-imagen" alt="Laboratorios Prater">
 <div class="logo-subtitulo">Sistemas de Apoyo Crítico y Metrología</div>
 <div class="logo-descripcion">LABORATORIOS PRATER</div>
@@ -59,8 +343,10 @@
 <div class="login-card">
 <h2>Acceso administrador</h2>
 <div class="login-error" id="loginError">Usuario o contraseña incorrectos.</div>
-<label>Usuario</label><input id="loginUsuario">
-<label>Contraseña</label><input type="password" id="loginClave" onkeydown="if(event.key==='Enter')iniciarSesion()">
+<label>Usuario</label>
+<input id="loginUsuario" autocomplete="username">
+<label>Contraseña</label>
+<input type="password" id="loginClave" autocomplete="current-password" onkeydown="if(event.key==='Enter')iniciarSesion()">
 <div class="acciones-form">
 <button class="btn-principal" onclick="iniciarSesion()">Ingresar</button>
 <button class="btn-secundario" onclick="cerrarLogin()">Cancelar</button>
@@ -71,10 +357,13 @@
 
 <script>
 const ADMIN_USUARIO="admin",ADMIN_CLAVE="SACM2026",DIAS_PROXIMO=180;
-let esAdmin=sessionStorage.getItem("adminSACM")==="true",moduloActual="inicio",indiceEdicionEquipo=null,indiceEdicionDocumento=null,excelTemporal=null,panelNotificacionesAbierto=false;
+let esAdmin=sessionStorage.getItem("adminSACM")==="true";
+let moduloActual="inicio",indiceEdicionEquipo=null,indiceEdicionDocumento=null,excelTemporal=null,panelNotificacionesAbierto=false;
 
+const $=id=>document.getElementById(id);
 const leerDatos=k=>{try{const d=JSON.parse(localStorage.getItem(k)||"[]");return Array.isArray(d)?d:[]}catch{return[]}};
-let equipos=leerDatos("equipos"),calificaciones=leerDatos("calificaciones"),programasCalificacion=leerDatos("programasCalificacion"),equiposCalibracion=leerDatos("equiposCalibracion"),registrosCalibracion=leerDatos("registrosCalibracion"),documentosSACM=leerDatos("documentosSACM"),registrosDocumentales=leerDatos("registrosDocumentales");
+let equipos=leerDatos("equipos"),calificaciones=leerDatos("calificaciones"),programasCalificacion=leerDatos("programasCalificacion");
+let equiposCalibracion=leerDatos("equiposCalibracion"),registrosCalibracion=leerDatos("registrosCalibracion"),documentosSACM=leerDatos("documentosSACM"),registrosDocumentales=leerDatos("registrosDocumentales");
 
 function guardarTodo(){
 localStorage.setItem("equipos",JSON.stringify(equipos));
@@ -86,19 +375,26 @@ localStorage.setItem("documentosSACM",JSON.stringify(documentosSACM));
 localStorage.setItem("registrosDocumentales",JSON.stringify(registrosDocumentales));
 }
 
-const val=id=>String(document.getElementById(id)?.value||"").trim();
-const sel=id=>document.getElementById(id)?.value||"";
+const val=id=>String($(id)?.value||"").trim();
+const sel=id=>$(id)?.value||"";
 const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 const escJS=s=>String(s??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'");
-function fechaHoy(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+const esVistaMovil=()=>window.matchMedia("(max-width:800px)").matches;
+
+function abrirMenuMovil(){if(!esVistaMovil())return;$("sidebar").classList.add("abierto");$("menuOverlay").classList.add("visible");document.body.classList.add("menu-abierto")}
+function cerrarMenuMovil(){$("sidebar").classList.remove("abierto");$("menuOverlay").classList.remove("visible");document.body.classList.remove("menu-abierto")}
+window.addEventListener("resize",()=>{if(!esVistaMovil())cerrarMenuMovil()});
+
+function fechaHoy(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
 const anioActual=()=>new Date().getFullYear();
 function fechaBonita(f){if(!f)return"—";const p=String(f).split("-");return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:f}
-function sumarAnios(f,n){if(!f)return"";const[a,m,d]=f.split("-").map(Number);let x=new Date(a+n,m-1,d);if(x.getMonth()!==m-1)x=new Date(a+n,m,0);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`}
+function sumarAnios(f,n){if(!f)return"";const[a,m,d]=f.split("-").map(Number);let x=new Date(a+n,m-1,d);if(x.getMonth()!==m-1)x=new Date(a+n,m,0);return`${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`}
 function normalizarFechaExcel(v){
 if(v===null||v===undefined||v==="")return"";
-if(v instanceof Date)return `${v.getFullYear()}-${String(v.getMonth()+1).padStart(2,"0")}-${String(v.getDate()).padStart(2,"0")}`;
+if(v instanceof Date)return`${v.getFullYear()}-${String(v.getMonth()+1).padStart(2,"0")}-${String(v.getDate()).padStart(2,"0")}`;
 if(typeof v==="number"){const x=XLSX.SSF.parse_date_code(v);return x?`${x.y}-${String(x.m).padStart(2,"0")}-${String(x.d).padStart(2,"0")}`:""}
-const t=String(v).trim();if(/^\d{4}-\d{2}-\d{2}$/.test(t))return t;const m=t.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);return m?`${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`:"";
+const t=String(v).trim();if(/^\d{4}-\d{2}-\d{2}$/.test(t))return t;
+const m=t.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);return m?`${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`:"";
 }
 function col(f,n){for(const x of n)if(f[x]!==undefined&&f[x]!==null&&String(f[x]).trim()!=="")return f[x];return""}
 const MESES=["","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -108,25 +404,50 @@ const obtenerAnioFecha=f=>f?Number(String(f).split("-")[0]||0):0;
 
 function migrar(){
 let c=false;
-equipos.forEach(e=>{["marca","modelo","serie","fechaBaja","motivoBaja"].forEach(k=>{if(!(k in e)){e[k]="";c=true}});if(!("estado"in e)){e.estado="Operativo";c=true}if(!("aplicaPQ"in e)){e.aplicaPQ=true;c=true}if(!Array.isArray(e.historialEstado)){e.historialEstado=[];c=true}});
-calificaciones.forEach(r=>{if(!r.fecha&&r.emision){r.fecha=r.emision;c=true}if(!("responsable"in r)){r.responsable="";c=true}if(r.fecha&&!r.vencimiento){r.vencimiento=sumarAnios(r.fecha,5);c=true}});
+equipos.forEach(e=>{
+["marca","modelo","serie","fechaBaja","motivoBaja"].forEach(k=>{if(!(k in e)){e[k]="";c=true}});
+if(!("estado"in e)){e.estado="Operativo";c=true}
+if(!("aplicaPQ"in e)){e.aplicaPQ=true;c=true}
+if(!Array.isArray(e.historialEstado)){e.historialEstado=[];c=true}
+});
+calificaciones.forEach(r=>{
+if(!r.fecha&&r.emision){r.fecha=r.emision;c=true}
+if(!("responsable"in r)){r.responsable="";c=true}
+if(r.fecha&&!r.vencimiento){r.vencimiento=sumarAnios(r.fecha,5);c=true}
+});
 if(c)guardarTodo();
 }
 
-function actualizarPermisosUI(){document.querySelectorAll(".solo-admin").forEach(x=>x.style.display=esAdmin?"flex":"none")}
+function actualizarPermisosUI(){$$(".solo-admin")}
+function $$(selector){return document.querySelectorAll(selector)}
+function actualizarPermisosUI(){$$(".solo-admin").forEach(x=>x.style.display=esAdmin?"flex":"none")}
+
 function estadoFecha(f){
 if(!f)return{texto:"Sin registro",clase:"neutro"};
-const h=new Date();h.setHours(0,0,0,0);const v=new Date(f+"T00:00:00");if(isNaN(v))return{texto:"Fecha inválida",clase:"neutro"};
-const d=Math.ceil((v-h)/86400000);return d<0?{texto:"Vencido",clase:"vencido"}:d<=DIAS_PROXIMO?{texto:"Próximo",clase:"proximo"}:{texto:"Vigente",clase:"vigente"};
+const h=new Date();h.setHours(0,0,0,0);const v=new Date(f+"T00:00:00");
+if(Number.isNaN(v.getTime()))return{texto:"Fecha inválida",clase:"neutro"};
+const d=Math.ceil((v-h)/86400000);
+return d<0?{texto:"Vencido",clase:"vencido"}:d<=DIAS_PROXIMO?{texto:"Próximo",clase:"proximo"}:{texto:"Vigente",clase:"vigente"};
 }
-function puntoEstado(e){const p=e.clase==="vigente"?"punto-verde":e.clase==="proximo"?"punto-amarillo":e.clase==="vencido"?"punto-rojo":"punto-gris";return `<span class="punto ${p}"></span><span class="badge ${e.clase}">${e.texto}</span>`}
+function puntoEstado(e){
+const p=e.clase==="vigente"?"punto-verde":e.clase==="proximo"?"punto-amarillo":e.clase==="vencido"?"punto-rojo":"punto-gris";
+return`<span class="punto ${p}"></span><span class="badge ${e.clase}">${e.texto}</span>`;
+}
 const fechaDocumento=r=>r?.fecha||r?.emision||"";
 function ultimoDocumento(c,t,d){return calificaciones.filter(r=>r.equipoCodigo===c&&r.tipo===t&&r.documento===d).sort((a,b)=>fechaDocumento(b).localeCompare(fechaDocumento(a)))[0]||null}
-function docsReq(e){const d=[["IQ","Protocolo"],["IQ","Reporte"],["OQ","Protocolo"],["OQ","Reporte"]];if(e.aplicaPQ!==false)d.push(["PQ","Protocolo"],["PQ","Reporte"]);return d.map(x=>({tipo:x[0],documento:x[1]}))}
+function docsReq(e){
+const d=[["IQ","Protocolo"],["IQ","Reporte"],["OQ","Protocolo"],["OQ","Reporte"]];
+if(e.aplicaPQ!==false)d.push(["PQ","Protocolo"],["PQ","Reporte"]);
+return d.map(x=>({tipo:x[0],documento:x[1]}));
+}
 function estadoEtapa(e,t){
 if(t==="PQ"&&e.aplicaPQ===false)return{texto:"No aplica",clase:"neutro"};
-const p=ultimoDocumento(e.codigo,t,"Protocolo"),r=ultimoDocumento(e.codigo,t,"Reporte");if(!p||!r)return{texto:"Incompleto",clase:"vencido"};
-const ep=estadoFecha(p.vencimiento),er=estadoFecha(r.vencimiento);if(ep.clase==="vencido"||er.clase==="vencido")return{texto:"Vencido",clase:"vencido"};if(ep.clase==="proximo"||er.clase==="proximo")return{texto:"Próximo",clase:"proximo"};return{texto:"Vigente",clase:"vigente"};
+const p=ultimoDocumento(e.codigo,t,"Protocolo"),r=ultimoDocumento(e.codigo,t,"Reporte");
+if(!p||!r)return{texto:"Incompleto",clase:"vencido"};
+const ep=estadoFecha(p.vencimiento),er=estadoFecha(r.vencimiento);
+if(ep.clase==="vencido"||er.clase==="vencido")return{texto:"Vencido",clase:"vencido"};
+if(ep.clase==="proximo"||er.clase==="proximo")return{texto:"Próximo",clase:"proximo"};
+return{texto:"Vigente",clase:"vigente"};
 }
 function estadoGlobalEquipo(e){
 if(e.estado==="De baja")return{texto:"De baja",clase:"neutro",icono:"⊘"};
@@ -142,7 +463,10 @@ const documentoReferenciaPrograma=e=>e.aplicaPQ!==false?ultimoDocumento(e.codigo
 function proximaAccionEquipo(e){
 if(e.estado==="De baja")return{texto:"Equipo fuera del programa activo",detalle:"La documentación permanece disponible como historial.",prioridad:99};
 const etapas=["IQ","OQ"];if(e.aplicaPQ!==false)etapas.push("PQ");
-for(const t of etapas){const p=ultimoDocumento(e.codigo,t,"Protocolo");if(!p)return{texto:`Completar Protocolo ${t}`,detalle:"No existe protocolo registrado para esta etapa.",prioridad:1};const r=ultimoDocumento(e.codigo,t,"Reporte");if(!r)return{texto:`Completar Reporte ${t}`,detalle:"Existe protocolo, pero no reporte registrado.",prioridad:1}}
+for(const t of etapas){
+const p=ultimoDocumento(e.codigo,t,"Protocolo");if(!p)return{texto:`Completar Protocolo ${t}`,detalle:"No existe protocolo registrado para esta etapa.",prioridad:1};
+const r=ultimoDocumento(e.codigo,t,"Reporte");if(!r)return{texto:`Completar Reporte ${t}`,detalle:"Existe protocolo, pero no reporte registrado.",prioridad:1};
+}
 const venc=docsReq(e).map(x=>({...x,registro:ultimoDocumento(e.codigo,x.tipo,x.documento)})).filter(x=>x.registro&&estadoFecha(x.registro.vencimiento).clase==="vencido").sort((a,b)=>a.registro.vencimiento.localeCompare(b.registro.vencimiento));
 if(venc.length){const x=venc[0];return{texto:`Regularizar ${x.tipo} ${x.documento}`,detalle:`${x.registro.codigo} venció el ${fechaBonita(x.registro.vencimiento)}.`,prioridad:2}}
 const prox=docsReq(e).map(x=>({...x,registro:ultimoDocumento(e.codigo,x.tipo,x.documento)})).filter(x=>x.registro&&estadoFecha(x.registro.vencimiento).clase==="proximo").sort((a,b)=>a.registro.vencimiento.localeCompare(b.registro.vencimiento));
@@ -150,17 +474,44 @@ if(prox.length){const x=prox[0];return{texto:`Preparar recalificación ${x.tipo}
 return{texto:"Sin acciones pendientes",detalle:"La documentación requerida se encuentra vigente.",prioridad:50};
 }
 
-function abrirLogin(){loginModal.style.display="block";loginUsuario.value="";loginClave.value="";loginError.style.display="none"}
-function cerrarLogin(){loginModal.style.display="none"}
+/* LOGIN */
+function abrirLogin(){$("loginModal").style.display="block";$("loginUsuario").value="";$("loginClave").value="";$("loginError").style.display="none"}
+function cerrarLogin(){$("loginModal").style.display="none"}
 function iniciarSesion(){
-if(val("loginUsuario")===ADMIN_USUARIO&&val("loginClave")===ADMIN_CLAVE){esAdmin=true;sessionStorage.setItem("adminSACM","true");cerrarLogin();actualizarPermisosUI();mostrarInicioGeneral()}else loginError.style.display="block";
+if(val("loginUsuario")===ADMIN_USUARIO&&val("loginClave")===ADMIN_CLAVE){
+esAdmin=true;sessionStorage.setItem("adminSACM","true");cerrarLogin();actualizarPermisosUI();mostrarInicioGeneral();
+}else $("loginError").style.display="block";
 }
-function cerrarSesion(){if(!confirm("¿Cerrar sesión de administrador?"))return;esAdmin=false;sessionStorage.removeItem("adminSACM");actualizarPermisosUI();mostrarInicioGeneral()}
-function renderUsuarioSuperior(){return `<div class="usuario-superior"><div class="usuario-icono">👤</div><div><div class="usuario-nombre">${esAdmin?"Administrador":"Modo consulta"}</div><div class="usuario-rol">${esAdmin?"SAC-M · Acceso completo":"Solo lectura"}</div></div></div><button class="btn-sesion" onclick="${esAdmin?"cerrarSesion()":"abrirLogin()"}">${esAdmin?"Cerrar sesión":"Ingresar"}</button>`}
+function cerrarSesion(){
+if(!confirm("¿Cerrar sesión de administrador?"))return;
+esAdmin=false;sessionStorage.removeItem("adminSACM");actualizarPermisosUI();mostrarInicioGeneral();
+}
+function renderUsuarioSuperior(){
+return`<div class="usuario-superior"><div class="usuario-icono">👤</div><div class="usuario-superior-info"><div class="usuario-nombre">${esAdmin?"Administrador":"Modo consulta"}</div><div class="usuario-rol">${esAdmin?"SAC-M · Acceso completo":"Solo lectura"}</div></div></div><button class="btn-sesion" onclick="${esAdmin?"cerrarSesion()":"abrirLogin()"}">${esAdmin?"Cerrar sesión":"Ingresar"}</button>`;
+}
 
-function marcarMenuActivo(m){document.querySelectorAll("#menuPrincipal li").forEach(x=>x.classList.remove("activo"));if(m){const x=document.querySelector(`[data-modulo="${m}"]`);if(x)x.classList.add("activo")}}
+/* TOPBAR */
+function cabecera(titulo,subtitulo,extra="",programa=false,volver=""){
+const n=generarNotificaciones().length;
+return`<div class="topbar">
+<div class="topbar-izquierda">
+<button class="menu-movil-btn" onclick="abrirMenuMovil()">☰</button>
+<div class="titulo-bloque">${volver}${titulo?`<h1 class="titulo-pagina">${titulo}</h1>`:""}${subtitulo?`<div class="subtitulo-pagina">${subtitulo}</div>`:""}</div>
+</div>
+<div class="topbar-acciones">
+${esAdmin?extra:""}
+${esAdmin&&programa?`<button class="btn-morado" onclick="generarProgramaProximoAnio(true)">📅 Programa ${anioActual()+1}</button>`:""}
+${esAdmin?`<button class="btn-campana" title="Notificaciones" onclick="toggleNotificaciones(event)">🔔${n?`<span class="contador-notificacion">${n>99?"99+":n}</span>`:""}</button>`:""}
+${renderUsuarioSuperior()}
+<div id="panelNotificaciones"></div>
+</div>
+</div>`;
+}
+
+/* NAV */
+function marcarMenuActivo(m){$$("#menuPrincipal li").forEach(x=>x.classList.remove("activo"));if(m){const x=document.querySelector(`[data-modulo="${m}"]`);if(x)x.classList.add("activo")}}
 function abrirModulo(m){
-panelNotificacionesAbierto=false;
+cerrarMenuMovil();panelNotificacionesAbierto=false;
 if(!esAdmin&&["documentacion","kpi"].includes(m)){mostrarInicioGeneral();return}
 moduloActual=m;marcarMenuActivo(m);
 if(m==="calificacion"){esAdmin?mostrarInicioCalificacion():mostrarEquiposCalificacion();return}
@@ -185,197 +536,425 @@ if(esAdmin)m.push(["documentacion","▤","Documentación SAC-M","Procedimientos,
 return m;
 }
 function mostrarInicioGeneral(){
-moduloActual="inicio";marcarMenuActivo(null);actualizarCumplimientoProgramas();
+cerrarMenuMovil();moduloActual="inicio";marcarMenuActivo(null);actualizarCumplimientoProgramas();
 const activos=equipos.filter(e=>e.estado!=="De baja"),alertas=generarNotificaciones();
-contenido.innerHTML=`<div class="topbar"><div><h1 class="titulo-pagina">Gestión SAC-M</h1><div class="subtitulo-pagina">Sistemas de Apoyo Crítico y Metrología</div></div>${renderAccionesTopbar()}</div>
-<div class="inicio-bienvenida"><h1>Bienvenido a Gestión SAC-M</h1><p>${esAdmin?"Panel general para gestión, planificación y control documental.":"Consulta de equipos, sistemas y documentación autorizada."}</p></div>
+$("contenido").innerHTML=
+cabecera("Gestión SAC-M","Sistemas de Apoyo Crítico y Metrología")+
+`<div class="inicio-bienvenida"><h1>Bienvenido a Gestión SAC-M</h1><p>${esAdmin?"Panel general para gestión, planificación y control documental.":"Consulta de equipos, sistemas y documentación autorizada."}</p></div>
 ${esAdmin?`<div class="resumen">${tarjetaResumen("⚙","Equipos calificados",equipos.length,"azul-bg")}${tarjetaResumen("✓","Equipos activos",activos.length,"verde-bg")}${tarjetaResumen("🔔","Alertas calificación",alertas.length,"amarillo-bg")}${tarjetaResumen("📅","Programa próximo año",obtenerPrograma(anioActual()+1)?"Generado":"Pendiente","morado-bg")}</div>`:""}
 <div class="tarjeta"><div class="seccion-titulo"><div><h2>Módulos SAC-M</h2><div class="subdato">Selecciona un módulo para ingresar.</div></div></div><div class="modulo-grid">${modulosInicio().map(m=>`<div class="modulo-card" onclick="abrirModulo('${m[0]}')"><div class="modulo-icono">${m[1]}</div><h3>${m[2]}</h3><div class="subdato">${m[3]}</div></div>`).join("")}</div></div>
 ${esAdmin&&alertas.length?`<div class="tarjeta"><h2>Necesita atención</h2>${alertas.slice(0,8).map(a=>`<div class="notificacion-item" onclick="mostrarFichaEquipo('${escJS(a.equipoCodigo)}')"><div class="notificacion-titulo">${a.icono} ${esc(a.titulo)}</div><div class="notificacion-texto">${esc(a.texto)}</div></div>`).join("")}</div>`:""}`;
 }
 function mostrarModuloBase(t,s,i){
-contenido.innerHTML=`<div class="topbar"><div><h1 class="titulo-pagina">${i} ${t}</h1><div class="subtitulo-pagina">${s}</div></div>${renderAccionesTopbar()}</div><div class="tarjeta"><h2>Módulo en preparación</h2><p>${esAdmin?"Este módulo se desarrollará después de finalizar Calificación de Equipos.":"Puedes ingresar a este módulo. Sus vistas de consulta se definirán cuando completemos su desarrollo."}</p></div>`;
+$("contenido").innerHTML=cabecera(`${i} ${t}`,s)+`<div class="tarjeta"><h2>Módulo en preparación</h2><p>${esAdmin?"Este módulo se desarrollará después de finalizar Calificación de Equipos.":"Este módulo está disponible para consulta. Sus vistas específicas se definirán cuando completemos su desarrollo."}</p></div>`;
 }
 
+/* NOTIFICATIONS */
 function generarNotificaciones(){
 const a=[];
-equipos.filter(e=>e.estado!=="De baja").forEach(e=>docsReq(e).forEach(x=>{const r=ultimoDocumento(e.codigo,x.tipo,x.documento);if(!r)return;const s=estadoFecha(r.vencimiento);if(s.clase==="vencido"||s.clase==="proximo")a.push({equipoCodigo:e.codigo,prioridad:s.clase==="vencido"?1:2,icono:s.clase==="vencido"?"🔴":"🟡",titulo:`${e.codigo} · ${x.tipo} ${x.documento}`,texto:`${r.codigo} ${s.clase==="vencido"?"venció":"vence"} el ${fechaBonita(r.vencimiento)}.`})}));
+equipos.filter(e=>e.estado!=="De baja").forEach(e=>docsReq(e).forEach(x=>{
+const r=ultimoDocumento(e.codigo,x.tipo,x.documento);if(!r)return;const s=estadoFecha(r.vencimiento);
+if(["vencido","proximo"].includes(s.clase))a.push({equipoCodigo:e.codigo,prioridad:s.clase==="vencido"?1:2,icono:s.clase==="vencido"?"🔴":"🟡",titulo:`${e.codigo} · ${x.tipo} ${x.documento}`,texto:`${r.codigo} ${s.clase==="vencido"?"venció":"vence"} el ${fechaBonita(r.vencimiento)}.`});
+}));
 return a.sort((x,y)=>x.prioridad-y.prioridad);
 }
-function renderAccionesTopbar(extra="",programa=false){
-const n=generarNotificaciones().length;
-return `<div class="topbar-acciones">${esAdmin?extra:""}${esAdmin&&programa?`<button class="btn-morado" onclick="generarProgramaProximoAnio(true)">📅 Programa ${anioActual()+1}</button>`:""}${esAdmin?`<button class="btn-campana" onclick="toggleNotificaciones(event)">🔔${n?`<span class="contador-notificacion">${n>99?"99+":n}</span>`:""}</button>`:""}${renderUsuarioSuperior()}<div id="panelNotificaciones"></div></div>`;
-}
 function toggleNotificaciones(ev){
-if(!esAdmin)return;ev?.stopPropagation();panelNotificacionesAbierto=!panelNotificacionesAbierto;const p=document.getElementById("panelNotificaciones");if(!p)return;if(!panelNotificacionesAbierto){p.innerHTML="";return}const l=generarNotificaciones();p.innerHTML=`<div class="panel-notificaciones" onclick="event.stopPropagation()"><div class="panel-notificaciones-header"><strong>Notificaciones</strong><span class="badge neutro">${l.length}</span></div>${l.length?l.map(x=>`<div class="notificacion-item" onclick="mostrarFichaEquipo('${escJS(x.equipoCodigo)}')"><div class="notificacion-titulo">${x.icono} ${esc(x.titulo)}</div><div class="notificacion-texto">${esc(x.texto)}</div></div>`).join(""):`<div class="notificacion-item">Sin alertas documentales.</div>`}</div>`;
+if(!esAdmin)return;ev?.stopPropagation();panelNotificacionesAbierto=!panelNotificacionesAbierto;const p=$("panelNotificaciones");if(!p)return;
+if(!panelNotificacionesAbierto){p.innerHTML="";return}
+const l=generarNotificaciones();
+p.innerHTML=`<div class="panel-notificaciones" onclick="event.stopPropagation()"><div class="panel-notificaciones-header"><strong>Notificaciones</strong><span class="badge neutro">${l.length}</span></div>${l.length?l.map(x=>`<div class="notificacion-item" onclick="mostrarFichaEquipo('${escJS(x.equipoCodigo)}')"><div class="notificacion-titulo">${x.icono} ${esc(x.titulo)}</div><div class="notificacion-texto">${esc(x.texto)}</div></div>`).join(""):`<div class="notificacion-item"><div class="notificacion-texto">No existen alertas documentales.</div></div>`}</div>`;
 }
-document.addEventListener("click",()=>{if(panelNotificacionesAbierto){panelNotificacionesAbierto=false;const p=document.getElementById("panelNotificaciones");if(p)p.innerHTML=""}});
+document.addEventListener("click",()=>{if(panelNotificacionesAbierto){panelNotificacionesAbierto=false;const p=$("panelNotificaciones");if(p)p.innerHTML=""}});
 
+/* QUALIFICATION NAV */
 function submenuCalificacion(a){
-if(!esAdmin)return `<div class="submenu"><button class="activo" onclick="mostrarEquiposCalificacion()">⚙ Equipos</button></div>`;
-return `<div class="submenu"><button class="${a==="inicio"?"activo":""}" onclick="mostrarInicioCalificacion()">⌂ Inicio</button><button class="${a==="equipos"?"activo":""}" onclick="mostrarEquiposCalificacion()">⚙ Equipos</button><button class="${a==="programa"?"activo":""}" onclick="mostrarProgramaCalificacion()">📅 Programa anual</button><button class="${a==="documentos"?"activo":""}" onclick="mostrarGestionDocumentos()">▣ Documentación</button><button class="${a==="excel"?"activo":""}" onclick="mostrarExcelCalificacion()">⇩ Carga Excel</button></div>`;
+if(!esAdmin)return`<div class="submenu"><button class="activo" onclick="mostrarEquiposCalificacion()">⚙ Equipos</button></div>`;
+return`<div class="submenu"><button class="${a==="inicio"?"activo":""}" onclick="mostrarInicioCalificacion()">⌂ Inicio</button><button class="${a==="equipos"?"activo":""}" onclick="mostrarEquiposCalificacion()">⚙ Equipos</button><button class="${a==="programa"?"activo":""}" onclick="mostrarProgramaCalificacion()">📅 Programa anual</button><button class="${a==="documentos"?"activo":""}" onclick="mostrarGestionDocumentos()">▣ Documentación</button><button class="${a==="excel"?"activo":""}" onclick="mostrarExcelCalificacion()">⇩ Carga Excel</button></div>`;
 }
-function tarjetaResumen(i,t,v,c){return `<div class="resumen-card"><div class="resumen-icono ${c}">${i}</div><div><div class="resumen-titulo">${t}</div><div class="resumen-numero">${v}</div></div></div>`}
+function tarjetaResumen(i,t,v,c){return`<div class="resumen-card"><div class="resumen-icono ${c}">${i}</div><div><div class="resumen-titulo">${t}</div><div class="resumen-numero">${v}</div></div></div>`}
 function resumenEtapa(t){
 const l=equipos.filter(e=>e.estado!=="De baja"&&!(t==="PQ"&&e.aplicaPQ===false)),r={total:l.length,vigente:0,proximo:0,vencido:0};
 l.forEach(e=>{const s=estadoEtapa(e,t);if(s.clase==="vigente")r.vigente++;else if(s.clase==="proximo")r.proximo++;else r.vencido++});return r;
 }
-function tarjetaResumenEtapa(t){const d=resumenEtapa(t);return `<div class="etapa-resumen"><div class="etapa-resumen-cabecera"><div class="etapa-resumen-titulo">${t}</div><span class="badge neutro">${d.total} equipos</span></div><div class="etapa-estados"><div class="etapa-mini"><div class="subdato">Vigentes</div><div class="etapa-mini-numero">${d.vigente}</div></div><div class="etapa-mini"><div class="subdato">Próximos</div><div class="etapa-mini-numero">${d.proximo}</div></div><div class="etapa-mini"><div class="subdato">Vencidos / incompletos</div><div class="etapa-mini-numero">${d.vencido}</div></div></div></div>`}
+function tarjetaResumenEtapa(t){
+const d=resumenEtapa(t);
+return`<div class="etapa-resumen"><div class="etapa-resumen-cabecera"><div class="etapa-resumen-titulo">${t}</div><span class="badge neutro">${d.total} equipos</span></div><div class="etapa-estados"><div class="etapa-mini"><div class="subdato">Vigentes</div><div class="etapa-mini-numero">${d.vigente}</div></div><div class="etapa-mini"><div class="subdato">Próximos</div><div class="etapa-mini-numero">${d.proximo}</div></div><div class="etapa-mini"><div class="subdato">Vencidos / incompletos</div><div class="etapa-mini-numero">${d.vencido}</div></div></div></div>`;
+}
 
+/* QUALIFICATION DASHBOARD */
 function mostrarInicioCalificacion(){
 if(!esAdmin){mostrarEquiposCalificacion();return}
 moduloActual="calificacion";marcarMenuActivo("calificacion");actualizarCumplimientoProgramas();
-const a=equipos.filter(e=>e.estado!=="De baja"),b=equipos.filter(e=>e.estado==="De baja"),v=a.filter(e=>estadoGlobalEquipo(e).clase==="vigente"),p=a.filter(e=>estadoGlobalEquipo(e).clase==="proximo"),x=a.filter(e=>estadoGlobalEquipo(e).clase==="vencido"),pct=a.length?Math.round((v.length+p.length)/a.length*100):0;
+const a=equipos.filter(e=>e.estado!=="De baja"),b=equipos.filter(e=>e.estado==="De baja");
+const v=a.filter(e=>estadoGlobalEquipo(e).clase==="vigente"),p=a.filter(e=>estadoGlobalEquipo(e).clase==="proximo"),x=a.filter(e=>estadoGlobalEquipo(e).clase==="vencido");
+const pct=a.length?Math.round((v.length+p.length)/a.length*100):0;
 const acciones=a.map(e=>({e,a:proximaAccionEquipo(e)})).filter(x=>x.a.prioridad<50).sort((x,y)=>x.a.prioridad-y.a.prioridad),prim=acciones[0];
-contenido.innerHTML=`<div class="topbar"><div><h1 class="titulo-pagina">Calificación de Equipos</h1><div class="subtitulo-pagina">Gestión documental, planificación anual y seguimiento IQ / OQ / PQ</div></div>${renderAccionesTopbar("",true)}</div>${submenuCalificacion("inicio")}
-<div class="resumen">${tarjetaResumen("⚙","Equipos activos",a.length,"azul-bg")}${tarjetaResumen("✓","Calificación vigente",v.length,"verde-bg")}${tarjetaResumen("◷","Próximos",p.length,"amarillo-bg")}${tarjetaResumen("!","Vencidos / incompletos",x.length,"rojo-bg")}${tarjetaResumen("⊘","De baja",b.length,"gris-bg")}</div>
+
+$("contenido").innerHTML=
+cabecera("Calificación de Equipos","Gestión documental, planificación anual y seguimiento IQ / OQ / PQ","",true)+
+submenuCalificacion("inicio")+
+`<div class="resumen">${tarjetaResumen("⚙","Equipos activos",a.length,"azul-bg")}${tarjetaResumen("✓","Calificación vigente",v.length,"verde-bg")}${tarjetaResumen("◷","Próximos",p.length,"amarillo-bg")}${tarjetaResumen("!","Vencidos / incompletos",x.length,"rojo-bg")}${tarjetaResumen("⊘","De baja",b.length,"gris-bg")}</div>
 <div class="dashboard-hero"><div class="hero-panel"><div class="hero-label">Cumplimiento global de calificación</div><div class="hero-numero">${pct}%</div><div class="hero-descripcion">${v.length+p.length} de ${a.length} equipos activos cuentan con sus etapas requeridas vigentes.</div><div class="barra-fondo"><div class="barra-avance" style="width:${pct}%"></div></div></div><div class="hero-panel"><div class="hero-label">Próxima acción prioritaria</div>${prim?`<div class="accion-principal"><div class="accion-principal-titulo">${esc(prim.e.codigo)} · ${esc(prim.e.nombre)}</div><div class="accion-principal-texto"><strong>${esc(prim.a.texto)}</strong><br>${esc(prim.a.detalle)}</div><button class="btn-azul" style="margin-top:10px" onclick="mostrarFichaEquipo('${escJS(prim.e.codigo)}')">Ver equipo</button></div>`:`<div class="accion-principal"><strong>Sin acciones críticas pendientes</strong></div>`}</div></div>
-<div class="panel-etapas">${tarjetaResumenEtapa("IQ")}${tarjetaResumenEtapa("OQ")}${tarjetaResumenEtapa("PQ")}</div>${renderProgramaInicio()}
+<div class="panel-etapas">${tarjetaResumenEtapa("IQ")}${tarjetaResumenEtapa("OQ")}${tarjetaResumenEtapa("PQ")}</div>
+${renderProgramaInicio()}
 <div class="tarjeta"><h2>Equipos que requieren atención</h2>${tablaEquiposAtencion()}</div>
-<div class="tarjeta"><h2>Próximas recalificaciones</h2><div class="subdato" style="margin-bottom:12px">RCD como referencia si aplica PQ; RCO cuando no aplica.</div>${tablaProximasCalificaciones()}</div>
+<div class="tarjeta"><h2>Próximas recalificaciones</h2><div class="subdato" style="margin-bottom:12px">RCD como referencia cuando aplica PQ y RCO cuando no aplica.</div>${tablaProximasCalificaciones()}</div>
 <div class="tarjeta"><h2>Actividad documental reciente</h2>${tablaActividadReciente()}</div>`;
 }
 
 function tablaEquiposAtencion(){
 const l=equipos.filter(e=>e.estado!=="De baja").map(e=>({e,s:estadoGlobalEquipo(e),a:proximaAccionEquipo(e)})).filter(x=>x.s.clase!=="vigente"||x.a.prioridad<50).slice(0,12);
-if(!l.length)return `<div class="subdato">No existen equipos que requieran atención inmediata.</div>`;
-return `<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Área</th><th>Estado global</th><th>Próxima acción</th><th></th></tr></thead><tbody>${l.map(x=>`<tr><td><strong>${esc(x.e.codigo)}</strong><div class="subdato">${esc(x.e.nombre)}</div></td><td>${esc(x.e.area)}</td><td><span class="badge ${x.s.clase}">${x.s.icono} ${x.s.texto}</span></td><td><strong>${esc(x.a.texto)}</strong><div class="subdato">${esc(x.a.detalle)}</div></td><td><button class="btn-icono btn-azul" onclick="mostrarFichaEquipo('${escJS(x.e.codigo)}')">👁</button></td></tr>`).join("")}</tbody></table></div>`;
+if(!l.length)return`<div class="subdato">No existen equipos que requieran atención inmediata.</div>`;
+return`<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Área</th><th>Estado global</th><th>Próxima acción</th><th></th></tr></thead><tbody>${l.map(x=>`<tr><td><strong>${esc(x.e.codigo)}</strong><div class="subdato">${esc(x.e.nombre)}</div></td><td>${esc(x.e.area)}</td><td><span class="badge ${x.s.clase}">${x.s.icono} ${x.s.texto}</span></td><td><strong>${esc(x.a.texto)}</strong><div class="subdato">${esc(x.a.detalle)}</div></td><td><button class="btn-icono btn-azul" onclick="mostrarFichaEquipo('${escJS(x.e.codigo)}')">👁</button></td></tr>`).join("")}</tbody></table></div>`;
 }
 function tablaProximasCalificaciones(){
 const l=equipos.filter(e=>e.estado!=="De baja").map(e=>({e,r:documentoReferenciaPrograma(e)})).filter(x=>x.r).sort((a,b)=>a.r.vencimiento.localeCompare(b.r.vencimiento)).slice(0,10);
-if(!l.length)return `<div class="subdato">No existen RCD/RCO de referencia registrados.</div>`;
-return `<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Área</th><th>Referencia</th><th>Mes límite</th><th>Año</th><th>Estado</th><th></th></tr></thead><tbody>${l.map(x=>`<tr><td><strong>${esc(x.e.codigo)}</strong><div class="subdato">${esc(x.e.nombre)}</div></td><td>${esc(x.e.area)}</td><td class="codigo">${esc(x.r.codigo)}</td><td>${obtenerMes(x.r.vencimiento)}</td><td>${obtenerAnioFecha(x.r.vencimiento)}</td><td>${puntoEstado(estadoFecha(x.r.vencimiento))}</td><td><button class="btn-icono btn-azul" onclick="mostrarFichaEquipo('${escJS(x.e.codigo)}')">👁</button></td></tr>`).join("")}</tbody></table></div>`;
+if(!l.length)return`<div class="subdato">No existen documentos RCD/RCO de referencia registrados.</div>`;
+return`<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Área</th><th>Referencia</th><th>Mes límite</th><th>Año</th><th>Estado</th><th></th></tr></thead><tbody>${l.map(x=>`<tr><td><strong>${esc(x.e.codigo)}</strong><div class="subdato">${esc(x.e.nombre)}</div></td><td>${esc(x.e.area)}</td><td class="codigo">${esc(x.r.codigo)}</td><td>${obtenerMes(x.r.vencimiento)}</td><td>${obtenerAnioFecha(x.r.vencimiento)}</td><td>${puntoEstado(estadoFecha(x.r.vencimiento))}</td><td><button class="btn-icono btn-azul" onclick="mostrarFichaEquipo('${escJS(x.e.codigo)}')">👁</button></td></tr>`).join("")}</tbody></table></div>`;
 }
 function tablaActividadReciente(){
-const l=[...calificaciones].sort((a,b)=>fechaDocumento(b).localeCompare(fechaDocumento(a))).slice(0,10);if(!l.length)return `<div class="subdato">Sin documentos registrados.</div>`;
-return `<div class="tabla-contenedor"><table><thead><tr><th>Emisión</th><th>Equipo</th><th>Documento</th><th>Código</th><th>Elaboró / Ejecutó</th></tr></thead><tbody>${l.map(x=>`<tr><td>${fechaBonita(fechaDocumento(x))}</td><td>${esc(x.equipoCodigo)}</td><td>${x.tipo} · ${x.documento}</td><td class="codigo">${esc(x.codigo)}</td><td>${esc(x.responsable||"—")}</td></tr>`).join("")}</tbody></table></div>`;
+const l=[...calificaciones].sort((a,b)=>fechaDocumento(b).localeCompare(fechaDocumento(a))).slice(0,10);
+if(!l.length)return`<div class="subdato">No existen documentos registrados.</div>`;
+return`<div class="tabla-contenedor"><table><thead><tr><th>Emisión</th><th>Equipo</th><th>Documento</th><th>Código</th><th>Elaboró / Ejecutó</th></tr></thead><tbody>${l.map(x=>`<tr><td>${fechaBonita(fechaDocumento(x))}</td><td>${esc(x.equipoCodigo)}</td><td>${x.tipo} · ${x.documento}</td><td class="codigo">${esc(x.codigo)}</td><td>${esc(x.responsable||"—")}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
+/* EQUIPMENT */
 function mostrarEquiposCalificacion(){
 moduloActual="calificacion";marcarMenuActivo("calificacion");indiceEdicionEquipo=null;
-contenido.innerHTML=`<div class="topbar"><div><h1 class="titulo-pagina">Equipos</h1><div class="subtitulo-pagina">${esAdmin?"Registro maestro y estado global de calificación":"Consulta de equipos calificados"}</div></div>${renderAccionesTopbar(esAdmin?`<button class="btn-principal" onclick="formEquipo()">+ Nuevo equipo</button>`:"")}</div>${submenuCalificacion("equipos")}<div id="formulario"></div><div class="tarjeta"><div class="filtros"><input id="buscarEquipo" placeholder="Buscar código, nombre, área, marca, modelo..." oninput="renderEquipos()"><select id="filtroEstadoEquipo" onchange="renderEquipos()"><option value="">Todos los equipos</option><option>Operativo</option><option>De baja</option></select><select id="filtroPQ" onchange="renderEquipos()"><option value="">PQ: Todos</option><option value="si">Aplica PQ</option><option value="no">No aplica PQ</option></select></div><div id="tablaPrincipal"></div></div>`;
+$("contenido").innerHTML=
+cabecera("Equipos",esAdmin?"Registro maestro y estado global de calificación":"Consulta de equipos calificados",esAdmin?`<button class="btn-principal" onclick="formEquipo()">+ Nuevo equipo</button>`:"")+
+submenuCalificacion("equipos")+
+`<div id="formulario"></div><div class="tarjeta"><div class="filtros"><input id="buscarEquipo" placeholder="Buscar código, nombre, área, marca, modelo..." oninput="renderEquipos()"><select id="filtroEstadoEquipo" onchange="renderEquipos()"><option value="">Todos los equipos</option><option value="Operativo">Operativos</option><option value="De baja">De baja</option></select><select id="filtroPQ" onchange="renderEquipos()"><option value="">PQ: Todos</option><option value="si">Aplica PQ</option><option value="no">No aplica PQ</option></select></div><div id="tablaPrincipal"></div></div>`;
 renderEquipos();
 }
 function formEquipo(i=null){
-if(!esAdmin)return;indiceEdicionEquipo=i;const e=i!==null?equipos[i]:{codigo:"",nombre:"",area:"",marca:"",modelo:"",serie:"",ubicacion:"",aplicaPQ:true,estado:"Operativo",historialEstado:[]};
-formulario.innerHTML=`<div class="tarjeta"><h2>${i===null?"Nuevo equipo":"Editar equipo"}</h2><div class="form-grid-3"><div><label>Código *</label><input id="eqCodigo" value="${esc(e.codigo)}"></div><div><label>Nombre *</label><input id="eqNombre" value="${esc(e.nombre)}"></div><div><label>Área *</label><input id="eqArea" value="${esc(e.area)}"></div><div><label>Marca</label><input id="eqMarca" value="${esc(e.marca)}"></div><div><label>Modelo</label><input id="eqModelo" value="${esc(e.modelo)}"></div><div><label>N° Serie</label><input id="eqSerie" value="${esc(e.serie)}"></div><div><label>Ubicación</label><input id="eqUbicacion" value="${esc(e.ubicacion)}"></div><div><label>¿Aplica PQ?</label><select id="eqPQ"><option value="si" ${e.aplicaPQ!==false?"selected":""}>Sí</option><option value="no" ${e.aplicaPQ===false?"selected":""}>No</option></select></div><div><label>Estado</label><input readonly value="${esc(e.estado||"Operativo")}"></div></div><div class="acciones-form"><button class="btn-principal" onclick="guardarEquipo()">Guardar</button><button class="btn-secundario" onclick="mostrarEquiposCalificacion()">Cancelar</button></div></div>`;
+if(!esAdmin)return;
+indiceEdicionEquipo=i;
+const e=i!==null?equipos[i]:{codigo:"",nombre:"",area:"",marca:"",modelo:"",serie:"",ubicacion:"",aplicaPQ:true,estado:"Operativo",historialEstado:[]};
+$("formulario").innerHTML=`<div class="tarjeta"><h2>${i===null?"Nuevo equipo":"Editar equipo"}</h2><div class="form-grid-3">
+<div><label>Código *</label><input id="eqCodigo" value="${esc(e.codigo)}"></div>
+<div><label>Nombre *</label><input id="eqNombre" value="${esc(e.nombre)}"></div>
+<div><label>Área *</label><input id="eqArea" value="${esc(e.area)}"></div>
+<div><label>Marca</label><input id="eqMarca" value="${esc(e.marca)}"></div>
+<div><label>Modelo</label><input id="eqModelo" value="${esc(e.modelo)}"></div>
+<div><label>N° Serie</label><input id="eqSerie" value="${esc(e.serie)}"></div>
+<div><label>Ubicación</label><input id="eqUbicacion" value="${esc(e.ubicacion)}"></div>
+<div><label>¿Aplica PQ?</label><select id="eqPQ"><option value="si" ${e.aplicaPQ!==false?"selected":""}>Sí</option><option value="no" ${e.aplicaPQ===false?"selected":""}>No</option></select></div>
+<div><label>Estado</label><input readonly value="${esc(e.estado||"Operativo")}"></div>
+</div><div class="acciones-form"><button class="btn-principal" onclick="guardarEquipo()">Guardar</button><button class="btn-secundario" onclick="mostrarEquiposCalificacion()">Cancelar</button></div></div>`;
+window.scrollTo({top:0,behavior:"smooth"});
 }
 function guardarEquipo(){
-if(!esAdmin)return;const codigo=val("eqCodigo"),nombre=val("eqNombre"),area=val("eqArea");if(!codigo||!nombre||!area){alert("Completa Código, Nombre y Área.");return}
-const dup=equipos.findIndex((e,i)=>e.codigo.toLowerCase()===codigo.toLowerCase()&&i!==indiceEdicionEquipo);if(dup!==-1){alert("Ya existe otro equipo con ese código.");return}
-if(indiceEdicionEquipo===null)equipos.push({codigo,nombre,area,marca:val("eqMarca"),modelo:val("eqModelo"),serie:val("eqSerie"),ubicacion:val("eqUbicacion"),aplicaPQ:sel("eqPQ")==="si",estado:"Operativo",fechaBaja:"",motivoBaja:"",historialEstado:[]});
-else{const e=equipos[indiceEdicionEquipo],ant=e.codigo;Object.assign(e,{codigo,nombre,area,marca:val("eqMarca"),modelo:val("eqModelo"),serie:val("eqSerie"),ubicacion:val("eqUbicacion"),aplicaPQ:sel("eqPQ")==="si"});calificaciones.forEach(r=>{if(r.equipoCodigo===ant){r.equipoCodigo=codigo;r.equipoNombre=nombre}});programasCalificacion.forEach(p=>p.equipos?.forEach(x=>{if(x.equipoCodigo===ant){x.equipoCodigo=codigo;x.equipoNombre=nombre}}))}
+if(!esAdmin)return;
+const codigo=val("eqCodigo"),nombre=val("eqNombre"),area=val("eqArea");
+if(!codigo||!nombre||!area){alert("Completa Código, Nombre y Área.");return}
+const dup=equipos.findIndex((e,i)=>String(e.codigo).toLowerCase()===codigo.toLowerCase()&&i!==indiceEdicionEquipo);
+if(dup!==-1){alert("Ya existe otro equipo con ese código.");return}
+if(indiceEdicionEquipo===null){
+equipos.push({codigo,nombre,area,marca:val("eqMarca"),modelo:val("eqModelo"),serie:val("eqSerie"),ubicacion:val("eqUbicacion"),aplicaPQ:sel("eqPQ")==="si",estado:"Operativo",fechaBaja:"",motivoBaja:"",historialEstado:[]});
+}else{
+const e=equipos[indiceEdicionEquipo],ant=e.codigo;
+Object.assign(e,{codigo,nombre,area,marca:val("eqMarca"),modelo:val("eqModelo"),serie:val("eqSerie"),ubicacion:val("eqUbicacion"),aplicaPQ:sel("eqPQ")==="si"});
+calificaciones.forEach(r=>{if(r.equipoCodigo===ant){r.equipoCodigo=codigo;r.equipoNombre=nombre}});
+programasCalificacion.forEach(p=>p.equipos?.forEach(x=>{if(x.equipoCodigo===ant){x.equipoCodigo=codigo;x.equipoNombre=nombre}}));
+}
 guardarTodo();actualizarCumplimientoProgramas();mostrarEquiposCalificacion();
 }
-function renderEquipos(){
+function equiposFiltrados(){
 const q=val("buscarEquipo").toLowerCase(),fe=sel("filtroEstadoEquipo"),fp=sel("filtroPQ");
-const l=equipos.filter(e=>[e.codigo,e.nombre,e.area,e.marca,e.modelo,e.serie,e.ubicacion].some(x=>String(x||"").toLowerCase().includes(q))&&(!fe||e.estado===fe)&&(!fp||(fp==="si"&&e.aplicaPQ!==false)||(fp==="no"&&e.aplicaPQ===false)));
-if(!l.length){tablaPrincipal.innerHTML=`<div class="subdato">No se encontraron equipos.</div>`;return}
-tablaPrincipal.innerHTML=`<div class="tabla-contenedor"><table><thead><tr><th>Código</th><th>Equipo</th><th>Área</th><th>Marca / Modelo</th><th>Estado global</th><th>Próxima acción</th><th>Ficha</th>${esAdmin?"<th>Editar</th>":""}</tr></thead><tbody>${l.map(e=>{const i=equipos.indexOf(e),s=estadoGlobalEquipo(e),a=proximaAccionEquipo(e);return `<tr><td class="codigo">${esc(e.codigo)}</td><td><strong>${esc(e.nombre)}</strong><div class="subdato">${e.aplicaPQ!==false?"PQ aplica":"PQ no aplica"}</div></td><td>${esc(e.area)}</td><td>${esc(e.marca||"—")}<div class="subdato">${esc(e.modelo||"—")}</div></td><td><span class="badge ${e.estado==="De baja"?"baja":s.clase}">${s.icono} ${s.texto}</span></td><td><strong>${esc(a.texto)}</strong><div class="subdato">${esc(a.detalle)}</div></td><td><button class="btn-icono btn-azul" onclick="mostrarFichaEquipo('${escJS(e.codigo)}')">👁</button></td>${esAdmin?`<td><button class="btn-icono btn-editar" onclick="formEquipo(${i})">✎</button></td>`:""}</tr>`}).join("")}</tbody></table></div>`;
+return equipos.filter(e=>
+[e.codigo,e.nombre,e.area,e.marca,e.modelo,e.serie,e.ubicacion].some(x=>String(x||"").toLowerCase().includes(q))&&
+(!fe||e.estado===fe)&&
+(!fp||(fp==="si"&&e.aplicaPQ!==false)||(fp==="no"&&e.aplicaPQ===false))
+);
+}
+function renderEquipos(){
+const l=equiposFiltrados();
+if(!l.length){$("tablaPrincipal").innerHTML=`<div class="subdato">No se encontraron equipos.</div>`;return}
+
+const escritorio=`<div class="tabla-contenedor tabla-equipos-escritorio"><table><thead><tr><th>Código</th><th>Equipo</th><th>Área</th><th>Marca / Modelo</th><th>Estado global</th><th>Próxima acción</th><th>Ficha</th>${esAdmin?"<th>Editar</th>":""}</tr></thead><tbody>${l.map(e=>{
+const i=equipos.indexOf(e),s=estadoGlobalEquipo(e),a=proximaAccionEquipo(e);
+return`<tr><td class="codigo">${esc(e.codigo)}</td><td><strong>${esc(e.nombre)}</strong><div class="subdato">${e.aplicaPQ!==false?"PQ aplica":"PQ no aplica"}</div></td><td>${esc(e.area)}</td><td>${esc(e.marca||"—")}<div class="subdato">${esc(e.modelo||"—")}</div></td><td><span class="badge ${e.estado==="De baja"?"baja":s.clase}">${s.icono} ${s.texto}</span></td><td><strong>${esc(a.texto)}</strong><div class="subdato">${esc(a.detalle)}</div></td><td><button class="btn-icono btn-azul" onclick="mostrarFichaEquipo('${escJS(e.codigo)}')">👁</button></td>${esAdmin?`<td><button class="btn-icono btn-editar" onclick="formEquipo(${i})">✎</button></td>`:""}</tr>`;
+}).join("")}</tbody></table></div>`;
+
+const movil=`<div class="lista-equipos-movil">${l.map(e=>{
+const i=equipos.indexOf(e),s=estadoGlobalEquipo(e),a=proximaAccionEquipo(e);
+return`<div class="equipo-movil-card">
+<div class="equipo-movil-header"><div><div class="equipo-movil-codigo">${esc(e.codigo)}</div><div class="equipo-movil-nombre">${esc(e.nombre)}</div></div><span class="badge ${e.estado==="De baja"?"baja":s.clase}">${s.icono} ${s.texto}</span></div>
+<div class="equipo-movil-datos">
+<div class="equipo-movil-dato"><div class="equipo-movil-label">Área</div><div class="equipo-movil-valor">${esc(e.area||"—")}</div></div>
+<div class="equipo-movil-dato"><div class="equipo-movil-label">PQ</div><div class="equipo-movil-valor">${e.aplicaPQ!==false?"Aplica":"No aplica"}</div></div>
+<div class="equipo-movil-dato"><div class="equipo-movil-label">Marca</div><div class="equipo-movil-valor">${esc(e.marca||"—")}</div></div>
+<div class="equipo-movil-dato"><div class="equipo-movil-label">Modelo</div><div class="equipo-movil-valor">${esc(e.modelo||"—")}</div></div>
+</div>
+<div class="equipo-movil-accion"><strong>${esc(a.texto)}</strong><br>${esc(a.detalle)}</div>
+<div class="equipo-movil-botones"><button class="btn-azul" onclick="mostrarFichaEquipo('${escJS(e.codigo)}')">👁 Ver ficha</button>${esAdmin?`<button class="btn-editar" onclick="formEquipo(${i})">✎ Editar</button>`:""}</div>
+</div>`;
+}).join("")}</div>`;
+
+$("tablaPrincipal").innerHTML=escritorio+movil;
 }
 
-function datoFicha(l,v){return `<div class="ficha-dato"><div class="ficha-label">${l}</div><div class="ficha-valor">${esc(v)}</div></div>`}
-function tarjetaDocumentoFicha(r,t){return !r?`<div class="doc-card"><div class="doc-tipo">${t}</div><div class="sin-documento">Sin registro</div></div>`:`<div class="doc-card"><div class="doc-tipo">${t}</div><div class="doc-codigo">${esc(r.codigo)}</div><div class="doc-linea">Emisión: <strong>${fechaBonita(fechaDocumento(r))}</strong></div><div class="doc-linea">Vencimiento: <strong>${fechaBonita(r.vencimiento)}</strong></div><div class="doc-linea">Elaboró / Ejecutó: <strong>${esc(r.responsable||"No informado")}</strong></div><div style="margin-top:9px">${puntoEstado(estadoFecha(r.vencimiento))}</div></div>`}
+/* FICHA */
+function datoFicha(l,v){return`<div class="ficha-dato"><div class="ficha-label">${l}</div><div class="ficha-valor">${esc(v)}</div></div>`}
+function tarjetaDocumentoFicha(r,t){
+if(!r)return`<div class="doc-card"><div class="doc-tipo">${t}</div><div class="sin-documento">Sin registro</div></div>`;
+return`<div class="doc-card"><div class="doc-tipo">${t}</div><div class="doc-codigo">${esc(r.codigo)}</div><div class="doc-linea">Emisión: <strong>${fechaBonita(fechaDocumento(r))}</strong></div><div class="doc-linea">Vencimiento: <strong>${fechaBonita(r.vencimiento)}</strong></div><div class="doc-linea">Elaboró / Ejecutó: <strong>${esc(r.responsable||"No informado")}</strong></div><div style="margin-top:9px">${puntoEstado(estadoFecha(r.vencimiento))}</div></div>`;
+}
 function tarjetaEtapa(e,t){
-if(t==="PQ"&&e.aplicaPQ===false)return `<div class="etapa-card"><div class="etapa-header"><div class="etapa-titulo">PQ</div><span class="badge neutro">No aplica</span></div><div class="doc-card"><div class="sin-documento">Este equipo no requiere Calificación de Desempeño.</div></div></div>`;
-const p=ultimoDocumento(e.codigo,t,"Protocolo"),r=ultimoDocumento(e.codigo,t,"Reporte"),s=estadoEtapa(e,t);return `<div class="etapa-card estado-${s.clase}"><div class="etapa-header"><div class="etapa-titulo">${t}</div>${puntoEstado(s)}</div>${tarjetaDocumentoFicha(p,"Protocolo")}${tarjetaDocumentoFicha(r,"Reporte")}</div>`;
+if(t==="PQ"&&e.aplicaPQ===false)return`<div class="etapa-card estado-neutro"><div class="etapa-header"><div class="etapa-titulo">PQ</div><span class="badge neutro">No aplica</span></div><div class="doc-card"><div class="sin-documento">Este equipo no requiere Calificación de Desempeño.</div></div></div>`;
+const p=ultimoDocumento(e.codigo,t,"Protocolo"),r=ultimoDocumento(e.codigo,t,"Reporte"),s=estadoEtapa(e,t);
+return`<div class="etapa-card estado-${s.clase}"><div class="etapa-header"><div class="etapa-titulo">${t}</div>${puntoEstado(s)}</div>${tarjetaDocumentoFicha(p,"Protocolo")}${tarjetaDocumentoFicha(r,"Reporte")}</div>`;
 }
 function mostrarFichaEquipo(c){
-const e=equipos.find(x=>x.codigo===c);if(!e){mostrarEquiposCalificacion();return}const i=equipos.indexOf(e),s=estadoGlobalEquipo(e),a=proximaAccionEquipo(e);
-contenido.innerHTML=`<div class="topbar"><div><button class="btn-secundario" onclick="mostrarEquiposCalificacion()">← Equipos</button></div>${renderAccionesTopbar()}</div>${submenuCalificacion("equipos")}
-<div class="ficha-hero"><div class="ficha-hero-cabecera"><div><div class="ficha-codigo">${esc(e.codigo)}</div><h1 class="ficha-nombre">${esc(e.nombre)}</h1><div class="subtitulo-pagina">${esc(e.area)} · ${esc(e.ubicacion||"Ubicación no informada")}</div></div><div class="ficha-estado-area"><span class="estado-global-grande ${e.estado==="De baja"?"baja":s.clase}">${s.icono} ${s.texto}</span>${esAdmin?`<button class="btn-editar" onclick="editarEquipoDesdeFicha(${i})">✎ Editar</button>`:""}</div></div><div class="ficha-proxima-accion"><strong>Próxima acción</strong><span><b>${esc(a.texto)}</b> · ${esc(a.detalle)}</span></div></div>
+cerrarMenuMovil();actualizarCumplimientoProgramas();
+const e=equipos.find(x=>x.codigo===c);if(!e){mostrarEquiposCalificacion();return}
+const i=equipos.indexOf(e),s=estadoGlobalEquipo(e),a=proximaAccionEquipo(e);
+const volver=`<button class="btn-secundario" style="margin-bottom:7px" onclick="mostrarEquiposCalificacion()">← Equipos</button>`;
+$("contenido").innerHTML=
+cabecera("", "", "", false,volver)+submenuCalificacion("equipos")+
+`<div class="ficha-hero"><div class="ficha-hero-cabecera"><div><div class="ficha-codigo">${esc(e.codigo)}</div><h1 class="ficha-nombre">${esc(e.nombre)}</h1><div class="subtitulo-pagina">${esc(e.area)} · ${esc(e.ubicacion||"Ubicación no informada")}</div></div><div class="ficha-estado-area"><span class="estado-global-grande ${e.estado==="De baja"?"baja":s.clase}">${s.icono} ${s.texto}</span>${esAdmin?`<button class="btn-editar" onclick="editarEquipoDesdeFicha(${i})">✎ Editar</button>`:""}</div></div><div class="ficha-proxima-accion"><strong>Próxima acción</strong><span><b>${esc(a.texto)}</b> · ${esc(a.detalle)}</span></div></div>
 <div class="tarjeta"><h2>Datos del equipo</h2><div class="ficha-grid">${datoFicha("Código",e.codigo)}${datoFicha("Nombre",e.nombre)}${datoFicha("Área",e.area)}${datoFicha("Marca",e.marca||"No informado")}${datoFicha("Modelo",e.modelo||"No informado")}${datoFicha("N° Serie",e.serie||"No informado")}${datoFicha("Ubicación",e.ubicacion||"No informado")}${datoFicha("Aplica PQ",e.aplicaPQ!==false?"Sí":"No")}${datoFicha("Estado administrativo",e.estado||"Operativo")}</div></div>
 <div class="tarjeta"><div class="seccion-titulo"><div><h2>Documentación de Calificación</h2><div class="subdato">Últimos Protocolos y Reportes IQ / OQ / PQ.</div></div>${esAdmin?`<button class="btn-principal" onclick="nuevoDocumentoDesdeFicha('${escJS(e.codigo)}')">+ Agregar documento</button>`:""}</div><div class="calificacion-grid">${tarjetaEtapa(e,"IQ")}${tarjetaEtapa(e,"OQ")}${tarjetaEtapa(e,"PQ")}</div></div>
 ${esAdmin?renderProgramaEquipo(e):""}
-${esAdmin?`<div class="tarjeta"><h2>Estado administrativo</h2>${e.estado==="De baja"?`<p>El equipo está de baja y no participa en KPI.</p><button class="btn-reactivar" onclick="reactivarEquipo('${escJS(e.codigo)}')">✓ Reactivar equipo</button>`:`<p>Dar de baja conserva toda su documentación histórica.</p><button class="btn-baja" onclick="mostrarFormularioBaja('${escJS(e.codigo)}')">⊘ Dar de baja</button><div id="zonaBaja"></div>`}</div><div class="tarjeta zona-peligro"><h2>Zona de peligro</h2><div class="advertencia">La eliminación definitiva borra el equipo y su documentación. Úsala solo para registros creados por error.</div><button class="btn-eliminar-definitivo" style="margin-top:13px" onclick="eliminarEquipoDefinitivamente('${escJS(e.codigo)}')">🗑 Eliminar definitivamente</button></div>`:""}
+${esAdmin?`<div class="tarjeta"><h2>Estado administrativo</h2>${e.estado==="De baja"?`<p>El equipo está de baja y no participa en KPI.</p><button class="btn-reactivar" onclick="reactivarEquipo('${escJS(e.codigo)}')">✓ Reactivar equipo</button>`:`<p>Dar de baja conserva toda su documentación histórica.</p><button class="btn-baja" onclick="mostrarFormularioBaja('${escJS(e.codigo)}')">⊘ Dar de baja</button><div id="zonaBaja" style="margin-top:15px"></div>`}</div><div class="tarjeta zona-peligro"><h2>Zona de peligro</h2><div class="advertencia">La eliminación definitiva elimina el equipo y toda su documentación IQ/OQ/PQ. Utiliza esta opción solamente para registros creados por error.</div><button class="btn-eliminar-definitivo" style="margin-top:13px" onclick="eliminarEquipoDefinitivamente('${escJS(e.codigo)}')">🗑 Eliminar definitivamente</button></div>`:""}
 <div class="tarjeta"><h2>Historial documental completo</h2>${tablaHistorialEquipo(e.codigo)}</div>`;
 }
 function tablaHistorialEquipo(c){
-const l=calificaciones.filter(x=>x.equipoCodigo===c).sort((a,b)=>fechaDocumento(b).localeCompare(fechaDocumento(a)));if(!l.length)return `<div class="subdato">Sin documentos registrados.</div>`;
-return `<div class="tabla-contenedor"><table><thead><tr><th>Etapa</th><th>Documento</th><th>Código</th><th>Versión</th><th>Emisión</th><th>Vencimiento</th><th>Elaboró / Ejecutó</th><th>Estado</th>${esAdmin?"<th>Acciones</th>":""}</tr></thead><tbody>${l.map(r=>{const i=calificaciones.indexOf(r);return `<tr><td>${r.tipo}</td><td>${r.documento}</td><td class="codigo">${esc(r.codigo)}</td><td>${esc(r.version||"—")}</td><td>${fechaBonita(fechaDocumento(r))}</td><td>${fechaBonita(r.vencimiento)}</td><td>${esc(r.responsable||"—")}</td><td>${puntoEstado(estadoFecha(r.vencimiento))}</td>${esAdmin?`<td><button class="btn-icono btn-editar" onclick="editarDocumentoDesdeFicha(${i})">✎</button> <button class="btn-icono btn-eliminar" onclick="eliminarDocumentoDesdeFicha(${i},'${escJS(c)}')">🗑</button></td>`:""}</tr>`}).join("")}</tbody></table></div>`;
+const l=calificaciones.filter(x=>x.equipoCodigo===c).sort((a,b)=>fechaDocumento(b).localeCompare(fechaDocumento(a)));
+if(!l.length)return`<div class="subdato">No existen documentos registrados.</div>`;
+return`<div class="tabla-contenedor"><table><thead><tr><th>Etapa</th><th>Documento</th><th>Código</th><th>Versión</th><th>Emisión</th><th>Vencimiento</th><th>Elaboró / Ejecutó</th><th>Estado</th>${esAdmin?"<th>Acciones</th>":""}</tr></thead><tbody>${l.map(r=>{const i=calificaciones.indexOf(r);return`<tr><td>${r.tipo}</td><td>${r.documento}</td><td class="codigo">${esc(r.codigo)}</td><td>${esc(r.version||"—")}</td><td>${fechaBonita(fechaDocumento(r))}</td><td>${fechaBonita(r.vencimiento)}</td><td>${esc(r.responsable||"—")}</td><td>${puntoEstado(estadoFecha(r.vencimiento))}</td>${esAdmin?`<td><div class="acciones-tabla"><button class="btn-icono btn-editar" onclick="editarDocumentoDesdeFicha(${i})">✎</button><button class="btn-icono btn-eliminar" onclick="eliminarDocumentoDesdeFicha(${i},'${escJS(c)}')">🗑</button></div></td>`:""}</tr>`}).join("")}</tbody></table></div>`;
 }
 function editarEquipoDesdeFicha(i){if(!esAdmin)return;mostrarEquiposCalificacion();setTimeout(()=>formEquipo(i),0)}
-function mostrarFormularioBaja(c){if(!esAdmin)return;zonaBaja.innerHTML=`<div class="form-grid"><div><label>Fecha de baja</label><input id="fechaBaja" type="date" value="${fechaHoy()}"></div><div><label>Motivo</label><input id="motivoBaja"></div></div><div class="acciones-form"><button class="btn-baja" onclick="confirmarBajaEquipo('${escJS(c)}')">Confirmar baja</button></div>`}
-function confirmarBajaEquipo(c){const e=equipos.find(x=>x.codigo===c);if(!e||!esAdmin||!val("fechaBaja"))return;if(!confirm(`¿Dar de baja ${c}?`))return;e.estado="De baja";e.fechaBaja=val("fechaBaja");e.motivoBaja=val("motivoBaja");e.historialEstado.push({estado:"De baja",fecha:e.fechaBaja,motivo:e.motivoBaja});guardarTodo();actualizarCumplimientoProgramas();mostrarFichaEquipo(c)}
-function reactivarEquipo(c){const e=equipos.find(x=>x.codigo===c);if(!e||!esAdmin||!confirm(`¿Reactivar ${c}?`))return;e.estado="Operativo";e.historialEstado.push({estado:"Reactivado",fecha:fechaHoy(),motivo:"Equipo reincorporado."});guardarTodo();actualizarCumplimientoProgramas();mostrarFichaEquipo(c)}
-function eliminarEquipoDefinitivamente(c){if(!esAdmin)return;const e=equipos.find(x=>x.codigo===c);if(!e||!confirm(`¿Eliminar definitivamente ${c}?`))return;if((prompt(`Escribe exactamente ${c}`)||"").trim()!==c){alert("El código no coincide.");return}equipos=equipos.filter(x=>x.codigo!==c);calificaciones=calificaciones.filter(x=>x.equipoCodigo!==c);programasCalificacion=programasCalificacion.map(p=>({...p,equipos:(p.equipos||[]).filter(x=>x.equipoCodigo!==c)}));guardarTodo();mostrarEquiposCalificacion()}
+function mostrarFormularioBaja(c){
+if(!esAdmin)return;
+$("zonaBaja").innerHTML=`<div class="form-grid"><div><label>Fecha de baja</label><input id="fechaBaja" type="date" value="${fechaHoy()}"></div><div><label>Motivo</label><input id="motivoBaja" placeholder="Ej.: retiro definitivo, reemplazo..."></div></div><div class="acciones-form"><button class="btn-baja" onclick="confirmarBajaEquipo('${escJS(c)}')">Confirmar baja</button><button class="btn-secundario" onclick="$('zonaBaja').innerHTML=''">Cancelar</button></div>`;
+}
+function confirmarBajaEquipo(c){
+const e=equipos.find(x=>x.codigo===c);if(!e||!esAdmin)return;
+if(!val("fechaBaja")){alert("Ingresa la fecha de baja.");return}
+if(!confirm(`¿Dar de baja ${c}?\n\nLa documentación permanecerá almacenada.`))return;
+e.estado="De baja";e.fechaBaja=val("fechaBaja");e.motivoBaja=val("motivoBaja");
+if(!Array.isArray(e.historialEstado))e.historialEstado=[];
+e.historialEstado.push({estado:"De baja",fecha:e.fechaBaja,motivo:e.motivoBaja});
+guardarTodo();actualizarCumplimientoProgramas();mostrarFichaEquipo(c);
+}
+function reactivarEquipo(c){
+const e=equipos.find(x=>x.codigo===c);if(!e||!esAdmin||!confirm(`¿Reactivar ${c}?`))return;
+e.estado="Operativo";if(!Array.isArray(e.historialEstado))e.historialEstado=[];
+e.historialEstado.push({estado:"Reactivado",fecha:fechaHoy(),motivo:"Equipo reincorporado al estado operativo."});
+guardarTodo();actualizarCumplimientoProgramas();mostrarFichaEquipo(c);
+}
+function eliminarEquipoDefinitivamente(c){
+if(!esAdmin)return;const e=equipos.find(x=>x.codigo===c);if(!e)return;
+if(!confirm(`ELIMINACIÓN DEFINITIVA\n\n${e.codigo} - ${e.nombre}\n\n¿Continuar?`))return;
+if((prompt(`Para confirmar escribe exactamente:\n${c}`)||"").trim()!==c){alert("El código no coincide.");return}
+equipos=equipos.filter(x=>x.codigo!==c);calificaciones=calificaciones.filter(x=>x.equipoCodigo!==c);
+programasCalificacion=programasCalificacion.map(p=>({...p,equipos:(p.equipos||[]).filter(x=>x.equipoCodigo!==c)}));
+guardarTodo();mostrarEquiposCalificacion();
+}
 
+/* DOCUMENT MANAGEMENT */
 function mostrarGestionDocumentos(){
 if(!esAdmin)return;indiceEdicionDocumento=null;
-contenido.innerHTML=`<div class="topbar"><div><h1 class="titulo-pagina">Documentación de Calificación</h1><div class="subtitulo-pagina">Protocolos y Reportes IQ / OQ / PQ</div></div>${renderAccionesTopbar(`<button class="btn-principal" onclick="formDocumentoCalificacion()">+ Nuevo documento</button>`)}</div>${submenuCalificacion("documentos")}<div id="formulario"></div><div class="tarjeta"><div class="filtros"><input id="buscarDocumentoCal" placeholder="Buscar equipo, documento o responsable..." oninput="renderDocumentosCalificacion()"><select id="filtroTipoCal" onchange="renderDocumentosCalificacion()"><option value="">Todas las etapas</option><option>IQ</option><option>OQ</option><option>PQ</option></select><select id="filtroDocCal" onchange="renderDocumentosCalificacion()"><option value="">Todos los documentos</option><option>Protocolo</option><option>Reporte</option></select></div><div id="tablaPrincipal"></div></div>`;renderDocumentosCalificacion();
+$("contenido").innerHTML=
+cabecera("Documentación de Calificación","Protocolos y Reportes IQ / OQ / PQ",`<button class="btn-principal" onclick="formDocumentoCalificacion()">+ Nuevo documento</button>`)+
+submenuCalificacion("documentos")+
+`<div id="formulario"></div><div class="tarjeta"><div class="filtros"><input id="buscarDocumentoCal" placeholder="Buscar equipo, documento o responsable..." oninput="renderDocumentosCalificacion()"><select id="filtroTipoCal" onchange="renderDocumentosCalificacion()"><option value="">Todas las etapas</option><option>IQ</option><option>OQ</option><option>PQ</option></select><select id="filtroDocCal" onchange="renderDocumentosCalificacion()"><option value="">Todos los documentos</option><option>Protocolo</option><option>Reporte</option></select></div><div id="tablaPrincipal"></div></div>`;
+renderDocumentosCalificacion();
 }
 function formDocumentoCalificacion(i=null,c=""){
-if(!esAdmin||!equipos.length)return;indiceEdicionDocumento=i;const r=i!==null?calificaciones[i]:{equipoCodigo:c||equipos[0].codigo,tipo:"IQ",documento:"Protocolo",codigo:"",version:"",fecha:"",responsable:""};
-formulario.innerHTML=`<div class="tarjeta"><h2>${i===null?"Nuevo documento":"Editar documento"}</h2><div class="form-grid"><div class="completo"><label>Equipo</label><select id="docEquipo" onchange="actualizarTiposDoc()">${equipos.map(e=>`<option value="${esc(e.codigo)}" ${e.codigo===r.equipoCodigo?"selected":""}>${esc(e.codigo)} - ${esc(e.nombre)}</option>`).join("")}</select></div><div><label>Etapa</label><select id="docTipo"></select></div><div><label>Tipo de documento</label><select id="docDocumento"><option ${r.documento==="Protocolo"?"selected":""}>Protocolo</option><option ${r.documento==="Reporte"?"selected":""}>Reporte</option></select></div><div><label>Código *</label><input id="docCodigo" value="${esc(r.codigo)}"></div><div><label>Versión</label><input id="docVersion" value="${esc(r.version||"")}"></div><div><label>Fecha emisión *</label><input id="docFecha" type="date" value="${fechaDocumento(r)}" onchange="actualizarVencDoc()"></div><div><label>Vencimiento</label><input id="docVencimiento" type="date" readonly></div><div class="completo"><label>Elaboró / Ejecutó</label><input id="docResponsable" value="${esc(r.responsable||"")}"></div></div><div class="acciones-form"><button class="btn-principal" onclick="guardarDocumentoCalificacion()">Guardar</button><button class="btn-secundario" onclick="mostrarGestionDocumentos()">Cancelar</button></div></div>`;
-actualizarTiposDoc(r.tipo);actualizarVencDoc();
+if(!esAdmin)return;if(!equipos.length){alert("Primero registra un equipo.");return}
+indiceEdicionDocumento=i;
+const r=i!==null?calificaciones[i]:{equipoCodigo:c||equipos[0].codigo,tipo:"IQ",documento:"Protocolo",codigo:"",version:"",fecha:"",responsable:""};
+$("formulario").innerHTML=`<div class="tarjeta"><h2>${i===null?"Nuevo documento":"Editar documento"}</h2><div class="form-grid">
+<div class="completo"><label>Equipo</label><select id="docEquipo" onchange="actualizarTiposDoc()">${equipos.map(e=>`<option value="${esc(e.codigo)}" ${e.codigo===r.equipoCodigo?"selected":""}>${esc(e.codigo)} - ${esc(e.nombre)}</option>`).join("")}</select></div>
+<div><label>Etapa</label><select id="docTipo"></select></div>
+<div><label>Tipo de documento</label><select id="docDocumento"><option ${r.documento==="Protocolo"?"selected":""}>Protocolo</option><option ${r.documento==="Reporte"?"selected":""}>Reporte</option></select></div>
+<div><label>Código del documento *</label><input id="docCodigo" value="${esc(r.codigo)}"></div>
+<div><label>Versión</label><input id="docVersion" value="${esc(r.version||"")}"></div>
+<div><label>Fecha de emisión *</label><input id="docFecha" type="date" value="${fechaDocumento(r)}" onchange="actualizarVencDoc()"></div>
+<div><label>Vencimiento automático</label><input id="docVencimiento" type="date" readonly></div>
+<div class="completo"><label>Elaboró / Ejecutó</label><input id="docResponsable" value="${esc(r.responsable||"")}"></div>
+</div><div class="acciones-form"><button class="btn-principal" onclick="guardarDocumentoCalificacion()">Guardar</button><button class="btn-secundario" onclick="mostrarGestionDocumentos()">Cancelar</button></div></div>`;
+actualizarTiposDoc(r.tipo);actualizarVencDoc();window.scrollTo({top:0,behavior:"smooth"});
 }
-function actualizarTiposDoc(s=""){const e=equipos.find(x=>x.codigo===sel("docEquipo")),t=["IQ","OQ"];if(e?.aplicaPQ!==false)t.push("PQ");docTipo.innerHTML=t.map(x=>`<option ${x===s?"selected":""}>${x}</option>`).join("")}
-function actualizarVencDoc(){if(document.getElementById("docVencimiento"))docVencimiento.value=sumarAnios(val("docFecha"),5)}
+function actualizarTiposDoc(s=""){
+const e=equipos.find(x=>x.codigo===sel("docEquipo")),t=["IQ","OQ"];if(e?.aplicaPQ!==false)t.push("PQ");
+$("docTipo").innerHTML=t.map(x=>`<option ${x===s?"selected":""}>${x}</option>`).join("");
+}
+function actualizarVencDoc(){if($("docVencimiento"))$("docVencimiento").value=sumarAnios(val("docFecha"),5)}
 function guardarDocumentoCalificacion(){
-if(!esAdmin)return;actualizarVencDoc();const e=equipos.find(x=>x.codigo===sel("docEquipo")),r={equipoCodigo:sel("docEquipo"),equipoNombre:e?.nombre||"",tipo:sel("docTipo"),documento:sel("docDocumento"),codigo:val("docCodigo"),version:val("docVersion"),fecha:val("docFecha"),vencimiento:val("docVencimiento"),responsable:val("docResponsable")};if(!r.codigo||!r.fecha){alert("Ingresa código y fecha.");return}
-const d=calificaciones.findIndex((x,i)=>x.equipoCodigo===r.equipoCodigo&&x.tipo===r.tipo&&x.documento===r.documento&&x.codigo===r.codigo&&fechaDocumento(x)===r.fecha&&i!==indiceEdicionDocumento);if(d!==-1){alert("Ese documento ya existe.");return}
-if(indiceEdicionDocumento===null)calificaciones.push(r);else calificaciones[indiceEdicionDocumento]=r;guardarTodo();actualizarCumplimientoProgramas();mostrarGestionDocumentos();
+if(!esAdmin)return;actualizarVencDoc();
+const e=equipos.find(x=>x.codigo===sel("docEquipo"));
+const r={equipoCodigo:sel("docEquipo"),equipoNombre:e?.nombre||"",tipo:sel("docTipo"),documento:sel("docDocumento"),codigo:val("docCodigo"),version:val("docVersion"),fecha:val("docFecha"),vencimiento:val("docVencimiento"),responsable:val("docResponsable")};
+if(!r.codigo||!r.fecha){alert("Ingresa código y fecha de emisión.");return}
+const d=calificaciones.findIndex((x,i)=>x.equipoCodigo===r.equipoCodigo&&x.tipo===r.tipo&&x.documento===r.documento&&x.codigo===r.codigo&&fechaDocumento(x)===r.fecha&&i!==indiceEdicionDocumento);
+if(d!==-1){alert("Ese documento ya existe.");return}
+if(indiceEdicionDocumento===null)calificaciones.push(r);else calificaciones[indiceEdicionDocumento]=r;
+guardarTodo();actualizarCumplimientoProgramas();mostrarGestionDocumentos();
 }
 function renderDocumentosCalificacion(){
-const q=val("buscarDocumentoCal").toLowerCase(),t=sel("filtroTipoCal"),d=sel("filtroDocCal"),l=calificaciones.filter(x=>[x.equipoCodigo,x.equipoNombre,x.codigo,x.responsable].some(y=>String(y||"").toLowerCase().includes(q))&&(!t||x.tipo===t)&&(!d||x.documento===d));
-tablaPrincipal.innerHTML=l.length?`<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Etapa</th><th>Documento</th><th>Código</th><th>Emisión</th><th>Vencimiento</th><th>Elaboró / Ejecutó</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>${l.map(x=>{const i=calificaciones.indexOf(x);return `<tr><td>${esc(x.equipoCodigo)}</td><td>${x.tipo}</td><td>${x.documento}</td><td class="codigo">${esc(x.codigo)}</td><td>${fechaBonita(fechaDocumento(x))}</td><td>${fechaBonita(x.vencimiento)}</td><td>${esc(x.responsable||"—")}</td><td>${puntoEstado(estadoFecha(x.vencimiento))}</td><td><button class="btn-icono btn-editar" onclick="formDocumentoCalificacion(${i})">✎</button> <button class="btn-icono btn-eliminar" onclick="eliminarDocumentoCalificacion(${i})">🗑</button></td></tr>`}).join("")}</tbody></table></div>`:`<div class="subdato">Sin documentos.</div>`;
+const q=val("buscarDocumentoCal").toLowerCase(),t=sel("filtroTipoCal"),d=sel("filtroDocCal");
+const l=calificaciones.filter(x=>[x.equipoCodigo,x.equipoNombre,x.codigo,x.responsable].some(y=>String(y||"").toLowerCase().includes(q))&&(!t||x.tipo===t)&&(!d||x.documento===d));
+$("tablaPrincipal").innerHTML=l.length?`<div class="tabla-contenedor"><table><thead><tr><th>Equipo</th><th>Etapa</th><th>Documento</th><th>Código</th><th>Emisión</th><th>Vencimiento</th><th>Elaboró / Ejecutó</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>${l.map(x=>{const i=calificaciones.indexOf(x);return`<tr><td>${esc(x.equipoCodigo)}</td><td>${x.tipo}</td><td>${x.documento}</td><td class="codigo">${esc(x.codigo)}</td><td>${fechaBonita(fechaDocumento(x))}</td><td>${fechaBonita(x.vencimiento)}</td><td>${esc(x.responsable||"—")}</td><td>${puntoEstado(estadoFecha(x.vencimiento))}</td><td><div class="acciones-tabla"><button class="btn-icono btn-editar" onclick="formDocumentoCalificacion(${i})">✎</button><button class="btn-icono btn-eliminar" onclick="eliminarDocumentoCalificacion(${i})">🗑</button></div></td></tr>`}).join("")}</tbody></table></div>`:`<div class="subdato">No existen documentos.</div>`;
 }
 function eliminarDocumentoCalificacion(i){if(esAdmin&&confirm("¿Eliminar este documento?")){calificaciones.splice(i,1);guardarTodo();actualizarCumplimientoProgramas();renderDocumentosCalificacion()}}
 function nuevoDocumentoDesdeFicha(c){if(!esAdmin)return;mostrarGestionDocumentos();setTimeout(()=>formDocumentoCalificacion(null,c),0)}
 function editarDocumentoDesdeFicha(i){if(!esAdmin)return;mostrarGestionDocumentos();setTimeout(()=>formDocumentoCalificacion(i),0)}
 function eliminarDocumentoDesdeFicha(i,c){if(esAdmin&&confirm("¿Eliminar este documento?")){calificaciones.splice(i,1);guardarTodo();actualizarCumplimientoProgramas();mostrarFichaEquipo(c)}}
 
-function documentosEsperadosPrograma(e){const d=[["IQ","Protocolo","PCI"],["IQ","Reporte","RCI"],["OQ","Protocolo","PCO"],["OQ","Reporte","RCO"]];if(e.aplicaPQ!==false)d.push(["PQ","Protocolo","PCD"],["PQ","Reporte","RCD"]);return d.map(x=>({tipo:x[0],documento:x[1],prefijo:x[2]}))}
+/* PROGRAM */
+function documentosEsperadosPrograma(e){
+const d=[["IQ","Protocolo","PCI"],["IQ","Reporte","RCI"],["OQ","Protocolo","PCO"],["OQ","Reporte","RCO"]];
+if(e.aplicaPQ!==false)d.push(["PQ","Protocolo","PCD"],["PQ","Reporte","RCD"]);
+return d.map(x=>({tipo:x[0],documento:x[1],prefijo:x[2]}));
+}
 function generarProgramaProximoAnio(desc=false){
 if(!esAdmin)return;const a=anioActual()+1,c=[];
-equipos.filter(e=>e.estado!=="De baja").forEach(e=>{const r=documentoReferenciaPrograma(e);if(!r||obtenerAnioFecha(r.vencimiento)!==a)return;c.push({equipoCodigo:e.codigo,equipoNombre:e.nombre,area:e.area,aplicaPQ:e.aplicaPQ!==false,referenciaTipo:e.aplicaPQ!==false?"RCD":"RCO",referenciaCodigo:r.codigo,vencimientoReferencia:r.vencimiento,mes:obtenerMes(r.vencimiento),mesNumero:obtenerNumeroMes(r.vencimiento),documentos:documentosEsperadosPrograma(e).map(d=>({...d,estado:"Pendiente",codigoCumplimiento:"",fechaCumplimiento:"",responsable:""})),estadoGeneral:"Pendiente",equipoDeBaja:false})});
-if(!c.length){alert(`No existen equipos cuyo RCD/RCO venza durante ${a}.`);return}
-let p=obtenerPrograma(a);if(p){if(!confirm(`Ya existe el programa ${a}. ¿Actualizarlo?`)){if(desc)descargarProgramaExcel(p);return}p.fechaGeneracion=fechaHoy();p.equipos=c}else{p={anio:a,fechaGeneracion:fechaHoy(),equipos:c};programasCalificacion.push(p)}guardarTodo();actualizarCumplimientoProgramas();if(desc)descargarProgramaExcel(p);mostrarProgramaCalificacion(a);
+equipos.filter(e=>e.estado!=="De baja").forEach(e=>{
+const r=documentoReferenciaPrograma(e);if(!r||obtenerAnioFecha(r.vencimiento)!==a)return;
+c.push({equipoCodigo:e.codigo,equipoNombre:e.nombre,area:e.area,aplicaPQ:e.aplicaPQ!==false,referenciaTipo:e.aplicaPQ!==false?"RCD":"RCO",referenciaCodigo:r.codigo,vencimientoReferencia:r.vencimiento,mes:obtenerMes(r.vencimiento),mesNumero:obtenerNumeroMes(r.vencimiento),documentos:documentosEsperadosPrograma(e).map(d=>({...d,estado:"Pendiente",codigoCumplimiento:"",fechaCumplimiento:"",responsable:""})),estadoGeneral:"Pendiente",equipoDeBaja:false});
+});
+if(!c.length){alert(`No existen equipos activos cuyo RCD/RCO venza durante ${a}.`);return}
+let p=obtenerPrograma(a);
+if(p){if(!confirm(`Ya existe un Programa de Calificaciones ${a}.\n\n¿Actualizarlo?`)){if(desc)descargarProgramaExcel(p);return}p.fechaGeneracion=fechaHoy();p.equipos=c}
+else{p={anio:a,fechaGeneracion:fechaHoy(),equipos:c};programasCalificacion.push(p)}
+guardarTodo();actualizarCumplimientoProgramas();if(desc)descargarProgramaExcel(p);mostrarProgramaCalificacion(a);
 }
 function actualizarCumplimientoProgramas(){
-programasCalificacion.forEach(p=>p.equipos?.forEach(i=>{const e=equipos.find(x=>x.codigo===i.equipoCodigo);i.equipoDeBaja=!e||e.estado==="De baja";i.documentos?.forEach(d=>{const r=calificaciones.filter(x=>x.equipoCodigo===i.equipoCodigo&&x.tipo===d.tipo&&x.documento===d.documento&&obtenerAnioFecha(fechaDocumento(x))===Number(p.anio)).sort((a,b)=>fechaDocumento(b).localeCompare(fechaDocumento(a)))[0];Object.assign(d,r?{estado:"Cumplido",codigoCumplimiento:r.codigo,fechaCumplimiento:fechaDocumento(r),responsable:r.responsable||""}:{estado:"Pendiente",codigoCumplimiento:"",fechaCumplimiento:"",responsable:""})});i.estadoGeneral=i.documentos?.length&&i.documentos.every(d=>d.estado==="Cumplido")?"Cumplido":"Pendiente"}));guardarTodo();
+programasCalificacion.forEach(p=>p.equipos?.forEach(i=>{
+const e=equipos.find(x=>x.codigo===i.equipoCodigo);i.equipoDeBaja=!e||e.estado==="De baja";
+i.documentos?.forEach(d=>{
+const r=calificaciones.filter(x=>x.equipoCodigo===i.equipoCodigo&&x.tipo===d.tipo&&x.documento===d.documento&&obtenerAnioFecha(fechaDocumento(x))===Number(p.anio)).sort((a,b)=>fechaDocumento(b).localeCompare(fechaDocumento(a)))[0];
+Object.assign(d,r?{estado:"Cumplido",codigoCumplimiento:r.codigo,fechaCumplimiento:fechaDocumento(r),responsable:r.responsable||""}:{estado:"Pendiente",codigoCumplimiento:"",fechaCumplimiento:"",responsable:""});
+});
+i.estadoGeneral=i.documentos?.length&&i.documentos.every(d=>d.estado==="Cumplido")?"Cumplido":"Pendiente";
+}));
+guardarTodo();
 }
-function resumenPrograma(p){const e=(p.equipos||[]).filter(x=>!x.equipoDeBaja),d=e.flatMap(x=>x.documentos||[]),c=d.filter(x=>x.estado==="Cumplido").length;return{equipos:e.length,total:d.length,cumplidos:c,pendientes:d.length-c,excluidos:(p.equipos||[]).filter(x=>x.equipoDeBaja).length,porcentaje:d.length?Math.round(c/d.length*100):0}}
-function renderProgramaInicio(){const p=obtenerPrograma(anioActual())||obtenerPrograma(anioActual()+1);if(!p)return `<div class="tarjeta"><div class="programa-cabecera"><div><h2>Programa anual</h2><div class="subdato">Aún no existe un programa generado.</div></div><button class="btn-morado" onclick="generarProgramaProximoAnio(true)">Generar ${anioActual()+1}</button></div></div>`;const r=resumenPrograma(p);return `<div class="tarjeta"><div class="programa-cabecera"><div><div class="hero-label">Programa anual</div><div class="programa-anio">${p.anio}</div></div><button class="btn-azul" onclick="mostrarProgramaCalificacion(${p.anio})">Ver programa</button></div><div class="barra-fondo"><div class="barra-avance" style="width:${r.porcentaje}%"></div></div><div class="subdato" style="margin-top:8px"><strong>${r.porcentaje}%</strong> · ${r.cumplidos} de ${r.total} documentos</div></div>`}
-function renderProgramaEquipo(e){const p=[...programasCalificacion].sort((a,b)=>b.anio-a.anio).find(p=>p.equipos?.some(x=>x.equipoCodigo===e.codigo));if(!p)return"";const i=p.equipos.find(x=>x.equipoCodigo===e.codigo);return `<div class="tarjeta"><h2>Programa ${p.anio}</h2><div class="subdato">Mes límite: <strong>${i.mes}</strong> · Referencia: <strong>${esc(i.referenciaCodigo)}</strong></div></div>`}
+function resumenPrograma(p){
+const e=(p.equipos||[]).filter(x=>!x.equipoDeBaja),d=e.flatMap(x=>x.documentos||[]),c=d.filter(x=>x.estado==="Cumplido").length;
+return{equipos:e.length,total:d.length,cumplidos:c,pendientes:d.length-c,excluidos:(p.equipos||[]).filter(x=>x.equipoDeBaja).length,porcentaje:d.length?Math.round(c/d.length*100):0};
+}
+function renderProgramaInicio(){
+const p=obtenerPrograma(anioActual())||obtenerPrograma(anioActual()+1);
+if(!p)return`<div class="tarjeta"><div class="programa-cabecera"><div><h2>Programa anual</h2><div class="subdato">Aún no existe un programa generado.</div></div><button class="btn-morado" onclick="generarProgramaProximoAnio(true)">Generar ${anioActual()+1}</button></div></div>`;
+const r=resumenPrograma(p);
+return`<div class="tarjeta"><div class="programa-cabecera"><div><div class="hero-label">Programa anual</div><div class="programa-anio">${p.anio}</div></div><button class="btn-azul" onclick="mostrarProgramaCalificacion(${p.anio})">Ver programa</button></div><div class="barra-fondo"><div class="barra-avance" style="width:${r.porcentaje}%"></div></div><div class="subdato" style="margin-top:8px"><strong>${r.porcentaje}%</strong> · ${r.cumplidos} de ${r.total} documentos cumplidos</div></div>`;
+}
+function renderProgramaEquipo(e){
+const p=[...programasCalificacion].sort((a,b)=>b.anio-a.anio).find(p=>p.equipos?.some(x=>x.equipoCodigo===e.codigo));if(!p)return"";
+const i=p.equipos.find(x=>x.equipoCodigo===e.codigo);
+return`<div class="tarjeta"><h2>Programa ${p.anio}</h2><div class="subdato">Mes límite: <strong>${i.mes}</strong> · Referencia: <strong>${esc(i.referenciaCodigo)}</strong></div></div>`;
+}
 function mostrarProgramaCalificacion(a=null){
-if(!esAdmin)return;actualizarCumplimientoProgramas();const as=programasCalificacion.map(p=>+p.anio).sort((x,y)=>y-x),an=a||as[0]||anioActual()+1,p=obtenerPrograma(an);
-contenido.innerHTML=`<div class="topbar"><div><h1 class="titulo-pagina">Programa Anual de Calificaciones</h1><div class="subtitulo-pagina">Planificación y cumplimiento automático por documento</div></div>${renderAccionesTopbar(`<button class="btn-morado" onclick="generarProgramaProximoAnio(true)">📅 Generar ${anioActual()+1}</button>${p?`<button class="btn-verde" onclick="descargarProgramaExcel(obtenerPrograma(${p.anio}))">⇩ Descargar Excel</button>`:""}`)}</div>${submenuCalificacion("programa")}${as.length?`<div class="tarjeta"><select style="max-width:220px" onchange="mostrarProgramaCalificacion(+this.value)">${as.map(x=>`<option ${x===+an?"selected":""}>${x}</option>`).join("")}</select></div>`:""}${p?renderProgramaCompleto(p):`<div class="tarjeta">Sin programa generado.</div>`}`;
+if(!esAdmin)return;actualizarCumplimientoProgramas();
+const as=programasCalificacion.map(p=>+p.anio).sort((x,y)=>y-x),an=a||as[0]||anioActual()+1,p=obtenerPrograma(an);
+$("contenido").innerHTML=
+cabecera("Programa Anual de Calificaciones","Planificación y cumplimiento automático por documento",`<button class="btn-morado" onclick="generarProgramaProximoAnio(true)">📅 Generar ${anioActual()+1}</button>${p?`<button class="btn-verde" onclick="descargarProgramaExcel(obtenerPrograma(${p.anio}))">⇩ Descargar Excel</button>`:""}`)+
+submenuCalificacion("programa")+
+`${as.length?`<div class="tarjeta"><label>Año del programa</label><select style="max-width:220px" onchange="mostrarProgramaCalificacion(+this.value)">${as.map(x=>`<option value="${x}" ${x===+an?"selected":""}>${x}</option>`).join("")}</select></div>`:""}${p?renderProgramaCompleto(p):`<div class="tarjeta">Sin programa generado.</div>`}`;
 }
-function renderProgramaCompleto(p){const r=resumenPrograma(p),filas=(p.equipos||[]).flatMap(i=>(i.documentos||[]).map(d=>({i,d})));return `<div class="tarjeta"><div class="programa-cabecera"><div><div class="hero-label">Programa de Calificaciones</div><div class="programa-anio">${p.anio}</div></div><span class="badge programado">${r.porcentaje}% cumplimiento</span></div><div class="barra-fondo"><div class="barra-avance" style="width:${r.porcentaje}%"></div></div><div class="programa-resumen"><div class="programa-mini">Equipos<strong>${r.equipos}</strong></div><div class="programa-mini">Documentos<strong>${r.total}</strong></div><div class="programa-mini">Cumplidos<strong>${r.cumplidos}</strong></div><div class="programa-mini">Pendientes<strong>${r.pendientes}</strong></div><div class="programa-mini">Excluidos<strong>${r.excluidos}</strong></div></div></div><div class="tarjeta"><div class="tabla-contenedor"><table><thead><tr><th>Mes</th><th>Equipo</th><th>Documento</th><th>Estado</th><th>Código cumplimiento</th><th>Fecha</th><th>Elaboró / Ejecutó</th></tr></thead><tbody>${filas.map(x=>`<tr><td>${x.i.mes}</td><td>${esc(x.i.equipoCodigo)}<div class="subdato">${esc(x.i.equipoNombre)}</div></td><td>${x.d.tipo} ${x.d.documento}</td><td><span class="badge ${x.i.equipoDeBaja?"baja":x.d.estado==="Cumplido"?"cumplido":"pendiente"}">${x.i.equipoDeBaja?"Excluido":x.d.estado}</span></td><td>${esc(x.d.codigoCumplimiento||"—")}</td><td>${fechaBonita(x.d.fechaCumplimiento)}</td><td>${esc(x.d.responsable||"—")}</td></tr>`).join("")}</tbody></table></div></div>`}
-function descargarProgramaExcel(p){if(!esAdmin||!p)return;const f=[];(p.equipos||[]).forEach(i=>(i.documentos||[]).forEach(d=>f.push({"Año Programa":p.anio,"Mes límite":i.mes,"Código equipo":i.equipoCodigo,"Equipo":i.equipoNombre,"Área":i.area,"Documento referencia":i.referenciaTipo,"Código referencia":i.referenciaCodigo,"Documento programado":`${d.tipo} ${d.documento}`,"Estado":i.equipoDeBaja?"Excluido":d.estado,"Código cumplimiento":d.codigoCumplimiento,"Fecha cumplimiento":d.fechaCumplimiento,"Elaboró / Ejecutó":d.responsable})));const ws=XLSX.utils.json_to_sheet(f),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,`Programa ${p.anio}`);XLSX.writeFile(wb,`Programa_Calificaciones_${p.anio}.xlsx`)}
+function renderProgramaCompleto(p){
+const r=resumenPrograma(p),filas=(p.equipos||[]).sort((a,b)=>a.mesNumero-b.mesNumero).flatMap(i=>(i.documentos||[]).map(d=>({i,d})));
+return`<div class="tarjeta"><div class="programa-cabecera"><div><div class="hero-label">Programa de Calificaciones</div><div class="programa-anio">${p.anio}</div></div><span class="badge programado">${r.porcentaje}% cumplimiento</span></div><div class="barra-fondo"><div class="barra-avance" style="width:${r.porcentaje}%"></div></div><div class="programa-resumen"><div class="programa-mini">Equipos activos<strong>${r.equipos}</strong></div><div class="programa-mini">Documentos<strong>${r.total}</strong></div><div class="programa-mini">Cumplidos<strong>${r.cumplidos}</strong></div><div class="programa-mini">Pendientes<strong>${r.pendientes}</strong></div><div class="programa-mini">Excluidos<strong>${r.excluidos}</strong></div></div></div>
+<div class="tarjeta"><h2>Programa por equipo y documento</h2><div class="tabla-contenedor"><table><thead><tr><th>Mes</th><th>Equipo</th><th>Documento</th><th>Estado</th><th>Código cumplimiento</th><th>Fecha real</th><th>Elaboró / Ejecutó</th></tr></thead><tbody>${filas.map(x=>`<tr><td>${x.i.mes}</td><td><strong>${esc(x.i.equipoCodigo)}</strong><div class="subdato">${esc(x.i.equipoNombre)}</div></td><td>${x.d.tipo} ${x.d.documento}</td><td><span class="badge ${x.i.equipoDeBaja?"baja":x.d.estado==="Cumplido"?"cumplido":"pendiente"}">${x.i.equipoDeBaja?"Excluido":x.d.estado}</span></td><td>${esc(x.d.codigoCumplimiento||"—")}</td><td>${fechaBonita(x.d.fechaCumplimiento)}</td><td>${esc(x.d.responsable||"—")}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
+function descargarProgramaExcel(p){
+if(!esAdmin||!p)return;const f=[];
+(p.equipos||[]).forEach(i=>(i.documentos||[]).forEach(d=>f.push({"Año Programa":p.anio,"Mes límite":i.mes,"Código equipo":i.equipoCodigo,"Equipo":i.equipoNombre,"Área":i.area,"Aplica PQ":i.aplicaPQ?"Sí":"No","Documento referencia":i.referenciaTipo,"Código referencia":i.referenciaCodigo,"Documento programado":`${d.tipo} ${d.documento}`,"Estado":i.equipoDeBaja?"Excluido":d.estado,"Código cumplimiento":d.codigoCumplimiento,"Fecha cumplimiento":d.fechaCumplimiento,"Elaboró / Ejecutó":d.responsable})));
+const ws=XLSX.utils.json_to_sheet(f),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,`Programa ${p.anio}`);XLSX.writeFile(wb,`Programa_Calificaciones_${p.anio}.xlsx`);
+}
 
+/* EXCEL */
 function mostrarExcelCalificacion(){
-if(!esAdmin)return;excelTemporal=null;contenido.innerHTML=`<div class="topbar"><div><h1 class="titulo-pagina">Carga Excel · Calificación</h1><div class="subtitulo-pagina">Una fila por equipo</div></div>${renderAccionesTopbar()}</div>${submenuCalificacion("excel")}<div class="tarjeta"><div class="excel-panel"><h2>Base de Equipos Calificados</h2><p>Los vencimientos se calculan automáticamente a 5 años.</p><div class="botones" style="justify-content:center"><button class="btn-gris" onclick="descargarPlantillaCalificacion()">Descargar plantilla</button><button class="btn-principal" onclick="archivoExcelCal.click()">Importar Excel</button><button class="btn-verde" onclick="exportarCalificacionExcel()">Exportar base</button></div><input id="archivoExcelCal" type="file" accept=".xlsx,.xls" style="display:none" onchange="leerExcelCalificacion(event)"></div></div><div id="previewExcel"></div>`;
+if(!esAdmin)return;excelTemporal=null;
+$("contenido").innerHTML=
+cabecera("Carga Excel · Calificación","Una fila por equipo con información técnica y documental")+
+submenuCalificacion("excel")+
+`<div class="tarjeta"><div class="excel-panel"><h2>Base de Equipos Calificados</h2><p>Los vencimientos se calculan automáticamente a 5 años desde la fecha de emisión.</p><div class="botones" style="justify-content:center"><button class="btn-gris" onclick="descargarPlantillaCalificacion()">Descargar plantilla</button><button class="btn-principal" onclick="$('archivoExcelCal').click()">Importar Excel</button><button class="btn-verde" onclick="exportarCalificacionExcel()">Exportar base actual</button></div><input id="archivoExcelCal" type="file" accept=".xlsx,.xls" style="display:none" onchange="leerExcelCalificacion(event)"></div></div><div id="previewExcel"></div>`;
 }
 function descargarPlantillaCalificacion(){
-const d=[{"Código equipo":"E780/EF","Nombre":"Envasadora de Gotas","Área":"Envasado","Marca":"","Modelo":"","Serie":"","Ubicación":"Planta Farma","Aplica PQ":"Sí","Protocolo IQ":"PCI-E780/EF-01","Emisión Protocolo IQ":"01/03/2026","Elaboró Protocolo IQ":"","Reporte IQ":"RCI-E780/EF-01","Emisión Reporte IQ":"15/03/2026","Ejecutó Reporte IQ":"","Protocolo OQ":"PCO-E780/EF-01","Emisión Protocolo OQ":"01/08/2026","Elaboró Protocolo OQ":"","Reporte OQ":"RCO-E780/EF-01","Emisión Reporte OQ":"07/09/2026","Ejecutó Reporte OQ":"","Protocolo PQ":"PCD-E780/EF-01","Emisión Protocolo PQ":"10/09/2026","Elaboró Protocolo PQ":"","Reporte PQ":"RCD-E780/EF-01","Emisión Reporte PQ":"20/09/2026","Ejecutó Reporte PQ":""}];const ws=XLSX.utils.json_to_sheet(d),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Calificación");XLSX.writeFile(wb,"Plantilla_Calificacion_Equipos.xlsx");
+const d=[{"Código equipo":"E780/EF","Nombre":"Envasadora de Gotas","Área":"Envasado","Marca":"","Modelo":"","Serie":"","Ubicación":"Planta Farma","Aplica PQ":"Sí","Protocolo IQ":"PCI-E780/EF-01","Emisión Protocolo IQ":"01/03/2026","Elaboró Protocolo IQ":"","Reporte IQ":"RCI-E780/EF-01","Emisión Reporte IQ":"15/03/2026","Ejecutó Reporte IQ":"","Protocolo OQ":"PCO-E780/EF-01","Emisión Protocolo OQ":"01/08/2026","Elaboró Protocolo OQ":"","Reporte OQ":"RCO-E780/EF-01","Emisión Reporte OQ":"07/09/2026","Ejecutó Reporte OQ":"","Protocolo PQ":"PCD-E780/EF-01","Emisión Protocolo PQ":"10/09/2026","Elaboró Protocolo PQ":"","Reporte PQ":"RCD-E780/EF-01","Emisión Reporte PQ":"20/09/2026","Ejecutó Reporte PQ":""}];
+const ws=XLSX.utils.json_to_sheet(d),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Calificación");XLSX.writeFile(wb,"Plantilla_Calificacion_Equipos.xlsx");
 }
-function leerExcelCalificacion(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{try{const wb=XLSX.read(new Uint8Array(x.target.result),{type:"array",cellDates:true}),ws=wb.Sheets[wb.SheetNames[0]],rows=XLSX.utils.sheet_to_json(ws,{defval:"",raw:true});procesarExcelCalificacion(rows,f.name)}catch{alert("No fue posible leer el Excel.")}};r.readAsArrayBuffer(f);ev.target.value=""}
-function agregarDocExcel(arr,row,e,t,d,cc,cf,cr){const c=String(col(row,[cc])).trim(),f=normalizarFechaExcel(col(row,[cf]));if(!c||!f)return;arr.push({equipoCodigo:e.codigo,equipoNombre:e.nombre,tipo:t,documento:d,codigo:c,version:"",fecha:f,vencimiento:sumarAnios(f,5),responsable:String(col(row,cr)).trim()})}
+function leerExcelCalificacion(ev){
+const f=ev.target.files[0];if(!f)return;
+const r=new FileReader();
+r.onload=x=>{try{const wb=XLSX.read(new Uint8Array(x.target.result),{type:"array",cellDates:true}),ws=wb.Sheets[wb.SheetNames[0]],rows=XLSX.utils.sheet_to_json(ws,{defval:"",raw:true});procesarExcelCalificacion(rows,f.name)}catch(err){console.error(err);alert("No fue posible leer el archivo Excel.")}};
+r.readAsArrayBuffer(f);ev.target.value="";
+}
+function agregarDocExcel(arr,row,e,t,d,cc,cf,cr){
+const c=String(col(row,[cc])).trim(),fo=col(row,[cf]),f=normalizarFechaExcel(fo);
+if(!c&&!fo)return;if(!c||!fo||!f)return;
+arr.push({equipoCodigo:e.codigo,equipoNombre:e.nombre,tipo:t,documento:d,codigo:c,version:"",fecha:f,vencimiento:sumarAnios(f,5),responsable:String(col(row,cr)).trim()});
+}
 function procesarExcelCalificacion(rows,n){
 const out=[],seen=new Set();
-rows.forEach((r,i)=>{const codigo=String(col(r,["Código equipo","Codigo equipo","Código","Codigo"])).trim(),nombre=String(col(r,["Nombre","Nombre equipo"])).trim(),area=String(col(r,["Área","Area"])).trim();if(!codigo||!nombre||!area||seen.has(codigo.toLowerCase())){out.push({fila:i+2,estado:"error",codigo,nombre,mensaje:"Fila incompleta o código repetido.",data:null});return}seen.add(codigo.toLowerCase());const pq=!["no","n","false","0"].includes(String(col(r,["Aplica PQ"])).trim().toLowerCase()),e={codigo,nombre,area,marca:String(col(r,["Marca"])).trim(),modelo:String(col(r,["Modelo"])).trim(),serie:String(col(r,["Serie","N° Serie","N° de Serie"])).trim(),ubicacion:String(col(r,["Ubicación","Ubicacion"])).trim(),aplicaPQ:pq,estado:"Operativo",fechaBaja:"",motivoBaja:"",historialEstado:[]},d=[];
-agregarDocExcel(d,r,e,"IQ","Protocolo","Protocolo IQ","Emisión Protocolo IQ",["Elaboró Protocolo IQ","Elaboro Protocolo IQ"]);agregarDocExcel(d,r,e,"IQ","Reporte","Reporte IQ","Emisión Reporte IQ",["Ejecutó Reporte IQ","Ejecuto Reporte IQ"]);agregarDocExcel(d,r,e,"OQ","Protocolo","Protocolo OQ","Emisión Protocolo OQ",["Elaboró Protocolo OQ","Elaboro Protocolo OQ"]);agregarDocExcel(d,r,e,"OQ","Reporte","Reporte OQ","Emisión Reporte OQ",["Ejecutó Reporte OQ","Ejecuto Reporte OQ"]);if(pq){agregarDocExcel(d,r,e,"PQ","Protocolo","Protocolo PQ","Emisión Protocolo PQ",["Elaboró Protocolo PQ"]);agregarDocExcel(d,r,e,"PQ","Reporte","Reporte PQ","Emisión Reporte PQ",["Ejecutó Reporte PQ"])}
-const ex=equipos.some(x=>x.codigo.toLowerCase()===codigo.toLowerCase());out.push({fila:i+2,estado:ex?"duplicado":"valido",codigo,nombre,mensaje:ex?"Equipo existente":"Equipo nuevo",data:{equipo:e,documentos:d}});
-});excelTemporal={archivo:n,resultados:out};renderPreviewExcel();
+rows.forEach((r,i)=>{
+const codigo=String(col(r,["Código equipo","Codigo equipo","Código","Codigo"])).trim(),nombre=String(col(r,["Nombre","Nombre equipo"])).trim(),area=String(col(r,["Área","Area"])).trim();
+if(!codigo||!nombre||!area||seen.has(codigo.toLowerCase())){out.push({fila:i+2,estado:"error",codigo,nombre,mensaje:"Fila incompleta o código repetido dentro del Excel.",data:null});return}
+seen.add(codigo.toLowerCase());
+const pq=!["no","n","false","0"].includes(String(col(r,["Aplica PQ"])).trim().toLowerCase());
+const e={codigo,nombre,area,marca:String(col(r,["Marca"])).trim(),modelo:String(col(r,["Modelo"])).trim(),serie:String(col(r,["Serie","N° Serie","N° de Serie"])).trim(),ubicacion:String(col(r,["Ubicación","Ubicacion"])).trim(),aplicaPQ:pq,estado:"Operativo",fechaBaja:"",motivoBaja:"",historialEstado:[]},d=[];
+agregarDocExcel(d,r,e,"IQ","Protocolo","Protocolo IQ","Emisión Protocolo IQ",["Elaboró Protocolo IQ","Elaboro Protocolo IQ"]);
+agregarDocExcel(d,r,e,"IQ","Reporte","Reporte IQ","Emisión Reporte IQ",["Ejecutó Reporte IQ","Ejecuto Reporte IQ"]);
+agregarDocExcel(d,r,e,"OQ","Protocolo","Protocolo OQ","Emisión Protocolo OQ",["Elaboró Protocolo OQ","Elaboro Protocolo OQ"]);
+agregarDocExcel(d,r,e,"OQ","Reporte","Reporte OQ","Emisión Reporte OQ",["Ejecutó Reporte OQ","Ejecuto Reporte OQ"]);
+if(pq){agregarDocExcel(d,r,e,"PQ","Protocolo","Protocolo PQ","Emisión Protocolo PQ",["Elaboró Protocolo PQ","Elaboro Protocolo PQ"]);agregarDocExcel(d,r,e,"PQ","Reporte","Reporte PQ","Emisión Reporte PQ",["Ejecutó Reporte PQ","Ejecuto Reporte PQ"])}
+const ex=equipos.some(x=>String(x.codigo).toLowerCase()===codigo.toLowerCase());
+out.push({fila:i+2,estado:ex?"duplicado":"valido",codigo,nombre,mensaje:ex?"Equipo existente":"Equipo nuevo",data:{equipo:e,documentos:d}});
+});
+excelTemporal={archivo:n,resultados:out};renderPreviewExcel();
 }
-function renderPreviewExcel(){const r=excelTemporal.resultados,n=r.filter(x=>x.estado==="valido").length,d=r.filter(x=>x.estado==="duplicado").length,e=r.filter(x=>x.estado==="error").length;previewExcel.innerHTML=`<div class="tarjeta"><h2>Vista previa</h2><div class="excel-resumen"><div class="excel-resumen-card">Filas<strong>${r.length}</strong></div><div class="excel-resumen-card">Nuevos<strong>${n}</strong></div><div class="excel-resumen-card">Existentes<strong>${d}</strong></div><div class="excel-resumen-card">Errores<strong>${e}</strong></div></div><label>Equipos existentes</label><select id="modoImportacionCal" style="max-width:450px"><option value="omitir">Omitir equipos existentes</option><option value="actualizar">Actualizar datos y agregar documentos nuevos</option></select><div class="tabla-contenedor" style="margin-top:15px"><table><thead><tr><th>Fila</th><th>Código</th><th>Equipo</th><th>Documentos</th><th>Resultado</th></tr></thead><tbody>${r.slice(0,30).map(x=>`<tr class="${x.estado==="valido"?"fila-valida":x.estado==="duplicado"?"fila-duplicada":"fila-error"}"><td>${x.fila}</td><td>${esc(x.codigo)}</td><td>${esc(x.nombre)}</td><td>${x.data?.documentos?.length||0}</td><td>${esc(x.mensaje)}</td></tr>`).join("")}</tbody></table></div><div class="acciones-form"><button class="btn-principal" onclick="confirmarImportacionCalificacion()">Importar</button><button class="btn-secundario" onclick="excelTemporal=null;previewExcel.innerHTML=''">Cancelar</button></div></div>`}
-function agregarDocumentoSiNoExiste(d){if(!calificaciones.some(r=>r.equipoCodigo===d.equipoCodigo&&r.tipo===d.tipo&&r.documento===d.documento&&r.codigo===d.codigo&&fechaDocumento(r)===d.fecha))calificaciones.push(d)}
+function renderPreviewExcel(){
+const r=excelTemporal.resultados,n=r.filter(x=>x.estado==="valido").length,d=r.filter(x=>x.estado==="duplicado").length,e=r.filter(x=>x.estado==="error").length;
+$("previewExcel").innerHTML=`<div class="tarjeta"><h2>Vista previa</h2><div class="excel-resumen"><div class="excel-resumen-card">Filas<strong>${r.length}</strong></div><div class="excel-resumen-card">Nuevos<strong>${n}</strong></div><div class="excel-resumen-card">Existentes<strong>${d}</strong></div><div class="excel-resumen-card">Errores<strong>${e}</strong></div></div><label>Equipos existentes</label><select id="modoImportacionCal" style="max-width:450px"><option value="omitir">Omitir equipos existentes</option><option value="actualizar">Actualizar datos y agregar documentos nuevos</option></select><div class="tabla-contenedor" style="margin-top:15px"><table><thead><tr><th>Fila</th><th>Código</th><th>Equipo</th><th>Documentos</th><th>Resultado</th></tr></thead><tbody>${r.slice(0,30).map(x=>`<tr class="${x.estado==="valido"?"fila-valida":x.estado==="duplicado"?"fila-duplicada":"fila-error"}"><td>${x.fila}</td><td>${esc(x.codigo)}</td><td>${esc(x.nombre)}</td><td>${x.data?.documentos?.length||0}</td><td>${esc(x.mensaje)}</td></tr>`).join("")}</tbody></table></div><div class="acciones-form"><button class="btn-principal" onclick="confirmarImportacionCalificacion()">Importar</button><button class="btn-secundario" onclick="excelTemporal=null;$('previewExcel').innerHTML=''">Cancelar</button></div></div>`;
+}
+function agregarDocumentoSiNoExiste(d){
+if(!calificaciones.some(r=>r.equipoCodigo===d.equipoCodigo&&r.tipo===d.tipo&&r.documento===d.documento&&r.codigo===d.codigo&&fechaDocumento(r)===d.fecha))calificaciones.push(d);
+}
 function confirmarImportacionCalificacion(){
-const modo=sel("modoImportacionCal");excelTemporal.resultados.forEach(r=>{if(r.estado==="error")return;const d=r.data,i=equipos.findIndex(e=>e.codigo.toLowerCase()===d.equipo.codigo.toLowerCase());if(i===-1){equipos.push(d.equipo);d.documentos.forEach(agregarDocumentoSiNoExiste)}else if(modo==="actualizar"){const a=equipos[i];equipos[i]={...a,nombre:d.equipo.nombre,area:d.equipo.area,marca:d.equipo.marca,modelo:d.equipo.modelo,serie:d.equipo.serie,ubicacion:d.equipo.ubicacion,aplicaPQ:d.equipo.aplicaPQ};d.documentos.forEach(agregarDocumentoSiNoExiste)}});guardarTodo();actualizarCumplimientoProgramas();excelTemporal=null;mostrarInicioCalificacion();
+if(!excelTemporal)return;const modo=sel("modoImportacionCal");
+excelTemporal.resultados.forEach(r=>{
+if(r.estado==="error")return;const d=r.data,i=equipos.findIndex(e=>String(e.codigo).toLowerCase()===String(d.equipo.codigo).toLowerCase());
+if(i===-1){equipos.push(d.equipo);d.documentos.forEach(agregarDocumentoSiNoExiste)}
+else if(modo==="actualizar"){const a=equipos[i];equipos[i]={...a,nombre:d.equipo.nombre,area:d.equipo.area,marca:d.equipo.marca,modelo:d.equipo.modelo,serie:d.equipo.serie,ubicacion:d.equipo.ubicacion,aplicaPQ:d.equipo.aplicaPQ};d.documentos.forEach(agregarDocumentoSiNoExiste)}
+});
+guardarTodo();actualizarCumplimientoProgramas();excelTemporal=null;mostrarInicioCalificacion();
 }
 function exportarCalificacionExcel(){
-const d=equipos.map(e=>{const pi=ultimoDocumento(e.codigo,"IQ","Protocolo"),ri=ultimoDocumento(e.codigo,"IQ","Reporte"),po=ultimoDocumento(e.codigo,"OQ","Protocolo"),ro=ultimoDocumento(e.codigo,"OQ","Reporte"),pp=ultimoDocumento(e.codigo,"PQ","Protocolo"),rp=ultimoDocumento(e.codigo,"PQ","Reporte");return{"Código equipo":e.codigo,"Nombre":e.nombre,"Área":e.area,"Marca":e.marca||"","Modelo":e.modelo||"","Serie":e.serie||"","Ubicación":e.ubicacion||"","Aplica PQ":e.aplicaPQ!==false?"Sí":"No","Estado":e.estado||"Operativo","Protocolo IQ":pi?.codigo||"","Emisión Protocolo IQ":fechaDocumento(pi),"Elaboró Protocolo IQ":pi?.responsable||"","Reporte IQ":ri?.codigo||"","Emisión Reporte IQ":fechaDocumento(ri),"Ejecutó Reporte IQ":ri?.responsable||"","Protocolo OQ":po?.codigo||"","Emisión Protocolo OQ":fechaDocumento(po),"Elaboró Protocolo OQ":po?.responsable||"","Reporte OQ":ro?.codigo||"","Emisión Reporte OQ":fechaDocumento(ro),"Ejecutó Reporte OQ":ro?.responsable||"","Protocolo PQ":pp?.codigo||"","Emisión Protocolo PQ":fechaDocumento(pp),"Elaboró Protocolo PQ":pp?.responsable||"","Reporte PQ":rp?.codigo||"","Emisión Reporte PQ":fechaDocumento(rp),"Ejecutó Reporte PQ":rp?.responsable||""}});
+if(!equipos.length){alert("No existen equipos para exportar.");return}
+const d=equipos.map(e=>{
+const pi=ultimoDocumento(e.codigo,"IQ","Protocolo"),ri=ultimoDocumento(e.codigo,"IQ","Reporte"),po=ultimoDocumento(e.codigo,"OQ","Protocolo"),ro=ultimoDocumento(e.codigo,"OQ","Reporte"),pp=ultimoDocumento(e.codigo,"PQ","Protocolo"),rp=ultimoDocumento(e.codigo,"PQ","Reporte");
+return{"Código equipo":e.codigo,"Nombre":e.nombre,"Área":e.area,"Marca":e.marca||"","Modelo":e.modelo||"","Serie":e.serie||"","Ubicación":e.ubicacion||"","Aplica PQ":e.aplicaPQ!==false?"Sí":"No","Estado":e.estado||"Operativo","Protocolo IQ":pi?.codigo||"","Emisión Protocolo IQ":fechaDocumento(pi),"Elaboró Protocolo IQ":pi?.responsable||"","Reporte IQ":ri?.codigo||"","Emisión Reporte IQ":fechaDocumento(ri),"Ejecutó Reporte IQ":ri?.responsable||"","Protocolo OQ":po?.codigo||"","Emisión Protocolo OQ":fechaDocumento(po),"Elaboró Protocolo OQ":po?.responsable||"","Reporte OQ":ro?.codigo||"","Emisión Reporte OQ":fechaDocumento(ro),"Ejecutó Reporte OQ":ro?.responsable||"","Protocolo PQ":e.aplicaPQ!==false?(pp?.codigo||""):"NO APLICA","Emisión Protocolo PQ":e.aplicaPQ!==false?fechaDocumento(pp):"","Elaboró Protocolo PQ":e.aplicaPQ!==false?(pp?.responsable||""):"","Reporte PQ":e.aplicaPQ!==false?(rp?.codigo||""):"NO APLICA","Emisión Reporte PQ":e.aplicaPQ!==false?fechaDocumento(rp):"","Ejecutó Reporte PQ":e.aplicaPQ!==false?(rp?.responsable||""):""};
+});
 const ws=XLSX.utils.json_to_sheet(d),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Calificación");XLSX.writeFile(wb,`Base_Calificacion_${fechaHoy()}.xlsx`);
 }
 
+/* KPI */
 function mostrarKPI(){
-if(!esAdmin)return;marcarMenuActivo("kpi");const a=equipos.filter(e=>e.estado!=="De baja"),c=a.filter(equipoCompletamenteCalificado);contenido.innerHTML=`<div class="topbar"><div><h1 class="titulo-pagina">KPI</h1><div class="subtitulo-pagina">Indicadores de Calificación de Equipos</div></div>${renderAccionesTopbar()}</div><div class="resumen">${tarjetaResumen("⚙","Equipos activos",a.length,"azul-bg")}${tarjetaResumen("✓","Completamente calificados",c.length,"verde-bg")}${tarjetaResumen("!","Vencidos / incompletos",a.length-c.length,"rojo-bg")}${tarjetaResumen("⊘","De baja",equipos.length-a.length,"gris-bg")}</div><div class="panel-etapas">${tarjetaResumenEtapa("IQ")}${tarjetaResumenEtapa("OQ")}${tarjetaResumenEtapa("PQ")}</div>`;
+if(!esAdmin)return;marcarMenuActivo("kpi");
+const a=equipos.filter(e=>e.estado!=="De baja"),c=a.filter(equipoCompletamenteCalificado);
+$("contenido").innerHTML=
+cabecera("KPI","Indicadores de Calificación de Equipos")+
+`<div class="resumen">${tarjetaResumen("⚙","Equipos activos",a.length,"azul-bg")}${tarjetaResumen("✓","Completamente calificados",c.length,"verde-bg")}${tarjetaResumen("!","Vencidos / incompletos",a.length-c.length,"rojo-bg")}${tarjetaResumen("⊘","De baja",equipos.length-a.length,"gris-bg")}</div><div class="panel-etapas">${tarjetaResumenEtapa("IQ")}${tarjetaResumenEtapa("OQ")}${tarjetaResumenEtapa("PQ")}</div>`;
 }
 
-window.addEventListener("storage",()=>{equipos=leerDatos("equipos");calificaciones=leerDatos("calificaciones");programasCalificacion=leerDatos("programasCalificacion");equiposCalibracion=leerDatos("equiposCalibracion");registrosCalibracion=leerDatos("registrosCalibracion");documentosSACM=leerDatos("documentosSACM");registrosDocumentales=leerDatos("registrosDocumentales");migrar();actualizarCumplimientoProgramas();actualizarPermisosUI();mostrarInicioGeneral()});
+/* SYNC */
+window.addEventListener("storage",()=>{
+equipos=leerDatos("equipos");
+calificaciones=leerDatos("calificaciones");
+programasCalificacion=leerDatos("programasCalificacion");
+equiposCalibracion=leerDatos("equiposCalibracion");
+registrosCalibracion=leerDatos("registrosCalibracion");
+documentosSACM=leerDatos("documentosSACM");
+registrosDocumentales=leerDatos("registrosDocumentales");
+migrar();actualizarCumplimientoProgramas();actualizarPermisosUI();mostrarInicioGeneral();
+});
 
+/* START */
 migrar();
 actualizarCumplimientoProgramas();
 actualizarPermisosUI();
